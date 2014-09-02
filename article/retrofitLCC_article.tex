@@ -1,0 +1,124 @@
+\documentclass[review]{elsarticle}
+\usepackage{lineno, hyperref}
+
+%% or use the graphicx package for more complicated commands
+%% \usepackage{graphicx}
+\graphicspath{{./images/}}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+\usepackage{lineno}
+
+\modulolinenumbers[5]
+
+\journal{Energy and Buildings}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Staging Energy Retrofits Under Capital Constraints\tnoteref{mytitlenote}}
+\tnotetext[mytitlenote]{Fully documented methods available \href{https://github.com/buildsci/retrofitLCC}{here}.}
+
+%% Group authors per affiliation:
+\author{Matthew Dahlhausen}
+\author{Mohammad Heidarinejad}
+\author{Jelena Srebric}
+\address{University of Maryland}
+%%\fnref{myfootnote}
+%%\fntext[myfootnote]{Since 1880.}
+
+%% or include affiliations in footnotes:
+%%\author[mymainaddress,mysecondaryaddress]{Elsevier Inc}
+%%\ead[url]{www.elsevier.com}
+
+%%\author[mysecondaryaddress]{Global Customer Service\corref{mycorrespondingauthor}}
+%%\cortext[mycorrespondingauthor]{Corresponding author}
+%%\ead{support@elsevier.com}
+
+%%\address[mymainaddress]{1600 John F Kennedy Boulevard, Philadelphia}
+%%\address[mysecondaryaddress]{360 Park Avenue South, New York}
+
+\begin{abstract}
+Write the abstract last.  4 sentences.  State the problem. Say why it's an interesting problem.  Say what your solution achieves.  Say what follows from your solution.  
+\end{abstract}
+
+\begin{keyword}
+Office building; energy retrofit; energy efficiency measures; simple payback; staging; integrative design; measure bundles; measure packages; energy simulation 
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}
+1 page
+1 page problem statement
+
+\section{Methods}
+2 pages describing method
+5 pages details
+2 pages comparison to related work
+
+\section{Discussion}
+
+\section{Conclusions}
+0.5 pages
+
+\section{\LaTeX\ templates}
+
+\subsection{References}
+Sample references: \cite{Shao2014, Chidiac20115037}.
+
+\subsection{Lists}
+\begin{itemize}
+\item Bullet point one
+\item Bullet point two
+\end{itemize}
+
+\begin{enumerate}
+\item Numbered list item one
+\item Numbered list item two
+\end{enumerate}
+
+\subsection{Tables}
+\begin{table}[h]
+\centering
+\begin{tabular}{l l l}
+\hline
+\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+\hline
+Treatment 1 & 0.0003262 & 0.562 \\
+Treatment 2 & 0.0015681 & 0.910 \\
+Treatment 3 & 0.0009271 & 0.296 \\
+\hline
+\end{tabular}
+\caption{Table caption}
+\end{table}
+
+\subsection{Figures}
+\begin{figure}[h]
+\centering\includegraphics[width=0.4\linewidth]{placeholder}
+\caption{Figure caption}
+\end{figure}
+
+\subsection{Equations}
+\begin{equation}
+\label{eq:emc}
+e = mc^2
+\end{equation}
+
+\section*{Acknowledgements}
+
+\section*{References}
+\bibliography{./references/master_ref_list}
+
+\end{document}

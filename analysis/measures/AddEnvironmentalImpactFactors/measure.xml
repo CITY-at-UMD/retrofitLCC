@@ -1,0 +1,114 @@
+<measure>
+	<name>Environmental Impact Factors</name>
+	<uid>d218f4ec-4d12-42cc-9434-d139251c88e9</uid>
+	<version_id>455e76bd-c76e-494c-8c5c-8580790c0899</version_id>
+	<description>Adds environmental impact factors object to the output reporting, including criteria pollutants, water, and greenhouse gas emissions.&#xd;
+	</description>
+	<modeler_description>Adds three Environmental Impact Factor objects to the EnergyPlus .idf file:&#xd;
+Output:EnvironmentalImpactFactors: (with associated reporting frequency, more than one frequency can be requested)&#xd;
+EnvironmentalImpactFactors: (contains additional information necessary for the calculations not included in the Fuel Factors)&#xd;
+FuelFactors: (required for every fuel that is simulated and converted in this simulation input file)&#xd;
+&#xd;
+Note: This does NOT provide hourly or seasonal emissions factors; values reported on less than an annual basis still assume a average annual impact factor for each fuel.&#xd;
+&#xd;
+	</modeler_description>
+	<provenances/>
+	<tags>
+		<tag>Reporting.QAQC</tag>
+	</tags>
+	<attributes>
+		<attribute>
+			<name>Measure Type</name>
+			<value>EnergyPlusMeasure</value>
+			<datatype>string</datatype>
+		</attribute>
+		<attribute>
+			<name>Requires EnergyPlus Results</name>
+			<value>false</value>
+			<datatype>boolean</datatype>
+		</attribute>
+		<attribute>
+			<name>Uses SketchUp API</name>
+			<value>false</value>
+			<datatype>boolean</datatype>
+		</attribute>
+	</attributes>
+	<files>
+		<file>
+			<filename>Electricity_National_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Electricity_Eastern_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Electricity_Western_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Electricity_ERCOT_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Electricity_Alaska_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Electricity_Hawaii_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Coal_Commercial Boiler_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>Natural Gas_Commercial Boiler_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>
+		<file>
+			<filename>FuelOil#1_Commercial Boiler_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>		
+		<file>
+			<filename>FuelOil#2_Commercial Boiler_FuelFactors.idf</filename>
+			<filetype>idf</filetype>
+			<usage_type>resource</usage_type>
+			<checksum></checksum>
+		</file>		
+		<file>
+			<version>
+				<software_program>OpenStudio</software_program>
+				<identifier>1.4.0</identifier>
+			</version>
+			<filename>measure.rb</filename>
+			<filetype>rb</filetype>
+			<usage_type>script</usage_type>
+			<checksum>3325DBCB</checksum>
+		</file>
+		<file>
+			<filename>AddEnvironmentalImpactFactors_Test.rb</filename>
+			<filetype>rb</filetype>
+			<usage_type>test</usage_type>
+			<checksum>1E795674</checksum>
+		</file>
+	</files>
+</measure>

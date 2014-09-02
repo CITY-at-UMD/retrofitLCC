@@ -1,0 +1,41 @@
+
+Version,
+  8.1;                       ! Version Identifier
+
+FuelFactors,
+	Electricity,             !- Existing Fuel Resource Name
+	kg,                      !- Units of Measure
+	,                        !- Energy per Unit Factor
+	2.894,                   !- Source Energy Factor {J/J}
+	,                        !- Source Energy Schedule Name
+	1.54E+02,        		 !- CO2 Emission Factor {g/MJ}
+	,                        !- CO2 Emission Factor Schedule Name
+	6.89E-02,                !- CO Emission Factor {g/MJ}
+	,                        !- CO Emission Factor Schedule Name
+	4.42E-01,                !- CH4 Emission Factor {g/MJ}
+	,                        !- CH4 Emission Factor Schedule Name
+	2.46E-01,  			     !- NOx Emission Factor {g/MJ}
+	,                        !- NOx Emission Factor Schedule Name
+	3.75E-03,    	  		 !- N2O Emission Factor {g/MJ}
+	,                        !- N2O Emission Factor Schedule Name
+	8.58E-01,   		     !- SO2 Emission Factor {g/MJ}
+	,                        !- SO2 Emission Factor Schedule Name
+	0.0,                     !- PM Emission Factor {g/MJ}
+	,                        !- PM Emission Factor Schedule Name
+	8.81E-03, 				 !- PM10 Emission Factor {g/MJ}
+	,                        !- PM10 Emission Factor Schedule Name
+	0.0,                     !- PM2.5 Emission Factor {g/MJ}
+	,                        !- PM2.5 Emission Factor Schedule Name
+	0.0,                     !- NH3 Emission Factor {g/MJ}
+	,                        !- NH3 Emission Factor Schedule Name
+	8.14E-03,    			 !- NMVOC Emission Factor {g/MJ}
+	,                        !- NMVOC Emission Factor Schedule Name
+	2.34E-06,          		 !- Hg Emission Factor {g/MJ}
+	,                        !- Hg Emission Factor Schedule Name
+	1.13E-05,                !- Pb Emission Factor {g/MJ}
+	,                        !- Pb Emission Factor Schedule Name
+	2.1007,                  !- Water Emission Factor {L/MJ}
+	,                        !- Water Emission Factor Schedule Name
+	0,                       !- Nuclear High Level Emission Factor {g/MJ}
+	,                        !- Nuclear High Level Emission Factor Schedule Name
+	0;                       !- Nuclear Low Level Emission Factor {m3/MJ}  
