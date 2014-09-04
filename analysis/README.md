@@ -2,12 +2,16 @@
 ##Folders: 
 -**lib**
  contains R functions for recursion, permutation, net present value, etc.
+ 
 -**measures**
  contains the ruby script implementation for each R measure. 
+ 
 -**energyplus_additions**
  contains .idf file output requests for environmental impact, utility rates, and load component summaries.
+ 
 -**base_scripts**
  contains the base scripts for building a ruby run manager call.
+ 
 -**run_scripts**
  contains the run scripts for each unique simulation.
  
