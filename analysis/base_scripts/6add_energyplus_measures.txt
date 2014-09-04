@@ -1,0 +1,15 @@
+dir = OpenStudio::Path.new("#{Dir.pwd}/AddEnvironmentalImpactFactors")                  
+measure = OpenStudio::BCLMeasure::load(dir)
+args  = OpenStudio::Ruleset::OSArgumentVector.new()
+reporting_frequency = OpenStudio::Ruleset::OSArgument::makeStringArgument("reporting_frequency")
+reporting_frequency.setValue("RunPeriod")
+args << reporting_frequency
+electricity_region = OpenStudio::Ruleset::OSArgument::makeStringArgument("electricity_region")
+electricity_region.setValue("National")
+args << electricity_region
+equipment = OpenStudio::Ruleset::OSArgument::makeStringArgument("equipment")
+equipment.setValue("Commercial Boiler")
+args << equipment
+rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);
+rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
+wf.addJob(rubyjobbuilder.toWorkItem());
