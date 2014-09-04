@@ -4,13 +4,11 @@
 3. Run **retrofitLCC_article.tex** with pdfLaTeX to generate the final .pdf file
 
 ##Folders: 
--*images*
- Contains the images for the document
--*references* 
- Contains the literature review and master reference list
--*elsarticle-template* 
- Contains an example template for Elsevier articles
+-**images** contains the images for the document
+
+-**references** contains the literature review and master reference list
+
+-**elsarticle-template** contains an example template for Elsevier articles
  
 ##Files:
--*retrofitLCC_article.tex*
- core .tex file for document
+-**retrofitLCC_article.tex** is the core .tex file for the article
