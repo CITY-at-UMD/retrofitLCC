@@ -8444,7 +8444,7 @@ OS:SizingPeriod:DesignDay,
   2.05;                                   !- ASHRAE Taud {dimensionless}
 
 OS:SubSurface,
-  {ce9a9fac-acca-423a-a03e-a416f07d50ec}, !- Handle
+  {478966cd-61f6-48ab-9ea5-50c3887bb0cb}, !- Handle
   Sub Surface 4,                          !- Name
   FixedWindow,                            !- Sub Surface Type
   ,                                       !- Construction Name
@@ -8461,7 +8461,7 @@ OS:SubSurface,
   -2.97460000000001, 3, 3.62722972950259; !- X,Y,Z Vertex 4 {m}
 
 OS:SubSurface,
-  {26921624-51f5-4162-b710-c01248e3f354}, !- Handle
+  {f8e3b0ec-a9d8-418e-a5cd-a8950b8cf57b}, !- Handle
   Sub Surface 10,                         !- Name
   FixedWindow,                            !- Sub Surface Type
   ,                                       !- Construction Name
@@ -8478,7 +8478,7 @@ OS:SubSurface,
   -2.97460000000001, 3, 3.62722972950259; !- X,Y,Z Vertex 4 {m}
 
 OS:SubSurface,
-  {4bf5ace9-e3eb-44cf-aa70-e4efa22c9c67}, !- Handle
+  {fec7dc35-8e16-4729-8fa8-04f8ba5f5708}, !- Handle
   Sub Surface 12,                         !- Name
   FixedWindow,                            !- Sub Surface Type
   ,                                       !- Construction Name

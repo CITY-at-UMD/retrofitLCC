@@ -1,0 +1,229 @@
+{
+ "job_params" : [
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "value" : "--argumentName=material_cost_insulation_increase_ip"
+      },
+      "param_index" : 0
+     },
+     {
+      "param" :       {
+       "value" : "--argumentValue=5"
+      },
+      "param_index" : 1
+     }
+    ],
+    "value" : "ruby_scriptparameters"
+   },
+   "param_index" : 0
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "children" : [
+           {
+            "param" :             {
+             "children" : [
+              {
+               "param" :                {
+                "value" : "in.osm"
+               },
+               "param_index" : 0
+              }
+             ],
+             "value" : ".*\\.osm"
+            },
+            "param_index" : 0
+           }
+          ],
+          "value" : "All"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "Last"
+      },
+      "param_index" : 0
+     }
+    ],
+    "value" : "ruby_inputfiles"
+   },
+   "param_index" : 1
+  },
+  {
+   "param" :    {
+    "value" : "ruby_toolparameters"
+   },
+   "param_index" : 2
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "children" : [
+           {
+            "param" :             {
+             "value" : ""
+            },
+            "param_index" : 0
+           }
+          ],
+          "value" : "osm"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "osm"
+      },
+      "param_index" : 0
+     }
+    ],
+    "value" : "ruby_copyrequired"
+   },
+   "param_index" : 3
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "user_script.rb"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/measure.rb"
+      },
+      "param_index" : 0
+     },
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "resources/OsLib_AedgMeasures.rb"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/resources/OsLib_AedgMeasures.rb"
+      },
+      "param_index" : 1
+     },
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "resources/OsLib_HelperMethods.rb"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/resources/OsLib_HelperMethods.rb"
+      },
+      "param_index" : 2
+     },
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "resources/OsLib_Constructions.rb"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/resources/OsLib_Constructions.rb"
+      },
+      "param_index" : 3
+     },
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "measure.rb"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/measure.rb"
+      },
+      "param_index" : 4
+     }
+    ],
+    "value" : "ruby_requiredfiles"
+   },
+   "param_index" : 4
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "value" : "true"
+      },
+      "param_index" : 0
+     }
+    ],
+    "value" : "ruby_isuserscriptjob"
+   },
+   "param_index" : 5
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "value" : "C:/Program Files (x86)/OpenStudio 1.3.0/Ruby/openstudio/runmanager/rubyscripts/UserScriptAdapter.rb"
+      },
+      "param_index" : 0
+     }
+    ],
+    "value" : "ruby_scriptfile"
+   },
+   "param_index" : 6
+  },
+  {
+   "param" :    {
+    "children" : [
+     {
+      "param" :       {
+       "children" : [
+        {
+         "param" :          {
+          "value" : "{1f0cb4be-c072-472e-82f6-800590f728b9}"
+         },
+         "param_index" : 0
+        }
+       ],
+       "value" : "bcl_measure_uuid"
+      },
+      "param_index" : 0
+     }
+    ],
+    "value" : "ruby_bclmeasureparameters"
+   },
+   "param_index" : 7
+  }
+ ],
+ "metadata" :  {
+  "openstudio_version" : "1.3.0"
+ }
+}

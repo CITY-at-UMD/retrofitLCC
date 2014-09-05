@@ -8495,7 +8495,7 @@ OS:SizingPeriod:DesignDay,
   2.05;                                   !- ASHRAE Taud {dimensionless}
 
 OS:ClimateZones,
-  {3de5ea9d-0d37-480f-9137-686fd37ebd87}, !- Handle
+  {8f07218c-c3bc-40ce-b80c-83f96e03423c}, !- Handle
   ,                                       !- Active Institution
   ,                                       !- Active Year
   ,                                       !- Climate Zone Institution Name 1

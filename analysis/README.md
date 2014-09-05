@@ -29,9 +29,12 @@
 3)**run_master.rb** 
  runs all the ruby scripts for each unique simulation, and deletes extraneous files after each simulation.
 
-4)**ResultsConstruction.R**
+4)**ResultsReader.R**
+ reads in the simulation results and saves them to an .RData file.
+ 
+5)**ResultsConstruction.R**
  takes in the simulation results and duplicate simulation mapping file. 
- Creates cash flows for each permutation.
+ Creates cash flows for each permutation, based on a year weighting over the lifetime.
 
-5)**RetrofitCharts.R** 
+6)**RetrofitCharts.R** 
  takes in the data frames from ResultsConstruction and uses it to produce graphics
