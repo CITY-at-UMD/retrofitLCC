@@ -3,5 +3,4 @@ require 'openstudio'
 require 'openstudio/energyplus/find_energyplus'
 require 'rubygems'
 gem 'minitest'
-require 'minitest/unit'
-MiniTest::Unit.autorun
+require 'minitest/autorun'

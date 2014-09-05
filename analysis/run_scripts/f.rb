@@ -3,9 +3,7 @@ require 'openstudio'
 require 'openstudio/energyplus/find_energyplus'
 require 'rubygems'
 gem 'minitest'
-require 'minitest/unit'
-MiniTest::Unit.autorun
-
+require 'minitest/autorun'
 
 #watcher
 class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
@@ -20,7 +18,7 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
 
   def jobFinishedDetails(t_jobId, t_jobType, t_lastRun, t_errors, t_outputFiles, t_inputParams, t_isMergedJob, t_mergedIntoJobId)
     #puts "JobFinished: #{t_jobId} #{t_jobType.valueName} #{t_lastRun} #{t_errors.succeeded} #{t_outputFiles.files.size} #{t_outputFiles.files.at(0).fullPath} #{t_inputParams.params.size} #{t_isMergedJob} #{t_mergedIntoJobId}\n"
-	puts "Job Id:#{t_jobType.valueName}\tRun Time:#{t_lastRun}\tNo Errors?:#{t_errors.succeeded}\tNumber Files Output:#{t_outputFiles.files.size}\tFile Path:#{t_outputFiles.files.at(0).fullPath}\n\m"
+	puts "Job Id:#{t_jobType.valueName}\nRun Time:#{t_lastRun}\nNo Errors?:#{t_errors.succeeded}\nNumber Files Output:#{t_outputFiles.files.size}\nFile Path:#{t_outputFiles.files.at(0).fullPath}\n"
 
     if not @m_finishedCounts[t_jobType.value]
       @m_finishedCounts[t_jobType.value] = 1
@@ -40,7 +38,7 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
   
 end
 
-class RunManagerWatcher_Test < MiniTest::Unit::TestCase
+class RunManagerWatcher_Test < MiniTest::Test
 def test_RunManagerWatcher
 
 # configure logging
@@ -82,28 +80,28 @@ rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args)
 rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
 wf.addJob(rubyjobbuilder.toWorkItem());
 
-#dir = OpenStudio::Path.new("#{Dir.pwd}/energyplus_additions/AddUtilityRates")                  
-#measure = OpenStudio::BCLMeasure::load(dir)
-#args  = OpenStudio::Ruleset::OSArgumentVector.new()
-#elec_tar = OpenStudio::Ruleset::OSArgument::makeStringArgument("elec_tar")
-#elec_tar.setValue("PECO Rates")
-#args << elec_tar
-#gas_tar = OpenStudio::Ruleset::OSArgument::makeStringArgument("gas_tar")
-#gas_tar.setValue("PGW Rates")
-#args << gas_tar
-#rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);
-#rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
-#wf.addJob(rubyjobbuilder.toWorkItem());
+dir = OpenStudio::Path.new("#{Dir.pwd}/energyplus_additions/AddUtilityRates")                  
+measure = OpenStudio::BCLMeasure::load(dir)
+args  = OpenStudio::Ruleset::OSArgumentVector.new()
+elec_tar = OpenStudio::Ruleset::OSArgument::makeStringArgument("elec_tar")
+elec_tar.setValue("PECO Rates")
+args << elec_tar
+gas_tar = OpenStudio::Ruleset::OSArgument::makeStringArgument("gas_tar")
+gas_tar.setValue("PGW Rates")
+args << gas_tar
+rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);
+rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
+wf.addJob(rubyjobbuilder.toWorkItem());
 
-#dir = OpenStudio::Path.new("#{Dir.pwd}/energyplus_additions/AddSummaryReport")                  
-#measure = OpenStudio::BCLMeasure::load(dir)
-#args  = OpenStudio::Ruleset::OSArgumentVector.new()
-#reports_request = OpenStudio::Ruleset::OSArgument::makeStringArgument("reports_request")
-#reports_request.setValue("ZoneComponentLoadSummary")
-#args << reports_request
-#rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);
-#rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
-#wf.addJob(rubyjobbuilder.toWorkItem());
+dir = OpenStudio::Path.new("#{Dir.pwd}/energyplus_additions/AddSummaryReport")                  
+measure = OpenStudio::BCLMeasure::load(dir)
+args  = OpenStudio::Ruleset::OSArgumentVector.new()
+reports_request = OpenStudio::Ruleset::OSArgument::makeStringArgument("reports_request")
+reports_request.setValue("ZoneComponentLoadSummary")
+args << reports_request
+rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);
+rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath());
+wf.addJob(rubyjobbuilder.toWorkItem());
 
 outdir = OpenStudio::Path.new("./run_scripts/results/f")
 
@@ -138,7 +136,6 @@ run_manager.enqueue(jobtree, true)
 run_manager.waitForFinished()
 
 counts = watcher.finishedCounts
-  assert(counts[OpenStudio::Runmanager::JobType.new("UserScript").value] == 4)
   assert(counts[OpenStudio::Runmanager::JobType.new("ModelToIdf").value] == 1)
   assert(counts[OpenStudio::Runmanager::JobType.new("EnergyPlus").value] == 1)
   # check to make sure exactly ONE *tree* finished

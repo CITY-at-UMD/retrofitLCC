@@ -14,22 +14,22 @@
   </FinalCondition>
   <Attributes>
     <Attribute>
-      <UUID>{ebf87a10-c9e2-4135-be03-1413bf2061e8}</UUID>
-      <VersionUUID>{c5b1db3d-033a-4048-97c3-b9ef630ab029}</VersionUUID>
+      <UUID>{20101b01-42e4-4d9d-9c6a-ba35c0d2e9b1}</UUID>
+      <VersionUUID>{aeec315d-77a2-4aaf-8a6a-a9e938dff492}</VersionUUID>
       <Name>wwr</Name>
       <ValueType>Double</ValueType>
       <Value>0.9</Value>
     </Attribute>
     <Attribute>
-      <UUID>{e8f66a41-44ed-4993-b2c8-883aad5da85b}</UUID>
-      <VersionUUID>{eca652c1-d95c-4bd2-8024-fbfb58f770b5}</VersionUUID>
+      <UUID>{b389093d-1ad0-43cc-bcf2-54ec5f175d69}</UUID>
+      <VersionUUID>{430f2db0-d7a4-4607-8f7d-c32acbadc1f9}</VersionUUID>
       <Name>sillHeight</Name>
       <ValueType>Double</ValueType>
       <Value>0.2</Value>
     </Attribute>
     <Attribute>
-      <UUID>{8dcee8bb-d2d5-43f2-b933-bebfcff37622}</UUID>
-      <VersionUUID>{b9b299ac-8f28-41a4-b8d8-a1daf65b7d8c}</VersionUUID>
+      <UUID>{9e7a1daf-1df7-4856-ae1f-8d34663b3670}</UUID>
+      <VersionUUID>{b1fd5393-dd29-4632-ab11-549222a25a70}</VersionUUID>
       <Name>facade</Name>
       <ValueType>String</ValueType>
       <Value>North</Value>

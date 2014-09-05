@@ -16,7 +16,6 @@ run_manager.enqueue(jobtree, true)
 run_manager.waitForFinished()
 
 counts = watcher.finishedCounts
-  assert(counts[OpenStudio::Runmanager::JobType.new("UserScript").value] == 4)
   assert(counts[OpenStudio::Runmanager::JobType.new("ModelToIdf").value] == 1)
   assert(counts[OpenStudio::Runmanager::JobType.new("EnergyPlus").value] == 1)
   # check to make sure exactly ONE *tree* finished

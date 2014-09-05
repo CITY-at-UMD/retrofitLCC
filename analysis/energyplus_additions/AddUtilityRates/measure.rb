@@ -87,7 +87,7 @@ class AddUtilityRates < OpenStudio::Ruleset::WorkspaceUserScript
       workspace.getObjectsByType("Timestep".to_IddObjectType)[0].setString(0,"4")
       runner.registerInfo("set the simulation timestep to 15 min to match the demand window of the tariffs")
     else
-      runner.registerError("there was no timestep object to alter")
+      runner.registerWarning("there was no timestep object to alter")
     end
     
     #remove any existing lifecycle cost parameters

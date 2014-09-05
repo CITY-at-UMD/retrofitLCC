@@ -1,48 +1,41 @@
 <measure>
-	<name>AddSummaryReport</name>
-	<uid></uid>
-	<version_id></version_id>
-	<description>User selects non-default summary reports to include in the EnergyPlus Output.&#xd;
-	</description>
-	<modeler_description>Adds the Load Components and Sensible Heat Gain Summary Reports. &#xd;
-	</modeler_description>
-	<provenances/>
-	<tags>
-		<tag>Reporting.QAQC</tag>
-	</tags>
-	<attributes>
-		<attribute>
-			<name>Measure Type</name>
-			<value>EnergyPlusMeasure</value>
-			<datatype>string</datatype>
-		</attribute>
-		<attribute>
-			<name>Requires EnergyPlus Results</name>
-			<value>false</value>
-			<datatype>boolean</datatype>
-		</attribute>
-		<attribute>
-			<name>Uses SketchUp API</name>
-			<value>false</value>
-			<datatype>boolean</datatype>
-		</attribute>
-	</attributes>
-	<files>
-		<file>
-			<version>
-				<software_program>OpenStudio</software_program>
-				<identifier>1.4.0</identifier>
-			</version>
-			<filename>measure.rb</filename>
-			<filetype>rb</filetype>
-			<usage_type>script</usage_type>
-			<checksum>3325DBCB</checksum>
-		</file>
-		<file>
-			<filename>AddSummaryReport_Test.rb</filename>
-			<filetype>rb</filetype>
-			<usage_type>test</usage_type>
-			<checksum>1E795674</checksum>
-		</file>
-	</files>
+  <name>AddSummaryReport</name>
+  <uid>bfce6754-124b-494a-aa6c-d5a8a734d115</uid>
+  <version_id>ed75b04e-7d34-4fcf-a956-b66896a9606c</version_id>
+  <description>User selects non-default summary reports to include in the EnergyPlus Output.</description>
+  <modeler_description>Adds the Load Components and Sensible Heat Gain Summary Reports.</modeler_description>
+  <provenances/>
+  <tags>
+    <tag>Reporting.QAQC</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Uses SketchUp API</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.4.0</identifier>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>6926A2E4</checksum>
+    </file>
+    <file>
+      <filename>AddSummaryReport_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>18AB7E1B</checksum>
+    </file>
+  </files>
 </measure>

@@ -1,4 +1,4 @@
-class RunManagerWatcher_Test < MiniTest::Unit::TestCase
+class RunManagerWatcher_Test < MiniTest::Test
 def test_RunManagerWatcher
 
 # configure logging

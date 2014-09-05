@@ -1,4 +1,5 @@
 require 'openstudio'
+
 require 'openstudio/ruleset/ShowRunnerOutput'
 
 require "#{File.dirname(__FILE__)}/../measure.rb"
@@ -6,9 +7,10 @@ require "#{File.dirname(__FILE__)}/../measure.rb"
 require 'test/unit'
 
 class AddUtilityRates_Test < Test::Unit::TestCase
+
   
   def test_AddUtilityRates
-  
+     
     puts "Testing the AddUtilityRates measure...\n\n" 
     # create an instance of the measure
     measure = AddUtilityRates.new
@@ -46,9 +48,9 @@ class AddUtilityRates_Test < Test::Unit::TestCase
     result = runner.result
     show_output(result)
     assert(result.value.valueName == "Success")
-	assert(result.warnings.size == 0)
-    #assert(result.info.size == 1)	
-  
+	assert(result.warnings.size == 1)
+    #assert(result.info.size == 7)	
+    
   end
   
 end

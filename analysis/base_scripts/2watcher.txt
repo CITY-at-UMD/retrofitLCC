@@ -11,7 +11,7 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
 
   def jobFinishedDetails(t_jobId, t_jobType, t_lastRun, t_errors, t_outputFiles, t_inputParams, t_isMergedJob, t_mergedIntoJobId)
     #puts "JobFinished: #{t_jobId} #{t_jobType.valueName} #{t_lastRun} #{t_errors.succeeded} #{t_outputFiles.files.size} #{t_outputFiles.files.at(0).fullPath} #{t_inputParams.params.size} #{t_isMergedJob} #{t_mergedIntoJobId}\n"
-	puts "Job Id:#{t_jobType.valueName}\tRun Time:#{t_lastRun}\tNo Errors?:#{t_errors.succeeded}\tNumber Files Output:#{t_outputFiles.files.size}\tFile Path:#{t_outputFiles.files.at(0).fullPath}\n\m"
+	puts "Job Id:#{t_jobType.valueName}\nRun Time:#{t_lastRun}\nNo Errors?:#{t_errors.succeeded}\nNumber Files Output:#{t_outputFiles.files.size}\nFile Path:#{t_outputFiles.files.at(0).fullPath}\n"
 
     if not @m_finishedCounts[t_jobType.value]
       @m_finishedCounts[t_jobType.value] = 1

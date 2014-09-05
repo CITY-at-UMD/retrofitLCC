@@ -1,63 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<measure xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://bcl.nrel.gov/xsd/measures/version/1.0.xsd">
-	<name>AddUtilityRates</name>
-	<uid></uid>
-	<version_id></version_id>
-	<description>Add the selected utility rate</description>
-	<modeler_description>Adds the .idf text for the selected PECO tariffs, sets the timestep to 15min so that the demand window and the timestep align.</modeler_description>
-	<tags>
-		<tag>Economics.Life Cycle Cost Analysis</tag>
-	</tags>
-	<attributes>
-		<attribute>
-			<name>Measure Type</name>
-			<value>EnergyPlusMeasure</value>
-			<datatype>string</datatype>
-		</attribute>
-		<attribute>
-			<name>Measure Function</name>
-			<value>Measure</value>
-			<datatype>string</datatype>
-		</attribute>
-		<attribute>
-			<name>Requires EnergyPlus Results</name>
-			<value>false</value>
-			<datatype>boolean</datatype>
-		</attribute>
-		<attribute>
-			<name>Uses SketchUp API</name>
-			<value>false</value>
-			<datatype>boolean</datatype>
-		</attribute>
-	</attributes>
-	<files>
-		<file>
-			<filename>PECO Rates.idf</filename>
-			<filetype>idf</filetype>
-			<usage_type>resource</usage_type>
-			<checksum>3543130F</checksum>
-		</file>
-		<file>
-			<filename>PGW Rates.idf</filename>
-			<filetype>idf</filetype>
-			<usage_type>resource</usage_type>
-			<checksum>3543130F</checksum>
-		</file>
-		<file>
-			<filename>AddUtilityRates_Test.rb</filename>
-			<filetype>rb</filetype>
-			<usage_type>test</usage_type>
-			<checksum>0CD65FA6</checksum>
-		</file>
-		<file>
-			<version>
-				<software_program>OpenStudio</software_program>
-				<identifier>0.11.3</identifier>
-			</version>
-			<filename>measure.rb</filename>
-			<filetype>rb</filetype>
-			<usage_type>script</usage_type>
-			<checksum>D4840763</checksum>
-		</file>
-	</files>
+<measure>
+  <name>AddUtilityRates</name>
+  <uid>470a22da-2eff-427a-b4b4-411b5b6c934c</uid>
+  <version_id>7e5b38d9-2065-45e1-afab-e896c545b45e</version_id>
+  <description>Add the selected utility rate.</description>
+  <modeler_description>Adds the .idf text for the selected PECO tariffs, sets the timestep to 15min so that the demand window and the timestep align.</modeler_description>
+  <provenances/>
+  <tags>
+    <tag>Economics.Life Cycle Cost Analysis</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Uses SketchUp API</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>PECO Rates.idf</filename>
+      <filetype>idf</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>9D0321F9</checksum>
+    </file>
+    <file>
+      <filename>PGW Rates.idf</filename>
+      <filetype>idf</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E5426993</checksum>
+    </file>
+    <file>
+      <filename>AddUtilityRates_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>77EA981E</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.3.0</identifier>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>DE38290B</checksum>
+    </file>
+  </files>
 </measure>
