@@ -1,0 +1,24 @@
+<OSResult>
+  <Value>Fail</Value>
+  <Errors>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AedgSmallToMediumOfficeExteriorWallConstruction</Channel>
+      <Message>Please assign an ASHRAE Climate Zone to your model using the site tab in the OpenStudio application. The measure can't make AEDG recommendations without this information.</Message>
+    </LogMessage>
+  </Errors>
+  <Info>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AedgSmallToMediumOfficeExteriorWallConstruction</Channel>
+      <Message>Using ASHRAE Climate zone  for AEDG recommendations.</Message>
+    </LogMessage>
+  </Info>
+  <Attributes>
+    <Attribute>
+      <UUID>{9671aa8a-0404-440c-8249-70dc5b8a30bf}</UUID>
+      <VersionUUID>{d931d9f1-68be-47c8-ba79-639d2a72af89}</VersionUUID>
+      <Name>material_cost_insulation_increase_ip</Name>
+      <ValueType>Double</ValueType>
+      <Value>5</Value>
+    </Attribute>
+  </Attributes>
+</OSResult>

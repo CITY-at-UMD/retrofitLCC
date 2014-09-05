@@ -1,0 +1,38 @@
+<OSResult>
+  <Value>Success</Value>
+  <InitialCondition>
+    <LogMessage>
+      <Channel>openstudio.ruleset.Set Window to Wall Ratio by Facade</Channel>
+      <Message>The model's initial window to wall ratio for North facing exterior walls was 0.40.</Message>
+    </LogMessage>
+  </InitialCondition>
+  <FinalCondition>
+    <LogMessage>
+      <Channel>openstudio.ruleset.Set Window to Wall Ratio by Facade</Channel>
+      <Message>The model's final window to wall ratio for North facing exterior walls is 0.90. Window area increased by 6,458 (ft^2). The material and construction costs increased by $0.</Message>
+    </LogMessage>
+  </FinalCondition>
+  <Attributes>
+    <Attribute>
+      <UUID>{ebf87a10-c9e2-4135-be03-1413bf2061e8}</UUID>
+      <VersionUUID>{c5b1db3d-033a-4048-97c3-b9ef630ab029}</VersionUUID>
+      <Name>wwr</Name>
+      <ValueType>Double</ValueType>
+      <Value>0.9</Value>
+    </Attribute>
+    <Attribute>
+      <UUID>{e8f66a41-44ed-4993-b2c8-883aad5da85b}</UUID>
+      <VersionUUID>{eca652c1-d95c-4bd2-8024-fbfb58f770b5}</VersionUUID>
+      <Name>sillHeight</Name>
+      <ValueType>Double</ValueType>
+      <Value>0.2</Value>
+    </Attribute>
+    <Attribute>
+      <UUID>{8dcee8bb-d2d5-43f2-b933-bebfcff37622}</UUID>
+      <VersionUUID>{b9b299ac-8f28-41a4-b8d8-a1daf65b7d8c}</VersionUUID>
+      <Name>facade</Name>
+      <ValueType>String</ValueType>
+      <Value>North</Value>
+    </Attribute>
+  </Attributes>
+</OSResult>

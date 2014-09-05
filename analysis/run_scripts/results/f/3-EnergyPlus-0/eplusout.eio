@@ -1,0 +1,807 @@
+Program Version,EnergyPlus-Windows-64 8.1.0.008, YMD=2014.09.05 00:03
+! <Version>, Version ID
+ Version, 8.1
+! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
+ Timesteps per Hour,  4, 15
+! <System Convergence Limits>, Minimum System TimeStep {minutes}, Max HVAC Iterations,  Minimum Plant Iterations, Maximum Plant Iterations
+ System Convergence Limits, 1, 20, 2, 8
+! <Simulation Control>, Do Zone Sizing, Do System Sizing, Do Plant Sizing, Do Design Days, Do Weather Simulation
+ Simulation Control, Yes, Yes, Yes, Yes, Yes
+! <Output Reporting Tolerances>, Tolerance for Time Heating Setpoint Not Met, Tolerance for Zone Cooling Setpoint Not Met Time
+ Output Reporting Tolerances, 0.200, 0.200, 
+! <Site:GroundTemperature:BuildingSurface>, Months From Jan to Dec {C}
+ Site:GroundTemperature:BuildingSurface,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00,  18.00
+! <Site:GroundTemperature:FCfactorMethod>, Months From Jan to Dec {C}
+ Site:GroundTemperature:FCfactorMethod,   1.62,   0.54,   2.47,   5.49,  13.39,  19.49,  23.60,  24.85,  22.72,  17.98,  11.66,   5.79
+! <Site:GroundTemperature:Shallow>, Months From Jan to Dec {C}
+ Site:GroundTemperature:Shallow,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00
+! <Site:GroundTemperature:Deep>, Months From Jan to Dec {C}
+ Site:GroundTemperature:Deep,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00
+! <Site:GroundReflectance>, Months From Jan to Dec {dimensionless}
+ Site:GroundReflectance,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Site:GroundReflectance:SnowModifier>, Normal, Daylighting {dimensionless}
+ Site:GroundReflectance:SnowModifier,   1.000,   1.000
+! <Site:GroundReflectance:Snow>, Months From Jan to Dec {dimensionless}
+ Site:GroundReflectance:Snow,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Site:GroundReflectance:Snow:Daylighting>, Months From Jan to Dec {dimensionless}
+ Site:GroundReflectance:Snow:Daylighting,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Environment:Weather Station>,Wind Sensor Height Above Ground {m},Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Sensor Height Above Ground {m},Wind Speed Modifier Coefficient [Internal],Temperature Modifier Coefficient [Internal]
+Environment:Weather Station,10.000,0.140,270.000,1.500,1.586,9.750E-003
+! <Site:Location>, Location Name, Latitude {N+/S- Deg}, Longitude {E+/W- Deg},  Time Zone Number {GMT+/-}, Elevation {m},  Standard Pressure at Elevation {Pa}, Standard RhoAir at Elevation
+Site:Location,Philadelphia International Ap PA USA TMY3 WMO#=724080,39.87,-75.23,-5.00,2.00,101301,1.2040
+! <Building Information>, Building Name,North Axis {deg},Terrain,  Loads Convergence Tolerance Value,Temperature Convergence Tolerance Value,  Solar Distribution,Maximum Number of Warmup Days,Minimum Number of Warmup Days
+ Building Information,Building 1,0.000,Suburbs,4.00000E-002,0.40000,FullExterior,25,6
+! <Inside Convection Algorithm>, Algorithm {Simple | TARP | CeilingDiffuser | AdaptiveConvectionAlgorithm}
+Inside Convection Algorithm,TARP
+! <Outside Convection Algorithm>, Algorithm {SimpleCombined | TARP | MoWitt | DOE-2 | AdaptiveConvectionAlgorithm}
+Outside Convection Algorithm,DOE-2
+! <Sky Radiance Distribution>, Value {Anisotropic}
+Sky Radiance Distribution,Anisotropic
+! <Zone Air Solution Algorithm>, Value {ThirdOrderBackwardDifference | AnalyticalSolution | EulerMethod}
+ Zone Air Solution Algorithm, ThirdOrderBackwardDifference
+! <Zone Air Contaminant Balance Simulation>, Simulation {Yes/No}, Carbon Dioxide Concentration
+ Zone Air Carbon Dioxide Balance Simulation, No,N/A
+! <Zone Air Contaminant Balance Simulation>, Simulation {Yes/No}, Generic Contaminant Concentration
+ Zone Air Generic Contaminant Balance Simulation, No,N/A
+! <Environment:Site Atmospheric Variation>,Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Gradient Coefficient {K/m}
+Environment:Site Atmospheric Variation,0.220,370.000,6.500000E-003
+! <SurfaceGeometry>,Starting Corner,Vertex Input Direction,Coordinate System,Daylight Reference Point Coordinate System,Rectangular (Simple) Surface Coordinate System
+ Surface Geometry,UpperLeftCorner,Counterclockwise,RelativeCoordinateSystem,RelativeCoordinateSystem,RelativeToZoneOrigin
+! <Surface Heat Transfer Algorithm>, Value {CTF - ConductionTransferFunction | EMPD - MoisturePenetrationDepthConductionTransferFunction | CondFD - ConductionFiniteDifference | HAMT - CombinedHeatAndMoistureFiniteElement} - Description,Inside Surface Max Temperature Limit{C}, Surface Convection Coefficient Lower Limit {W/m2-K}, Surface Convection Coefficient Upper Limit {W/m2-K}
+Surface Heat Transfer Algorithm, CTF - ConductionTransferFunction,200,0.10,1000.0
+! <Shading Summary>, Number of Fixed Detached Shades, Number of Building Detached Shades, Number of Attached Shades
+ Shading Summary,0,0,0
+! <Zone Summary>, Number of Zones, Number of Zone Surfaces, Number of SubSurfaces
+ Zone Summary,15,102,12
+! <Zone Information>,Zone Name,North Axis {deg},Origin X-Coordinate {m},Origin Y-Coordinate {m},Origin Z-Coordinate {m},Centroid X-Coordinate {m},Centroid Y-Coordinate {m},Centroid Z-Coordinate {m},Type,Zone Multiplier,Zone List Multiplier,Minimum X {m},Maximum X {m},Minimum Y {m},Maximum Y {m},Minimum Z {m},Maximum Z {m},Ceiling Height {m},Volume {m3},Zone Inside Convection Algorithm {Simple-Detailed-CeilingDiffuser-TrombeWall},Zone Outside Convection Algorithm {Simple-Detailed-Tarp-MoWitt-DOE-2-BLAST}, Floor Area {m2},Exterior Gross Wall Area {m2},Exterior Net Wall Area {m2},Exterior Window Area {m2}, Number of Surfaces, Number of SubSurfaces, Number of Shading SubSurfaces,  Part of Total Building Area
+ Zone Information, THERMAL ZONE 1,0.0,0.00,0.00,0.00,50.00,1.47,2.00,1,1,1,0.00,100.00,0.00,3.00,0.00,4.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,240.00,160.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 10,0.0,0.00,0.00,4.00,1.43,25.00,6.00,1,1,1,0.00,3.00,0.00,50.00,4.00,8.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 11,0.0,3.00,47.00,0.00,50.00,48.53,2.00,1,1,1,0.00,100.00,47.00,50.00,0.00,4.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,40.00,360.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 12,0.0,97.00,3.00,0.00,98.57,25.00,2.00,1,1,1,97.00,100.00,0.00,50.00,0.00,4.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 13,0.0,3.00,3.00,4.00,50.00,25.00,6.00,1,1,1,3.00,97.00,3.00,47.00,4.00,8.00,4.00,16544.00,TARP,DOE-2,4136.00,0.00,0.00,0.00,6,0,0,Yes
+ Zone Information, THERMAL ZONE 14,0.0,3.00,47.00,4.00,50.00,48.53,6.00,1,1,1,0.00,100.00,47.00,50.00,4.00,8.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,40.00,360.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 15,0.0,97.00,3.00,4.00,98.57,25.00,6.00,1,1,1,97.00,100.00,0.00,50.00,4.00,8.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 2,0.0,0.00,0.00,8.00,50.00,1.47,10.00,1,1,1,0.00,100.00,0.00,3.00,8.00,12.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,240.00,160.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 3,0.0,3.00,47.00,8.00,50.00,48.53,10.00,1,1,1,0.00,100.00,47.00,50.00,8.00,12.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,40.00,360.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 4,0.0,0.00,0.00,4.00,50.00,1.47,6.00,1,1,1,0.00,100.00,0.00,3.00,4.00,8.00,4.00,1164.00,TARP,DOE-2,291.00,400.00,240.00,160.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 5,0.0,3.00,3.00,8.00,50.00,25.00,10.00,1,1,1,3.00,97.00,3.00,47.00,8.00,12.00,4.00,16544.00,TARP,DOE-2,4136.00,0.00,0.00,0.00,6,0,0,Yes
+ Zone Information, THERMAL ZONE 6,0.0,3.00,3.00,0.00,50.00,25.00,2.00,1,1,1,3.00,97.00,3.00,47.00,0.00,4.00,4.00,16544.00,TARP,DOE-2,4136.00,0.00,0.00,0.00,6,0,0,Yes
+ Zone Information, THERMAL ZONE 7,0.0,0.00,0.00,8.00,1.43,25.00,10.00,1,1,1,0.00,3.00,0.00,50.00,8.00,12.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 8,0.0,0.00,0.00,0.00,1.43,25.00,2.00,1,1,1,0.00,3.00,0.00,50.00,0.00,4.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+ Zone Information, THERMAL ZONE 9,0.0,97.00,3.00,8.00,98.57,25.00,10.00,1,1,1,97.00,100.00,0.00,50.00,8.00,12.00,4.00,564.00,TARP,DOE-2,141.00,200.00,120.00,80.00,6,1,0,Yes
+! <Zone Internal Gains/Equipment Information - Nominal>,Zone Name, Floor Area {m2},# Occupants,Area per Occupant {m2/person},Occupant per Area {person/m2},Interior Lighting {W/m2},Electric Load {W/m2},Gas Load {W/m2},Other Load {W/m2},Hot Water Eq {W/m2},Steam Equipment {W/m2},Sum Loads per Area {W/m2},Outdoor Controlled Baseboard Heat
+ Zone Internal Gains, THERMAL ZONE 1,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 10,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 11,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 12,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 13,4136.00,222.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 14,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 15,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 2,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 3,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 4,291.00,15.7,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 5,4136.00,222.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 6,4136.00,222.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 7,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 8,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+ Zone Internal Gains, THERMAL ZONE 9,141.00,7.6,18.581,5.382E-002,10.764,10.764,0.000,0.000,0.000,0.000,21.528,No
+! <People Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Number of People {},People/Floor Area {person/m2},Floor Area per person {m2/person},Fraction Radiant,Fraction Convected,Sensible Fraction Calculation,Activity level,ASHRAE 55 Warnings,Carbon Dioxide Generation Rate,Nominal Minimum Number of People,Nominal Maximum Number of People 
+ People Internal Gains, THERMAL ZONE 1 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 1,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 10 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 10,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+ People Internal Gains, THERMAL ZONE 11 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 11,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 12 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 12,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+ People Internal Gains, THERMAL ZONE 13 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 13,4136.00,222.6,222.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,223
+ People Internal Gains, THERMAL ZONE 14 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 14,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 15 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 15,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+ People Internal Gains, THERMAL ZONE 2 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 2,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 3 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 3,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 4 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 4,291.00,15.7,15.7,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,16
+ People Internal Gains, THERMAL ZONE 5 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 5,4136.00,222.6,222.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,223
+ People Internal Gains, THERMAL ZONE 6 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 6,4136.00,222.6,222.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,223
+ People Internal Gains, THERMAL ZONE 7 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 7,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+ People Internal Gains, THERMAL ZONE 8 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 8,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+ People Internal Gains, THERMAL ZONE 9 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING PEOPLE,SMALL OFFICE_BLDG_OCC,THERMAL ZONE 9,141.00,7.6,7.6,5.382E-002,18.581,0.300,0.700,AutoCalculate,SMALL OFFICE_ACTIVITY,No,3.8200E-008,0,8
+! <Lights Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Lighting Level {W},Lights/Floor Area {W/m2},Lights per person {W/person},Fraction Return Air,Fraction Radiant,Fraction Short Wave,Fraction Convected,Fraction Replaceable,End-Use Category,Nominal Minimum Lighting Level {W},Nominal Maximum Lighting Level {W}
+ Lights Internal Gains, THERMAL ZONE 1 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 1,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 10 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 10,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+ Lights Internal Gains, THERMAL ZONE 11 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 11,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 12 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 12,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+ Lights Internal Gains, THERMAL ZONE 13 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 13,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,44519.533
+ Lights Internal Gains, THERMAL ZONE 14 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 14,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 15 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 15,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+ Lights Internal Gains, THERMAL ZONE 2 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 2,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 3 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 3,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 4 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 4,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,3132.298
+ Lights Internal Gains, THERMAL ZONE 5 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 5,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,44519.533
+ Lights Internal Gains, THERMAL ZONE 6 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 6,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,44519.533
+ Lights Internal Gains, THERMAL ZONE 7 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 7,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+ Lights Internal Gains, THERMAL ZONE 8 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 8,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+ Lights Internal Gains, THERMAL ZONE 9 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING LIGHTS,SMALL OFFICE_BLDG_LIGHT,THERMAL ZONE 9,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,1.000,General,0.000,1517.711
+! <ElectricEquipment Internal Gains - Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Equipment Level {W},Equipment/Floor Area {W/m2},Equipment per person {W/person},Fraction Latent,Fraction Radiant,Fraction Lost,Fraction Convected,End-Use SubCategory,Nominal Minimum Equipment Level {W},Nominal Maximum Equipment Level {W}
+ ElectricEquipment Internal Gains, THERMAL ZONE 1 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 1,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 10 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 10,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+ ElectricEquipment Internal Gains, THERMAL ZONE 11 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 11,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 12 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 12,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+ ElectricEquipment Internal Gains, THERMAL ZONE 13 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 13,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,44519.533
+ ElectricEquipment Internal Gains, THERMAL ZONE 14 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 14,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 15 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 15,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+ ElectricEquipment Internal Gains, THERMAL ZONE 2 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 2,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 3 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 3,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 4 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 4,291.00,15.7,3132.298,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,3132.298
+ ElectricEquipment Internal Gains, THERMAL ZONE 5 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 5,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,44519.533
+ ElectricEquipment Internal Gains, THERMAL ZONE 6 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 6,4136.00,222.6,44519.533,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,44519.533
+ ElectricEquipment Internal Gains, THERMAL ZONE 7 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 7,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+ ElectricEquipment Internal Gains, THERMAL ZONE 8 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 8,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+ ElectricEquipment Internal Gains, THERMAL ZONE 9 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING ELECTRIC EQUIPMENT,SMALL OFFICE_BLDG_EQUIP,THERMAL ZONE 9,141.00,7.6,1517.711,10.764,200.000,0.000,0.000,0.000,1.000,General,0.000,1517.711
+! <Shadowing/Sun Position Calculations> [Annual Simulations], Calculation Method,Value {days}, Allowable Number Figures in Shadow Overlap {}, Polygon Clipping Algorithm, Sky Diffuse Modeling Algorithm
+Shadowing/Sun Position Calculations,AverageOverDaysInFrequency,20,15000,SutherlandHodgman,SimpleSkyDiffuseModeling
+! <Water Heater Information>,Type,Name,Volume {m3},Maximum Capacity {W},Standard Rated Recovery Efficiency, Standard Rated Energy Factor
+! <Infiltration Airflow Stats - Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s/m2},Volume Flow Rate/Exterior Surface Area {m3/s/m2},ACH - Air Changes per Hour,Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2}
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 1 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 1,291.00,15.7,0.121,4.155E-004,3.023E-004,0.374,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 10 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 10,141.00,7.6,6.045E-002,4.287E-004,3.023E-004,0.386,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 11 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 11,291.00,15.7,0.121,4.155E-004,3.023E-004,0.374,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 12 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 12,141.00,7.6,6.045E-002,4.287E-004,3.023E-004,0.386,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 13 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 13,4136.00,222.6,0.000,0.000,N/A,0.000,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 14 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 14,291.00,15.7,0.121,4.155E-004,3.023E-004,0.374,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 15 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 15,141.00,7.6,6.045E-002,4.287E-004,3.023E-004,0.386,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 2 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 2,291.00,15.7,0.209,7.177E-004,3.023E-004,0.646,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 3 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 3,291.00,15.7,0.209,7.177E-004,3.023E-004,0.646,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 4 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 4,291.00,15.7,0.121,4.155E-004,3.023E-004,0.374,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 5 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 5,4136.00,222.6,1.250,3.023E-004,3.023E-004,0.272,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 6 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 6,4136.00,222.6,0.000,0.000,N/A,0.000,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 7 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 7,141.00,7.6,0.103,7.310E-004,3.023E-004,0.658,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 8 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 8,141.00,7.6,6.045E-002,4.287E-004,3.023E-004,0.386,1.000,0.000,0.000,0.000
+ ZoneInfiltration Airflow Stats, THERMAL ZONE 9 ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING INFILTRATION,SMALL OFFICE_INFIL_QUARTER_ON,THERMAL ZONE 9,141.00,7.6,0.103,7.310E-004,3.023E-004,0.658,1.000,0.000,0.000,0.000
+! <AirFlow Model>, Simple
+ AirFlow Model, Simple
+! <RoomAir Model>, Zone Name, Mixing/Mundt/UCSDDV/UCSDCV/UCSDUFI/UCSDUFE/User Defined
+RoomAir Model,THERMAL ZONE 1,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 10,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 11,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 12,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 13,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 14,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 15,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 2,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 3,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 4,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 5,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 6,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 7,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 8,Mixing/Well-Stirred
+RoomAir Model,THERMAL ZONE 9,Mixing/Well-Stirred
+! <AirflowNetwork Model:Control>, No Multizone or Distribution/Multizone with Distribution/Multizone without Distribution/Multizone with Distribution only during Fan Operation
+AirflowNetwork Model:Control,NoMultizoneOrDistribution
+! <Zone Volume Capacitance Multiplier>, Sensible Heat Capacity Multiplier, Moisture Capacity Multiplier, Carbon Dioxide Capacity Multiplier, Generic Contaminant Capacity Multiplier
+Zone Volume Capacitance Multiplier,   1.000 ,   1.000,   1.000,   1.000
+! <Load Timesteps in Zone Design Calculation Averaging Window>, Value
+ Load Timesteps in Zone Design Calculation Averaging Window,    4
+! <Heating Sizing Factor Information>, Sizing Factor ID, Value
+ Heating Sizing Factor Information, Global,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 1,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 10,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 11,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 12,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 13,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 14,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 15,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 2,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 3,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 4,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 5,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 6,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 7,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 8,   1.2500    
+ Heating Sizing Factor Information, Zone THERMAL ZONE 9,   1.2500    
+! <Cooling Sizing Factor Information>, Sizing Factor ID, Value
+ Cooling Sizing Factor Information, Global,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 1,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 10,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 11,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 12,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 13,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 14,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 15,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 2,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 3,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 4,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 5,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 6,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 7,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 8,   1.1500    
+ Cooling Sizing Factor Information, Zone THERMAL ZONE 9,   1.1500    
+! <Zone Sizing Information>, Zone Name, Load Type, Calc Des Load {W}, User Des Load {W}, Calc Des Air Flow Rate {m3/s}, User Des Air Flow Rate {m3/s}, Design Day Name, Date/Time of Peak, Temperature at Peak {C}, Humidity Ratio at Peak {kgWater/kgDryAir}, Floor Area {m2}, # Occupants, Calc Outdoor Air Flow Rate {m3/s}
+ Zone Sizing Information, THERMAL ZONE 1, Cooling, 17738.08513, 20398.79789, 1.03126, 1.18595, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 13:30:00, 33.03750, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 1, Heating, 25036.77411, 31295.96764, 1.27407, 1.59259, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 10, Cooling, 15955.26755, 18348.55769, 0.92759, 1.06673, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 17:30:00, 31.30500, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 10, Heating, 12242.97439, 15303.71798, 0.62302, 0.77877, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 11, Cooling, 14311.73257, 16458.49246, 0.83210, 0.95691, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 18:15:00, 30.38625, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 11, Heating, 36082.79709, 45103.49636, 1.83619, 2.29524, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 12, Cooling, 11069.90686, 12730.39289, 0.64358, 0.74012, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 09:45:00, 28.86375, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 12, Heating, 12496.92605, 15621.15757, 0.63594, 0.79493, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 13, Cooling, 96983.06631, 111530.52626, 5.63860, 6.48439, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 16:45:00, 32.04000, 1.49611E-002, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 13, Heating, 17473.29825, 21841.62281, 0.88949, 2.10109, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 07:30:00, -20.00000, 6.49857E-004, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 14, Cooling, 20654.43544, 23752.60076, 1.20082, 1.38094, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 18:30:00, 29.99250, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 14, Heating, 36829.42422, 46036.78028, 1.87418, 2.34273, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 15, Cooling, 14173.61961, 16299.66255, 0.82401, 0.94762, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 10:30:00, 30.09750, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 15, Heating, 12104.68021, 15130.85027, 0.61598, 0.76997, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 2, Cooling, 25073.34044, 28834.34151, 1.45776, 1.67643, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 14:15:00, 33.30000, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 2, Heating, 32033.99636, 40042.49544, 1.62980, 2.03725, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 3, Cooling, 21741.22953, 25002.41396, 1.26406, 1.45367, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 18:30:00, 29.99250, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 3, Heating, 44462.97486, 55578.71857, 2.26215, 2.82769, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 4, Cooling, 24456.22326, 28124.65675, 1.42182, 1.63509, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 14:15:00, 33.30000, 1.49611E-002, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 4, Heating, 24279.68900, 30349.61125, 1.23555, 1.54443, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 291.00000, 15.66149, 0.14783
+ Zone Sizing Information, THERMAL ZONE 5, Cooling, 107583.96610, 123721.56101, 6.25522, 7.19351, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 19:00:00, 29.20500, 1.49611E-002, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 5, Heating, 117392.84793, 146741.05991, 5.97398, 7.46748, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 6, Cooling, 48442.30060, 55708.64569, 2.81632, 3.23877, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 15:45:00, 32.82750, 1.49611E-002, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 6, Heating, 38658.72304, 48323.40380, 1.96796, 2.45994, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 07:00:00, -20.00000, 6.49857E-004, 4136.00000, 222.59767, 2.10109
+ Zone Sizing Information, THERMAL ZONE 7, Cooling, 16325.82187, 18774.69515, 0.94917, 1.09155, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 17:30:00, 31.30500, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 7, Heating, 16001.79206, 20002.24008, 0.81412, 1.01766, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 8, Cooling, 12678.93328, 14580.77327, 0.73712, 0.84769, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 17:00:00, 31.83000, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 8, Heating, 12583.32847, 15729.16059, 0.64034, 0.80042, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 9, Cooling, 14303.74263, 16449.30402, 0.83161, 0.95636, CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB, 7/21 10:30:00, 30.09750, 1.49611E-002, 141.00000, 7.58856, 7.16280E-002
+ Zone Sizing Information, THERMAL ZONE 9, Heating, 15845.27470, 19806.59338, 0.80616, 1.00770, CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB, 1/21 06:00:00, -20.00000, 6.49857E-004, 141.00000, 7.58856, 7.16280E-002
+! <System Sizing Information>, System Name, Field Description, Value
+ System Sizing Information, PACKAGED ROOFTOP VAV WITH REHEAT, Calculated Cooling Design Air Flow Rate [m3/s], 30.85571
+ System Sizing Information, PACKAGED ROOFTOP VAV WITH REHEAT, User Cooling Design Air Flow Rate [m3/s], 30.85571
+ System Sizing Information, PACKAGED ROOFTOP VAV WITH REHEAT, Calculated Heating Design Air Flow Rate [m3/s], 29.83790
+ System Sizing Information, PACKAGED ROOFTOP VAV WITH REHEAT, User Heating Design Air Flow Rate [m3/s], 29.83790
+! <Component Sizing Information>, Component Type, Component Name, Input Field Description, Value
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 2, Design Size Maximum Air Flow Rate [m3/s], 1.59259
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 2, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.03200E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 2, Design Size Maximum Flow Fraction during Reheat [], 0.37129
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 2, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.17442E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 2, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 1.59259
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 3, Design Size Design Coil Load [W], 54058.98154
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 3, Design Size Maximum Water Flow Rate [m3/s], 1.17442E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 3, Design Size U-Factor Times Area Value [W/K], 1131.99674
+! <Water Heating Coil Capacity Information>,Component Type,Name,Nominal Total Capacity {W}
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 3,31717.74
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 9, Design Size Maximum Air Flow Rate [m3/s], 1.06673
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 9, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.26963E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 9, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 9, Design Size Maximum Reheat Water Flow Rate [m3/s], 5.74281E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 9, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 0.77877
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 10, Design Size Design Coil Load [W], 26434.34589
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 10, Design Size Maximum Water Flow Rate [m3/s], 5.74281E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 10, Design Size U-Factor Times Area Value [W/K], 553.53416
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 10,18493.41
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 13, Design Size Maximum Air Flow Rate [m3/s], 2.29524
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 13, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.36622E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 13, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 13, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.69283E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 13, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 2.29524
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 14, Design Size Design Coil Load [W], 77921.32656
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 14, Design Size Maximum Water Flow Rate [m3/s], 1.69283E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 14, Design Size U-Factor Times Area Value [W/K], 1631.75153
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 14,45714.74
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 14, Design Size Maximum Air Flow Rate [m3/s], 0.79493
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 14, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.03200E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 14, Design Size Maximum Flow Fraction during Reheat [], 0.36043
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 14, Design Size Maximum Reheat Water Flow Rate [m3/s], 5.86200E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 14, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 0.79493
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 15, Design Size Design Coil Load [W], 26982.97739
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 15, Design Size Maximum Water Flow Rate [m3/s], 5.86200E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 15, Design Size U-Factor Times Area Value [W/K], 565.02424
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 15,15831.59
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 7, Design Size Maximum Air Flow Rate [m3/s], 6.48439
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 7, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 1.56779E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 7, Design Size Maximum Flow Fraction during Reheat [], 1.00000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 7, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.07357E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 7, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 1.94532
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 8, Design Size Design Coil Load [W], 49416.66237
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 8, Design Size Maximum Water Flow Rate [m3/s], 1.07357E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 8, Design Size U-Factor Times Area Value [W/K], 964.00462
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 8,46820.74
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 6, Design Size Maximum Air Flow Rate [m3/s], 2.34273
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 6, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.41519E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 6, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 6, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.72787E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 6, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 2.34273
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 7, Design Size Design Coil Load [W], 79534.29014
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 7, Design Size Maximum Water Flow Rate [m3/s], 1.72787E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 7, Design Size U-Factor Times Area Value [W/K], 1665.53231
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 7,46660.85
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 4, Design Size Maximum Air Flow Rate [m3/s], 0.94762
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 4, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.03200E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 4, Design Size Maximum Flow Fraction during Reheat [], 0.30235
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 4, Design Size Maximum Reheat Water Flow Rate [m3/s], 5.67791E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 4, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 0.76997
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 5, Design Size Design Coil Load [W], 26135.59740
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 5, Design Size Maximum Water Flow Rate [m3/s], 5.67791E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 5, Design Size U-Factor Times Area Value [W/K], 547.27744
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 5,17302.23
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 12, Design Size Maximum Air Flow Rate [m3/s], 2.03725
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 12, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.10026E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 12, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 12, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.50208E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 12, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 2.03725
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 13, Design Size Design Coil Load [W], 69141.10110
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 13, Design Size Maximum Water Flow Rate [m3/s], 1.50208E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 13, Design Size U-Factor Times Area Value [W/K], 1447.74387
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 13,40570.25
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 1, Design Size Maximum Air Flow Rate [m3/s], 2.82769
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 1, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.91514E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 1, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 1, Design Size Maximum Reheat Water Flow Rate [m3/s], 2.08524E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 1, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 2.82769
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 2, Design Size Design Coil Load [W], 95984.28645
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 2, Design Size Maximum Water Flow Rate [m3/s], 2.08524E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 2, Design Size U-Factor Times Area Value [W/K], 2009.92206
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 2,56315.96
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 11, Design Size Maximum Air Flow Rate [m3/s], 1.63509
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 11, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.03200E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 11, Design Size Maximum Flow Fraction during Reheat [], 0.36164
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 11, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.13889E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 11, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 1.54443
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 12, Design Size Design Coil Load [W], 52423.41505
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 12, Design Size Maximum Water Flow Rate [m3/s], 1.13889E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 12, Design Size U-Factor Times Area Value [W/K], 1097.74284
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 12,31854.08
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 10, Design Size Maximum Air Flow Rate [m3/s], 7.46748
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 10, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 1.80548E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 10, Design Size Maximum Flow Fraction during Reheat [], 1.00000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 10, Design Size Maximum Reheat Water Flow Rate [m3/s], 5.50385E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 10, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 7.46748
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 11, Design Size Design Coil Load [W], 253344.09063
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 11, Design Size Maximum Water Flow Rate [m3/s], 5.50385E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 11, Design Size U-Factor Times Area Value [W/K], 5304.18160
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 11,148683.62
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 15, Design Size Maximum Air Flow Rate [m3/s], 3.23877
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 15, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 7.83068E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 15, Design Size Maximum Flow Fraction during Reheat [], 1.00000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 15, Design Size Maximum Reheat Water Flow Rate [m3/s], 1.81500E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 15, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 2.45994
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 16, Design Size Design Coil Load [W], 83544.96255
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 16, Design Size Maximum Water Flow Rate [m3/s], 1.81500E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 16, Design Size U-Factor Times Area Value [W/K], 1749.72220
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 16,57286.18
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 8, Design Size Maximum Air Flow Rate [m3/s], 1.09155
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 8, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.32244E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 8, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 8, Design Size Maximum Reheat Water Flow Rate [m3/s], 7.50330E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 8, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 1.01766
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 9, Design Size Design Coil Load [W], 34537.90739
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 9, Design Size Maximum Water Flow Rate [m3/s], 7.50330E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 9, Design Size U-Factor Times Area Value [W/K], 723.19006
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 9,21152.34
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 3, Design Size Maximum Air Flow Rate [m3/s], 0.84769
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 3, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.03200E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 3, Design Size Maximum Flow Fraction during Reheat [], 0.33799
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 3, Design Size Maximum Reheat Water Flow Rate [m3/s], 5.90255E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 3, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 0.80042
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 4, Design Size Design Coil Load [W], 27169.62788
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 4, Design Size Maximum Water Flow Rate [m3/s], 5.90255E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 4, Design Size U-Factor Times Area Value [W/K], 568.93328
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 4,16512.21
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 5, Design Size Maximum Air Flow Rate [m3/s], 1.00770
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 5, Design Size Maximum Flow per Zone Floor Area during Reheat [m3/s-m2], 2.14405E-003
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 5, Design Size Maximum Flow Fraction during Reheat [], 0.30000
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 5, Design Size Maximum Reheat Water Flow Rate [m3/s], 7.42986E-004
+ Component Sizing Information, AirTerminal:SingleDuct:VAV:Reheat, AIR TERMINAL SINGLE DUCT VAV REHEAT 5, Design Size Reheat Coil Sizing Air Volume Flow Rate [m3/s], 1.00770
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 6, Design Size Design Coil Load [W], 34199.87310
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 6, Design Size Maximum Water Flow Rate [m3/s], 7.42986E-004
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 6, Design Size U-Factor Times Area Value [W/K], 716.11064
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 6,20067.61
+ Component Sizing Information, Branch, BRANCH {4A24A15D-E5F4-404F-BB1E-02EC176DCC64}, Maximum Flow Rate [m3/s], 30.85571
+ Component Sizing Information, AirLoopHVAC, PACKAGED ROOFTOP VAV WITH REHEAT, Design Supply Air Flow Rate [m3/s], 30.85571
+!<Controller:MechanicalVentilation>,Name,Availability Schedule Name,Demand Controlled Ventilation {Yes/No},System Outdoor Air Method,Zone Maximum Outdoor Air Fraction,Number of Zones,Zone Name,DSOA Name,DSZAD Name
+ Controller:MechanicalVentilation,CONTROLLER MECHANICAL VENTILATION 1,ALWAYS ON DISCRETE,No,ZoneSum,1.00,15,THERMAL ZONE 1,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 1 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 10,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 10 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 11,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 11 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 12,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 12 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 13,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 13 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 14,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 14 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 15,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 15 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 2,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 2 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 3,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 3 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 4,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 4 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 5,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 5 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 6,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 6 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 7,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 7 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 8,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 8 DESIGN SPEC ZONE AIR DIST,THERMAL ZONE 9,ASHRAE_90.1-2004 CLIMATEZONE 1-8 SMALLOFFICE WHOLEBUILDING VENTILATION,THERMAL ZONE 9 DESIGN SPEC ZONE AIR DIST
+ Component Sizing Information, Controller:OutdoorAir, CONTROLLER OUTDOOR AIR 1, Maximum Outdoor Air Flow Rate [m3/s], 30.85571
+ Component Sizing Information, Controller:OutdoorAir, CONTROLLER OUTDOOR AIR 1, Minimum Outdoor Air Flow Rate [m3/s], 7.62000
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated High Speed Air Flow Rate [m3/s], 30.85571
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated High Speed Total Cooling Capacity (gross) [W], 766220.70048
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated High Speed Sensible Heat Ratio, 0.67608
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated Low Speed Air Flow Rate [m3/s], 10.28421
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated Low Speed Total Cooling Capacity (gross) [W], 255381.35947
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, Design Size Rated Low Speed Sensible Heat Ratio, 0.67608
+ Component Sizing Information, Coil:Cooling:DX:TwoSpeed, COIL COOLING DX TWO SPEED 1, User-Specified Rated Low Speed Sensible Heat Ratio, 0.69000
+! <VAV DX Cooling Coil Standard Rating Information>, DX Coil Type, DX Coil Name, Fan Type, Fan Name, Standard Net Cooling Capacity {W}, Standard Net Cooling Capacity {Btu/h}, IEER {Btu/W-h}, COP 100% Capacity {W/W}, COP 75% Capacity {W/W}, COP 50% Capacity {W/W}, COP 25% Capacity {W/W}, EER 100% Capacity {Btu/W-h}, EER 75% Capacity {Btu/W-h}, EER 50% Capacity {Btu/W-h}, EER 25% Capacity {Btu/W-h}, Supply Air Flow 100% {kg/s}, Supply Air Flow 75% {kg/s},Supply Air Flow 50% {kg/s},Supply Air Flow 25% {kg/s}
+ VAV DX Cooling Coil Standard Rating Information, Coil:Cooling:DX:TwoSpeed,COIL COOLING DX TWO SPEED 1,N/A,N/A,743657.57,2537464.95,18.51,4.59,5.15,5.75,6.28,15.66,17.58,19.62,21.41,35.6801,28.4057,19.2852,8.3040,
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 1, Design Size Design Coil Load [W], 367341.85076
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 1, Design Size Maximum Water Flow Rate [m3/s], 7.98043E-003
+ Component Sizing Information, Coil:Heating:Water, COIL HEATING WATER 1, Design Size U-Factor Times Area Value [W/K], 4724.81052
+Water Heating Coil Capacity Information,Coil:Heating:Water,COIL HEATING WATER 1,236632.36
+ Component Sizing Information, Fan:VariableVolume, FAN VARIABLE VOLUME 1, Design Size Maximum Flow Rate [m3/s], 30.85571
+ Component Sizing Information, Controller:WaterCoil, CONTROLLER WATER COIL 1, Maximum Actuated Flow [m3/s], 7.98043E-003
+ Component Sizing Information, Controller:WaterCoil, CONTROLLER WATER COIL 1, Controller Convergence Tolerance, 5.96697E-005
+ Component Sizing Information, Boiler:HotWater, BOILER HOT WATER 1, Nominal Capacity [W], 1363428.73345
+ Component Sizing Information, Boiler:HotWater, BOILER HOT WATER 1, Design Water Flow Rate [m3/s], 2.95060E-002
+ Component Sizing Information, PlantLoop, HOT WATER LOOP, Maximum Loop Flow Rate [m3/s], 2.95060E-002
+ Component Sizing Information, PlantLoop, HOT WATER LOOP, Plant Loop Volume [m3], 33.19428
+ Component Sizing Information, PlantLoop, HOT WATER LOOP2, Maximum Loop Flow Rate [m3/s], 2.00000E-006
+ Component Sizing Information, PlantLoop, HOT WATER LOOP2, Plant Loop Volume [m3], 2.25000E-003
+ Component Sizing Information, WaterHeater:Mixed, WATER HEATER MIXED 1, Use Side Design Flow Rate [m3/s], 2.00000E-006
+Water Heater Information,WaterHeater:Mixed,WATER HEATER MIXED 1,0.7570,845000.0,0.919,0.6006
+ Component Sizing Information, Pump:VariableSpeed, PUMP VARIABLE SPEED 1, Rated Flow Rate [m3/s], 2.95060E-002
+ Component Sizing Information, Pump:VariableSpeed, PUMP VARIABLE SPEED 1, Rated Power Consumption [W], 7538.41101
+ Component Sizing Information, Pump:VariableSpeed, PUMP VARIABLE SPEED 2, Rated Flow Rate [m3/s], 2.00000E-006
+ Component Sizing Information, Pump:VariableSpeed, PUMP VARIABLE SPEED 2, Rated Power Consumption [W], 0.51097
+! <Environment>,Environment Name,Environment Type, Start Date, End Date, Start DayOfWeek, Duration {#days}, Source:Start DayOfWeek,  Use Daylight Saving, Use Holidays, Apply Weekend Holiday Rule,  Use Rain Values, Use Snow Values
+! <Environment:Special Days>, Special Day Name, Special Day Type, Source, Start Date, Duration {#days}
+! <Environment:Daylight Saving>, Daylight Saving Indicator, Source, Start Date, End Date
+! <Environment:WarmupDays>, NumberofWarmupDays
+Environment,CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+! <Environment:Design Day Data>, Max Dry-Bulb Temp {C}, Temp Range {dC}, Temp Range Ind Type, Hum Ind Value at Max Temp, Hum Ind Type,Pressure {Pa}, Wind Direction {deg CW from N}, Wind Speed {m/s}, Clearness, Rain, Snow
+! <Environment:Design_Day_Misc>,DayOfYear,ASHRAE A Coeff,ASHRAE B Coeff,ASHRAE C Coeff,Solar Constant-Annual Variation,Eq of Time {minutes}, Solar Declination Angle {deg}, Solar Model
+Environment:Design Day Data,33.30,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+! <Warmup Convergence Information>,Zone Name,Environment Type/Name,Average Warmup Temperature Difference {deltaC},Std Dev Warmup Temperature Difference {deltaC},Max Temperature Pass/Fail Convergence,Min Temperature Pass/Fail Convergence,Average Warmup Load Difference {W},Std Dev Warmup Load Difference {W},Heating Load Pass/Fail Convergence,Cooling Load Pass/Fail Convergence
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,8.3660061077E-002,0.1209642271,Pass,Pass,2.6313796216E-002,2.7671687918E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,6.7493612066E-002,6.6782188062E-002,Pass,Pass,2.4611870359E-002,2.8388352355E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,0.1060604403,0.1570745279,Pass,Pass,2.5930066595E-002,3.4139658671E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,8.3669279327E-002,0.1784945043,Pass,Pass,3.1286136051E-002,3.6924222375E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,2.1106498005E-004,4.0386398770E-004,Pass,Pass,3.0954047396E-003,1.2189571198E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,8.4279696781E-002,0.1102056533,Pass,Pass,2.0558647495E-002,2.3865023935E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,6.9141736179E-002,0.1317403327,Pass,Pass,2.3627305722E-002,2.4246946105E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,6.3252806453E-002,8.2117794101E-002,Pass,Pass,1.9872814220E-002,1.8958105002E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,8.4377926337E-002,0.1018814505,Pass,Pass,1.9829936289E-002,2.1355855716E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,5.2822438049E-002,7.5498353410E-002,Pass,Pass,2.2916692807E-002,2.1013576482E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,2.4203911263E-004,5.5279173398E-004,Pass,Pass,5.2389066550E-003,1.7176422754E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,1.5999885383E-004,3.0887484721E-004,Pass,Pass,1.0271321414E-002,3.3212316661E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,6.3924090782E-002,5.9646079915E-002,Pass,Pass,2.4445578100E-002,2.7984142171E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,8.3599859472E-002,0.1216145977,Pass,Pass,3.4582641859E-002,4.5838644786E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DB=>MWB,6.6430782489E-002,0.1283025451,Pass,Pass,2.2456273144E-002,2.3481603817E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,28.90,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3759420845E-002,0.1303402732,Pass,Pass,3.5004165605E-002,4.0347776802E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3463433923E-002,9.6091210021E-002,Pass,Pass,2.6259918671E-002,2.9698042700E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,9.5040891823E-002,0.1443307755,Pass,Pass,4.3549902263E-002,5.7270492097E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3813653500E-002,0.1796253035,Pass,Pass,4.0163371656E-002,5.2338153638E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,2.0744711023E-004,4.0231588348E-004,Pass,Pass,3.3170598713E-003,1.2558947824E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3835380450E-002,0.1106896259,Pass,Pass,2.6010873420E-002,2.8795026654E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3490899447E-002,0.1485274207,Pass,Pass,2.6078528037E-002,2.4999037864E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3466886256E-002,9.9980749012E-002,Pass,Pass,2.1744656952E-002,2.1117873184E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.8230738570E-002,0.1029022560,Pass,Pass,2.5781066457E-002,3.1686139547E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,7.6402406858E-002,9.5842848486E-002,Pass,Pass,2.2602825867E-002,2.1213251013E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,3.3024676359E-004,6.4473858167E-004,Pass,Pass,6.6007861922E-003,2.6666297472E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,1.6457323667E-004,3.2306588834E-004,Pass,Pass,1.0573950124E-002,3.4619143558E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3476141997E-002,9.6507033507E-002,Pass,Pass,2.6774290741E-002,3.0522642849E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3823712803E-002,0.1516763371,Pass,Pass,4.2681753853E-002,4.8087626205E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS DP=>MDB,8.3477521963E-002,0.1496071876,Pass,Pass,2.5580097730E-002,2.4573619718E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,31.40,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.6283856580E-002,0.1430368408,Pass,Pass,3.3546311472E-002,3.0096994508E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,0.1002537370,8.0871269992E-002,Pass,Pass,2.7332803365E-002,3.0773708915E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,9.8781520818E-002,0.1791400208,Pass,Pass,3.7181406504E-002,4.1430944859E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.5740815964E-002,0.1903650298,Pass,Pass,3.9377437554E-002,4.0010318056E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,3.4505746720E-002,6.9237986445E-002,Pass,Pass,9.7180860721E-003,1.6569037286E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.8051395144E-002,0.1070992162,Pass,Pass,2.2811441335E-002,2.6069848165E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.0436978626E-002,0.1355334271,Pass,Pass,2.3576021286E-002,2.5378416387E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.1243798415E-002,8.8051182133E-002,Pass,Pass,1.9642047207E-002,1.7936502191E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.7979555103E-002,0.1081197773,Pass,Pass,2.3695252836E-002,2.3430351481E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.7012947835E-002,8.8619255850E-002,Pass,Pass,2.1292876658E-002,2.0723637798E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,3.2291445444E-002,6.4555530967E-002,Pass,Pass,1.0365393429E-002,2.1756592483E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,1.9013399517E-002,3.7461834684E-002,Pass,Pass,1.8465377782E-002,3.4754652846E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,9.9247736904E-002,8.0102420428E-002,Pass,Pass,2.7080314848E-002,3.0831989818E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,0.1142764360,0.1298560128,Pass,Pass,3.8523984325E-002,5.1720736676E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS ENTH=>MDB,8.0093886611E-002,0.1362491674,Pass,Pass,2.2437632126E-002,2.4111771750E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,31.20,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,8.3754547650E-002,0.1270781013,Pass,Pass,2.9335294426E-002,3.0598372589E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,7.7503347891E-002,8.4818620661E-002,Pass,Pass,2.4693067664E-002,2.8494770358E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,0.1050128257,0.1571344988,Pass,Pass,3.0767106015E-002,4.1475537256E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,8.3759621059E-002,0.1743032662,Pass,Pass,3.4739988469E-002,4.2308076190E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,2.1944657198E-004,4.1906487065E-004,Pass,Pass,3.2040446167E-003,1.2375594642E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,8.5142249994E-002,0.1093055543,Pass,Pass,2.2928848484E-002,2.5974024939E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,7.9656788701E-002,0.1396601704,Pass,Pass,2.3602946029E-002,2.4800431597E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,7.6277215429E-002,9.2201032553E-002,Pass,Pass,1.9693025203E-002,1.8754818073E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,8.4975291060E-002,0.1041672839,Pass,Pass,2.2448933784E-002,2.3984849306E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,6.3779280621E-002,8.5546928342E-002,Pass,Pass,2.2719663393E-002,2.1435512323E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,3.3927757675E-004,6.6947754818E-004,Pass,Pass,5.8762416894E-003,2.1509755325E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,1.6996924283E-004,3.2953325246E-004,Pass,Pass,1.0429512854E-002,3.3970331372E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,7.6473584562E-002,8.1356759865E-002,Pass,Pass,2.4573106032E-002,2.8622256200E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,8.3659563038E-002,0.1372720903,Pass,Pass,3.7711915711E-002,4.6973667237E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG .4% CONDNS WB=>MDB,7.9315865290E-002,0.1403709168,Pass,Pass,2.2445774202E-002,2.3405685978E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,31.60,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,8.3674591214E-002,0.1255764841,Pass,Pass,2.8677015659E-002,2.9579243625E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,7.5621809316E-002,8.2513997580E-002,Pass,Pass,2.4674474706E-002,2.8556686568E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,0.1061536258,0.1582716048,Pass,Pass,2.9322612244E-002,3.9780518155E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,8.3677676665E-002,0.1757868562,Pass,Pass,3.4181713176E-002,4.1743086671E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,2.2178420305E-004,4.2352991995E-004,Pass,Pass,3.1875889416E-003,1.2347376811E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,8.5120051496E-002,0.1099336045,Pass,Pass,2.2412546178E-002,2.5524832467E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,7.7789613025E-002,0.1395759570,Pass,Pass,2.3581094744E-002,2.5397189906E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,7.3897987182E-002,9.0411455256E-002,Pass,Pass,1.9738818845E-002,1.8379405483E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,8.4949016167E-002,0.1033621068,Pass,Pass,2.1922737744E-002,2.3277579103E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,6.1789252329E-002,8.3731396897E-002,Pass,Pass,2.2776424542E-002,2.0978720198E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,2.7077743321E-004,5.7714246847E-004,Pass,Pass,5.7404461070E-003,2.0657683700E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,1.7148866682E-004,3.3044390494E-004,Pass,Pass,1.0403140190E-002,3.3882003220E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,7.4097678657E-002,7.7587568749E-002,Pass,Pass,2.4524351468E-002,2.8715437534E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,8.3655765079E-002,0.1349381865,Pass,Pass,3.7141485527E-002,4.6621326824E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DB=>MWB,7.7006954474E-002,0.1394221444,Pass,Pass,2.2426793454E-002,2.3954992029E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,27.70,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3819083089E-002,0.1331849880,Pass,Pass,3.7920287189E-002,4.8602600936E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3480061965E-002,0.1002119658,Pass,Pass,2.7805798460E-002,3.2403223384E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.9570226566E-002,0.1376781198,Pass,Pass,5.9376719652E-002,7.4968225711E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3757190585E-002,0.1784857849,Pass,Pass,4.4022326972E-002,5.7118584367E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,2.0946089713E-004,3.9102100638E-004,Pass,Pass,3.3752436397E-003,1.2662766369E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.7755758296E-002,0.1077138352,Pass,Pass,2.7286468033E-002,3.2379497908E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3469410617E-002,0.1528814267,Pass,Pass,2.7643364757E-002,2.6172433162E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3555912237E-002,0.1046016503,Pass,Pass,2.3860355661E-002,2.7764809389E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.8852290952E-002,0.1021094780,Pass,Pass,2.8411601632E-002,3.9564348710E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.2948614703E-002,0.1013926532,Pass,Pass,2.2485141063E-002,2.1230717459E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,3.1326470872E-004,5.8526703795E-004,Pass,Pass,7.0920385647E-003,2.9667335747E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,1.6706596280E-004,3.1188346321E-004,Pass,Pass,1.0643810067E-002,3.5004182919E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3543227087E-002,0.1023151440,Pass,Pass,2.8858441473E-002,3.5254115086E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3834750119E-002,0.1553849903,Pass,Pass,4.6702942913E-002,5.2963147367E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS DP=>MDB,8.3521004788E-002,0.1558053045,Pass,Pass,2.7811566195E-002,2.6993744904E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,29.60,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3844347079E-002,0.1320979696,Pass,Pass,3.3851855677E-002,3.4675162361E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3486705842E-002,9.5383271590E-002,Pass,Pass,2.5334472178E-002,3.1178208127E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,0.1109733049,0.1503173710,Pass,Pass,4.0956531613E-002,4.9840091397E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3863106975E-002,0.1827762727,Pass,Pass,4.1757493963E-002,4.9475808853E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,2.5876653897E-004,3.8418657440E-004,Pass,Pass,3.2790987379E-003,1.2488142511E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3818782491E-002,0.1109531065,Pass,Pass,2.5090171572E-002,2.8383227363E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3563216917E-002,0.1481139803,Pass,Pass,2.5022986370E-002,2.7717204039E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3561861454E-002,9.7833797281E-002,Pass,Pass,2.0549026646E-002,1.8806875318E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.4418267654E-002,0.1063551043,Pass,Pass,2.6608204224E-002,2.8430116656E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,7.2589629611E-002,9.3276344363E-002,Pass,Pass,2.2672626026E-002,2.1068558105E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,3.8580983461E-004,6.1652042812E-004,Pass,Pass,6.3901706456E-003,2.5008817957E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,1.7467226538E-004,2.8093205052E-004,Pass,Pass,1.0589335651E-002,3.4380550381E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3522376308E-002,9.5916701234E-002,Pass,Pass,2.5571631847E-002,3.2267102747E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3895537162E-002,0.1478079020,Pass,Pass,4.0966257469E-002,4.9092904011E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS ENTH=>MDB,8.3515836811E-002,0.1474316916,Pass,Pass,2.4272543535E-002,2.3673225121E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,29.60,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3759219516E-002,0.1295047053,Pass,Pass,3.2524268976E-002,3.3926246345E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3448206662E-002,9.0223440298E-002,Pass,Pass,2.5287121997E-002,2.8885063737E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,9.7964989825E-002,0.1477126179,Pass,Pass,3.8500593843E-002,5.1254050060E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3803216424E-002,0.1775119419,Pass,Pass,3.9064872437E-002,5.0713193436E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,2.0601963724E-004,3.8644594537E-004,Pass,Pass,3.2831282500E-003,1.2494054491E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3684886705E-002,0.1112544280,Pass,Pass,2.4898386187E-002,2.8304953717E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3465258022E-002,0.1482580848,Pass,Pass,2.5061344329E-002,2.7613165388E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3458337447E-002,9.7876618850E-002,Pass,Pass,2.0535723252E-002,1.8782909612E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.7970101769E-002,0.1010495068,Pass,Pass,2.4322800059E-002,2.8819250399E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,7.2595613097E-002,9.3347225789E-002,Pass,Pass,2.2619857367E-002,2.1131760090E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,3.2202610105E-004,6.0805383855E-004,Pass,Pass,6.3636752216E-003,2.5024125795E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,1.6410506279E-004,3.0657192301E-004,Pass,Pass,1.0528071564E-002,3.4403731107E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3424766933E-002,9.0359215635E-002,Pass,Pass,2.5534525925E-002,2.9178291405E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3876986491E-002,0.1440999470,Pass,Pass,4.0885467390E-002,4.7421314486E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 1% CONDNS WB=>MDB,8.3472244756E-002,0.1475015920,Pass,Pass,2.4321648855E-002,2.3666626848E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,30.10,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3719584321E-002,0.1293518563,Pass,Pass,3.1511454347E-002,3.3121218029E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3045056380E-002,8.8349080442E-002,Pass,Pass,2.4720877266E-002,2.9034913571E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,9.9977862850E-002,0.1508598024,Pass,Pass,3.5830596853E-002,4.8690381901E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3704071865E-002,0.1764849041,Pass,Pass,3.7298615114E-002,4.7933609037E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,2.1934481466E-004,4.0495737296E-004,Pass,Pass,3.2623865765E-003,1.2471112141E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.5347924847E-002,0.1116487334,Pass,Pass,2.4357385036E-002,2.8059018394E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3409420511E-002,0.1466320034,Pass,Pass,2.4337902314E-002,2.4013001398E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3410580164E-002,9.7368937285E-002,Pass,Pass,1.9681990910E-002,1.8166464583E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.9060435565E-002,0.1007594700,Pass,Pass,2.3509297179E-002,2.7455940971E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,6.9984849857E-002,9.0577827944E-002,Pass,Pass,2.2678574405E-002,2.1190499759E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,2.7148056528E-004,5.5919014529E-004,Pass,Pass,6.1938710728E-003,2.3907373320E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,1.7068217314E-004,3.1538228559E-004,Pass,Pass,1.0502569815E-002,3.4339513686E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3416995678E-002,8.9149497671E-002,Pass,Pass,2.4675985640E-002,2.9945497026E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3752776959E-002,0.1412966302,Pass,Pass,3.9914454124E-002,4.7256232430E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DB=>MWB,8.3413076317E-002,0.1468492449,Pass,Pass,2.3372039754E-002,2.3377725029E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,26.50,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3843242882E-002,0.1342618501,Pass,Pass,4.2559354812E-002,5.2900622319E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3526602770E-002,0.1064667348,Pass,Pass,2.9411906479E-002,3.4583579724E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,7.8588408611E-002,0.1339923835,Pass,Pass,0.1519027196,0.3429344746,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3833071992E-002,0.1738262797,Pass,Pass,4.9039844775E-002,6.0574736658E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,2.0707119431E-004,3.7868074060E-004,Pass,Pass,3.4286928665E-003,1.2776509815E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.9848249577E-002,0.1063942881,Pass,Pass,2.9571582611E-002,3.6399096121E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3574444769E-002,0.1559442087,Pass,Pass,2.9532117706E-002,3.0013911941E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3702344470E-002,0.1104484051,Pass,Pass,2.6081998882E-002,3.2347770069E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.2649082111E-002,9.6986052037E-002,Pass,Pass,3.3959203607E-002,5.1420205639E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3479657665E-002,0.1032594395,Pass,Pass,2.4411608376E-002,2.2463343349E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,2.9548468724E-004,5.5914393212E-004,Pass,Pass,7.6863522685E-003,3.2815112919E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,1.6276589798E-004,3.0637242307E-004,Pass,Pass,1.0711125642E-002,3.5410989900E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3679126437E-002,0.1102631341,Pass,Pass,3.1208316216E-002,3.8868165757E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3802749906E-002,0.1582589974,Pass,Pass,5.0823978974E-002,5.4896451821E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS DP=>MDB,8.3668557740E-002,0.1578009910,Pass,Pass,3.0340291102E-002,2.9338899276E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,28.20,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3902420350E-002,0.1313646707,Pass,Pass,3.7398757374E-002,4.6579336724E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3488772774E-002,9.8967196356E-002,Pass,Pass,2.7146083886E-002,3.1311033906E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,9.2405353589E-002,0.1412368274,Pass,Pass,5.0594192454E-002,6.6047795508E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3827404410E-002,0.1794680671,Pass,Pass,4.2262901481E-002,5.4562389503E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,2.0793732990E-004,4.0647957710E-004,Pass,Pass,3.3528784397E-003,1.2615561352E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.4931255926E-002,0.1097191646,Pass,Pass,2.7112792065E-002,3.0622805129E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3569659154E-002,0.1495433642,Pass,Pass,2.6949386830E-002,2.4883736864E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3572513116E-002,0.1021371729,Pass,Pass,2.2947928653E-002,2.4771660740E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.9116821180E-002,0.1033534016,Pass,Pass,2.7161418839E-002,3.6162272811E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.0196896417E-002,9.9112376925E-002,Pass,Pass,2.2589056984E-002,2.0768141711E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,3.5192421001E-004,6.7790758717E-004,Pass,Pass,6.8757066272E-003,2.8357817432E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,1.6523766995E-004,3.2658571282E-004,Pass,Pass,1.0622515192E-002,3.4831813378E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3583026215E-002,9.9947738955E-002,Pass,Pass,2.7971967926E-002,3.3270050308E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3897880669E-002,0.1545446839,Pass,Pass,4.4780416000E-002,5.0242461487E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS ENTH=>MDB,8.3599337174E-002,0.1521417325,Pass,Pass,2.6813257657E-002,2.6604715856E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,SizingPeriod:DesignDay,07/21,07/21,SummerDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,28.10,10.50,DefaultMultipliers,98934,230,5.2,0.00,No ,No 
+Environment:Design_Day_Misc,202,1084.4,0.2082,0.1365,1.0,-6.23,20.6,ASHRAETau
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3872234281E-002,0.1314261147,Pass,Pass,3.7253614246E-002,4.6622683829E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3484172832E-002,9.9434364435E-002,Pass,Pass,2.7234365575E-002,3.1567973871E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,9.1456463095E-002,0.1399329157,Pass,Pass,5.1918947025E-002,6.7280505879E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3787362176E-002,0.1792966733,Pass,Pass,4.2674810638E-002,5.5504109848E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,2.0703548977E-004,4.0405596459E-004,Pass,Pass,3.3564796592E-003,1.2628342372E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.5775008994E-002,0.1088508159,Pass,Pass,2.6961136284E-002,3.0848645177E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3520590662E-002,0.1497116011,Pass,Pass,2.7120291464E-002,2.4857578839E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3499402300E-002,0.1025233081,Pass,Pass,2.3111280086E-002,2.5608449739E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.9139539150E-002,0.1026459127,Pass,Pass,2.7375073776E-002,3.6814826173E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.0779605641E-002,9.9494070585E-002,Pass,Pass,2.2534024344E-002,2.0674894971E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,3.0442337790E-004,5.9099596157E-004,Pass,Pass,6.9123443726E-003,2.8628307482E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,1.6573101463E-004,3.2575902023E-004,Pass,Pass,1.0618885377E-002,3.4873069945E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3494310078E-002,0.1006942282,Pass,Pass,2.8103164739E-002,3.3655759005E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3807678088E-002,0.1550551111,Pass,Pass,4.5253351533E-002,5.0343165734E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN CLG 2% CONDNS WB=>MDB,8.3545746100E-002,0.1524564362,Pass,Pass,2.7060039539E-002,2.6502127957E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-16.60,0.00,DefaultMultipliers,98934,270,4.9,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.4036869245E-002,0.1104967141,Pass,Pass,3.2037106561E-003,1.1372520533E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,1.7241517607E-002,5.0581633018E-002,Pass,Pass,6.2274434085E-003,2.5680361289E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.6653501544E-002,0.1207134466,Pass,Pass,2.3089470181E-003,7.4794425200E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.3779444906E-002,0.1113051898,Pass,Pass,3.2955673942E-003,1.1430271571E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,8.7761970140E-003,1.7916039487E-002,Pass,Pass,5.7080318007E-002,0.1760367482,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,4.1567465533E-002,0.1294329559,Pass,Pass,2.2667940463E-003,6.7876940180E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,1.7272791716E-002,5.1347351508E-002,Pass,Pass,6.2640227792E-003,2.6111080330E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.9117106890E-002,0.1455649350,Pass,Pass,6.1890938805E-003,2.5140115239E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,4.0926765761E-002,0.1480741804,Pass,Pass,3.6957018568E-003,1.5358950004E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.1781341287E-002,0.1035925980,Pass,Pass,3.2886939813E-003,1.2426887233E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.6951872024E-002,0.1105357503,Pass,Pass,9.4821095423E-003,3.3860980093E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,1.0371390154E-002,1.7631402684E-002,Pass,Pass,3.1954954925E-003,1.4282405972E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,2.9072494606E-002,0.1082978190,Pass,Pass,6.2736121472E-003,2.9913702296E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,2.6060004284E-002,9.5603491983E-002,Pass,Pass,3.9899161382E-003,1.6957102988E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99% CONDNS DB,3.8931340368E-002,0.1456823018,Pass,Pass,6.2269912796E-003,2.5483633737E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-20.00,0.00,DefaultMultipliers,98934,270,4.9,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.2500209895E-002,0.1295475757,Pass,Pass,3.2208209010E-003,1.0360381464E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,1.7015745420E-002,4.6957373110E-002,Pass,Pass,7.7599434206E-003,2.7951228326E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.0412905858E-002,0.1313471044,Pass,Pass,2.2755140600E-003,7.6796594571E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.1784189252E-002,0.1304426144,Pass,Pass,3.0330711298E-003,1.0664099940E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.8450630959E-003,8.7719812671E-003,Pass,Pass,2.0192260849E-002,5.7901104347E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.0809539552E-002,0.1287483736,Pass,Pass,2.1959570217E-003,7.1672353449E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,2.2921058469E-002,8.5346548325E-002,Pass,Pass,4.9406443205E-003,2.0187858623E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,5.1476646955E-002,0.1739879339,Pass,Pass,5.4139251989E-003,2.0533871586E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,5.1612843902E-002,0.1770389949,Pass,Pass,3.5912621071E-003,1.4196654206E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.2388969502E-002,0.1254485428,Pass,Pass,3.0774589399E-003,1.0007646884E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.9310239800E-002,0.1346288101,Pass,Pass,7.7996687748E-003,2.7288287055E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,7.5702103847E-003,9.6497236004E-003,Pass,Pass,2.2930303526E-003,9.4546218438E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,4.0854339294E-002,0.1545463991,Pass,Pass,5.5966175270E-003,2.4043430493E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,3.3926109750E-002,0.1167393298,Pass,Pass,3.8343194594E-003,1.2649802600E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG 99.6% CONDNS DB,5.0675518003E-002,0.1735978565,Pass,Pass,5.4557315274E-003,2.0722591333E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-3.20,0.00,DefaultMultipliers,98934,270,11.4,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  7
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,1.7273068894E-004,3.3045953441E-004,Pass,Pass,4.4370854630E-003,3.0210807230E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,1.5993112600E-003,2.9131069278E-003,Pass,Pass,5.3243103246E-003,3.1952684765E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,2.8961171514E-004,7.1925194243E-004,Pass,Pass,3.0532586372E-003,2.0561345603E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,5.4056836408E-003,2.3359048824E-003,Pass,Pass,8.4382166857E-003,3.0130679854E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,1.2482023247E-003,4.1226926664E-003,Pass,Pass,3.3534796072E-002,0.1362250223,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,2.3886868541E-004,6.7528082786E-004,Pass,Pass,2.9967961399E-003,2.0186178620E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,3.0427411629E-004,9.8713443368E-004,Pass,Pass,4.7194285413E-003,3.1985193546E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,2.2540447321E-004,6.4544144645E-004,Pass,Pass,6.9097926050E-003,4.7550026913E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,4.6026128620E-004,1.2568221179E-003,Pass,Pass,4.7041796737E-003,3.1942336686E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,4.4479645518E-003,2.8879624852E-003,Pass,Pass,7.8289709188E-003,3.1378585268E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,1.7917160188E-003,1.3775318078E-003,Pass,Pass,1.5391643777E-002,8.8977467624E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,1.6440376272E-003,1.1340766793E-003,Pass,Pass,4.3051895126E-003,2.7151052303E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,2.1391870942E-003,2.0381859829E-003,Pass,Pass,8.4031269555E-003,4.6673629438E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,5.6574096474E-004,1.2392099400E-003,Pass,Pass,4.5648261532E-003,3.0203753551E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99% CONDNS WS=>MCDB,2.3383297419E-004,5.9159700619E-004,Pass,Pass,6.9418722676E-003,4.7780272576E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-3.50,0.00,DefaultMultipliers,98934,270,12.4,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  7
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,5.2529643922E-004,1.1789107496E-003,Pass,Pass,4.5987372565E-003,3.0312668852E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,3.0064060845E-004,7.0368151625E-004,Pass,Pass,4.6906255131E-003,3.1848650154E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,3.1659064452E-004,8.6427634630E-004,Pass,Pass,3.0270754336E-003,2.0293839652E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,6.1504547355E-003,1.3680156290E-003,Pass,Pass,8.9130145019E-003,3.0705269360E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,1.2706012308E-003,4.2041010960E-003,Pass,Pass,3.6429209412E-002,0.1432365670,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,3.8086903608E-003,4.0516226951E-003,Pass,Pass,4.7199932580E-003,2.0014896225E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,4.0187245891E-003,2.8250824794E-003,Pass,Pass,7.6057044498E-003,3.1530858625E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,2.3480338477E-003,3.3042638363E-003,Pass,Pass,7.8762560912E-003,4.7253292085E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,5.9349953953E-003,4.2190528054E-003,Pass,Pass,7.3928140455E-003,3.1771826019E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,2.1301357591E-004,5.3814556886E-004,Pass,Pass,4.7118858000E-003,3.1891367915E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,1.9248239312E-003,1.7463805309E-003,Pass,Pass,1.5748780695E-002,9.0075535649E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,2.2537665790E-003,1.9105824812E-004,Pass,Pass,8.4498108972E-003,3.1715981686E-004,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,2.9675922395E-003,3.7460710314E-003,Pass,Pass,8.6773677020E-003,4.6396978607E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,3.2192626335E-003,2.9616269648E-003,Pass,Pass,6.9650332816E-003,2.9892134084E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HTG WIND 99.6% CONDNS WS=>MCDB,2.3903689402E-004,7.4345284709E-004,Pass,Pass,6.9707979385E-003,4.7862192975E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-15.70,0.00,DefaultMultipliers,98934,270,4.9,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.1641234851E-002,0.1103988805,Pass,Pass,3.8072495132E-003,1.1210083364E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,1.7113490799E-002,4.7640294972E-002,Pass,Pass,7.0976749211E-003,2.6493036817E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.3999595175E-002,0.1162774996,Pass,Pass,2.6266553972E-003,7.3823039908E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.1384560957E-002,0.1109676547,Pass,Pass,3.5623221976E-003,1.1470627825E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,9.0145136202E-003,1.8686836556E-002,Pass,Pass,9.1124235730E-002,0.2537895809,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.8180889039E-002,0.1237854034,Pass,Pass,2.3014789760E-003,5.9560905141E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,1.6519918901E-002,4.8006560522E-002,Pass,Pass,6.9190226415E-003,2.7193861843E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.5560790453E-002,0.1338873440,Pass,Pass,7.3073396262E-003,3.0250438333E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.7405925165E-002,0.1398708214,Pass,Pass,4.6049294858E-003,1.8583696976E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,2.8852385938E-002,0.1016631984,Pass,Pass,3.6500428040E-003,1.2672799014E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.4016864815E-002,0.1184539368,Pass,Pass,1.2247957184E-002,3.8382952746E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,1.0216600224E-002,1.8203640551E-002,Pass,Pass,3.3242600760E-003,1.4628048464E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,2.5043731817E-002,9.1775901458E-002,Pass,Pass,7.0819805916E-003,3.3250759262E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,2.3946794495E-002,8.7132800436E-002,Pass,Pass,4.8971349782E-003,2.0514568436E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99% CONDNS DP=>MCDB,3.5751940649E-002,0.1341767233,Pass,Pass,7.1536977559E-003,2.9662959642E-002,Pass,Pass
+Environment,CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,SizingPeriod:DesignDay,01/21,01/21,WinterDesignDay,1,N/A,N/A,N/A,N/A,N/A,N/A
+Environment:Daylight Saving,No,SizingPeriod:DesignDay
+Environment:Design Day Data,-19.20,0.00,DefaultMultipliers,98934,270,4.9,0.00,No ,No 
+Environment:Design_Day_Misc, 21,1229.0,0.1415,5.7310E-002,1.0,-11.15,-20.1,ASHRAEClearSky
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.0968440506E-002,0.1261434099,Pass,Pass,3.3991098255E-003,1.0396443005E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,1.6560564434E-002,4.7909480156E-002,Pass,Pass,6.4011864965E-003,2.7699767348E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.1623166660E-002,0.1338278052,Pass,Pass,2.3859560770E-003,7.5903804922E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.0212393709E-002,0.1269209014,Pass,Pass,3.1240614400E-003,1.0707358839E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,5.4505314944E-003,1.0842755483E-002,Pass,Pass,2.4562284133E-002,7.0105541028E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.1974683977E-002,0.1313999034,Pass,Pass,2.2968408410E-003,7.1355303066E-003,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,2.1225056921E-002,7.7086146768E-002,Pass,Pass,5.0761084859E-003,2.0768010426E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.8742679813E-002,0.1677694380,Pass,Pass,5.3264765334E-003,2.1027621867E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.9405149653E-002,0.1716325936,Pass,Pass,3.7694895025E-003,1.4463214779E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.0304450359E-002,0.1212723056,Pass,Pass,3.5134833172E-003,1.0750339511E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.6562452231E-002,0.1310772031,Pass,Pass,8.5694738518E-003,2.9296958377E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,8.2191249809E-003,1.1237127369E-002,Pass,Pass,2.6072879680E-003,1.0459953194E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,3.7422127228E-002,0.1482431845,Pass,Pass,6.2385023379E-003,2.6132409467E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,3.2569779045E-002,0.1127966757,Pass,Pass,3.5320740110E-003,1.3179778124E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,SizingPeriod: CHICAGO OHARE INTL AP ANN HUM_N 99.6% CONDNS DP=>MCDB,4.8294015102E-002,0.1678602557,Pass,Pass,5.4235728742E-003,2.0968758516E-002,Pass,Pass
+Environment,RUN PERIOD 1,WeatherFileRunPeriod,01/01,12/31,Thursday,365,Use RunPeriod Specified Day,No ,No ,No ,Yes,Yes
+Environment:Daylight Saving,No,RunPeriod Object
+Environment:WarmupDays,  6
+ Warmup Convergence Information,THERMAL ZONE 1,RunPeriod: RUN PERIOD 1,8.5259397217E-002,0.2068196336,Pass,Pass,0.3009709716,1.0934498001,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 10,RunPeriod: RUN PERIOD 1,1.6521675200E-002,5.0390464049E-002,Pass,Pass,0.2196873714,0.3991260874,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 11,RunPeriod: RUN PERIOD 1,3.1406505197E-003,2.7217864739E-003,Pass,Pass,4.3431298651E-002,7.1165681771E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 12,RunPeriod: RUN PERIOD 1,2.1358666742E-003,1.7745009681E-003,Pass,Pass,0.2379073647,0.5371694021,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 13,RunPeriod: RUN PERIOD 1,8.3532875381E-002,0.1907430955,Pass,Pass,3.0172111677E-002,7.8660886166E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 14,RunPeriod: RUN PERIOD 1,2.5439154075E-003,2.3320028658E-003,Pass,Pass,4.9205886893E-002,8.1144136766E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 15,RunPeriod: RUN PERIOD 1,1.9995167488E-003,1.5920698532E-003,Pass,Pass,0.1452847226,0.4700639699,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 2,RunPeriod: RUN PERIOD 1,8.4870934475E-002,0.1727692823,Pass,Pass,0.2139325858,0.5536886135,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 3,RunPeriod: RUN PERIOD 1,3.2366493994E-003,2.9896973736E-003,Pass,Pass,4.0249062583E-002,7.0560971382E-002,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 4,RunPeriod: RUN PERIOD 1,8.4786703850E-002,0.1812314009,Pass,Pass,0.5844344234,4.0418569493,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 5,RunPeriod: RUN PERIOD 1,7.9914876322E-002,0.1607477340,Pass,Pass,0.2078647799,1.5601957906,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 6,RunPeriod: RUN PERIOD 1,8.8977173787E-002,0.1845979909,Pass,Pass,0.1784572609,0.6687381804,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 7,RunPeriod: RUN PERIOD 1,2.5989558013E-003,3.4692512250E-003,Pass,Pass,0.3440097382,1.7430990440,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 8,RunPeriod: RUN PERIOD 1,3.1788409155E-002,9.0965717344E-002,Pass,Pass,0.1190049093,0.2492217824,Pass,Pass
+ Warmup Convergence Information,THERMAL ZONE 9,RunPeriod: RUN PERIOD 1,2.2967200310E-003,2.1872388205E-003,Pass,Pass,0.2567013970,0.8449676284,Pass,Pass
+! <Program Control Information:Threads/Parallel Sims>, Threading Supported,Maximum Number of Threads, Env Set Threads (OMP_NUM_THREADS), EP Env Set Threads (EP_OMP_NUM_THREADS), IDF Set Threads, Number of Threads Used (Interior Radiant Exchange), Number Nominal Surfaces, Number Parallel Sims
+Program Control:Threads/Parallel Sims, No,1, N/A, N/A, N/A, N/A, N/A, N/A
+End of Data

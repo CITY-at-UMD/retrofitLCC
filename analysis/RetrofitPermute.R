@@ -20,7 +20,10 @@ source("./lib/permute.R")
 source("./lib/vectorRecursion.R")
 
 #list all files in the measure directory
-measure.names <- list.files(path="./measures/")
+measure.names <- list.dirs(path="./measures/",
+                           full.names=FALSE,
+                            recursive=FALSE)
+measure.names
 num.m <- length(measure.names)
 if(num.m > 9) { stop("too many measures!") }
 
@@ -70,8 +73,8 @@ for (measure in measure.names) {
 rm(measure, i)
 
 # map measure names to letters for easier reading
-measures <- data.frame(name = measure.names, 
-                       letter = letters[1:num.m], 
+measures <- data.frame(letter = letters[1:num.m],
+                       name = measure.names,
                        depend = measure.dependence)
 
 # generate all ordered permutations 
@@ -121,7 +124,9 @@ save(measures,
      num.m,
      permutations, 
      permutations.map,
-     unique.sims,
      file="./measures/measure_permutations.RData")
+write(unique.sims, file="./measures/unique_sims.txt")
+write.table(measures, file="./measures/measure_map.txt",
+            quote=FALSE, row.names=FALSE, col.names=FALSE)
 # clear all
 rm(list=ls())

@@ -17,3 +17,13 @@ cost <- function(size) {
 ```R
 dependence <- 0
 ```
+
+#Temp Files
+These files are generated from running the top-level scripts:
+
+-**measure_permutations.RData** contains all measure data, cost functions, permutations, and reduction for simulation. 
+
+-**measure_map.txt** contains a table correlating letter to measure, and measure dependence.
+
+-**unique_sims.txt** contains the unique combinations to be simulated.
+ 

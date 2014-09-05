@@ -2,6 +2,6 @@ class RunManagerWatcher_Test < MiniTest::Unit::TestCase
 def test_RunManagerWatcher
 
 # configure logging
-osm = OpenStudio::Path.new("#{Dir.pwd}/exampleVirtualPULSEModel.osm"); # load osm file
-epw = OpenStudio::Path.new("#{Dir.pwd}/USA_CO_Golden-NREL.724666_TMY3.epw"); # set epw file location
+osm = OpenStudio::Path.new("#{Dir.pwd}/model/exampleVirtualPULSEModel.osm"); # load osm file
+epw = OpenStudio::Path.new("#{Dir.pwd}/weather/USA_PA_Philadelphia.Intl.AP.724080_TMY3.epw"); # set epw file location
 wf = OpenStudio::Runmanager::Workflow.new();  # make a new workflow

@@ -1,0 +1,50 @@
+<OSResult>
+  <Value>Success</Value>
+  <Info>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AddEnvironmentalImpactFactors</Channel>
+      <Message>Added Output:EnvironmentalImpactFactors object with a value of RunPeriod</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AddEnvironmentalImpactFactors</Channel>
+      <Message>Added EnvironmentalImpactFactors object</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AddEnvironmentalImpactFactors</Channel>
+      <Message>Added FuelFactors object for Electricity</Message>
+    </LogMessage>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AddEnvironmentalImpactFactors</Channel>
+      <Message>Added FuelFactors object for NaturalGas</Message>
+    </LogMessage>
+  </Info>
+  <FinalCondition>
+    <LogMessage>
+      <Channel>openstudio.ruleset.AddEnvironmentalImpactFactors</Channel>
+      <Message>The model finished with 1 Output:EnvironmentalImpactFactors objects, 1 EnvironmentalImpactFactors objects, and 2 FuelFactor objects.</Message>
+    </LogMessage>
+  </FinalCondition>
+  <Attributes>
+    <Attribute>
+      <UUID>{ee451d27-63ec-4543-96fb-7e95c471c9a8}</UUID>
+      <VersionUUID>{533a2458-cc47-45c6-b1e8-e97873734ceb}</VersionUUID>
+      <Name>reporting_frequency</Name>
+      <ValueType>String</ValueType>
+      <Value>RunPeriod</Value>
+    </Attribute>
+    <Attribute>
+      <UUID>{38734dca-26fc-4741-946a-fc83847b0995}</UUID>
+      <VersionUUID>{31f5833f-ace5-4faa-8366-7a57ac0d4734}</VersionUUID>
+      <Name>electricity_region</Name>
+      <ValueType>String</ValueType>
+      <Value>National</Value>
+    </Attribute>
+    <Attribute>
+      <UUID>{da22c12c-7c33-4692-bfad-1016ed0518f4}</UUID>
+      <VersionUUID>{58c67eaa-6d33-4f94-92cb-1f3cba405518}</VersionUUID>
+      <Name>equipment</Name>
+      <ValueType>String</ValueType>
+      <Value>Commercial Boiler</Value>
+    </Attribute>
+  </Attributes>
+</OSResult>

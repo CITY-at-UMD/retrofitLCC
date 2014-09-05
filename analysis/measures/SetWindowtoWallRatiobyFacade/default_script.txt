@@ -1,0 +1,15 @@
+dir = OpenStudio::Path.new("#{Dir.pwd}/measures/SetWindowtoWallRatiobyFacade"); # link to measure directory
+measure = OpenStudio::BCLMeasure::load(dir);  # load measure
+args  = OpenStudio::Ruleset::OSArgumentVector.new(); # make a new argument vector
+wwr = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("wwr"); # make a new double argument
+wwr.setValue(0.9) # set value for this argument
+args << wwr # add it to the arguments array
+sillHeight = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("sillHeight");
+sillHeight.setValue(0.2)
+args << sillHeight
+facade = OpenStudio::Ruleset::OSArgument::makeStringArgument("facade"); # make a new string argument
+facade.setValue("North");
+args << facade
+rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args); # build job from measure and args
+rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath()); # include its path in search tree
+wf.addJob(rubyjobbuilder.toWorkItem()); # set the measure as the first job in the queue
