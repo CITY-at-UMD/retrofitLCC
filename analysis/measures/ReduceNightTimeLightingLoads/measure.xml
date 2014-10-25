@@ -1,0 +1,57 @@
+<measure>
+  <name>Reduce Night Time Lighting Loads Copy</name>
+  <uid>ac698eb4-75b8-4c44-b12e-2b548d21e33b</uid>
+  <version_id>58695f99-f48b-4384-96d8-6189fe821289</version_id>
+  <description>Many buildings have lights that run unnecessarily at night.  Turning these lights off at night can provide energy savings without impacting the day-to-day operation of the building occupants.  Implementing this change may require coordination with after-hours cleaning and maintenance crews.</description>
+  <modeler_description>This measure sets fractional lighting schedule values for all instances of the selected lights definition for a specific time of day and for specific days of the week.  The new schedules values are based on the user arguments. Summer and winter design day profiles will not be altered.  This measure clones the existing schedules, modifies them, then assigns these modified schedules to the lights instances. Costs can be added per each lights object.  Quantity for costing is calculated by looking at number of instances and their quantity. Currently cost is added to the building, but in a future version cost will be associated with the instances.</modeler_description>
+  <provenances/>
+  <tags>
+    <tag>Electric Lighting.Electric Lighting Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Function</name>
+      <value>Measure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Requires EnergyPlus Results</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Uses SketchUp API</name>
+      <value>false</value>
+      <datatype>boolean</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>EnvelopeAndLoadTestModel_01.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>1C34D03F</checksum>
+    </file>
+    <file>
+      <filename>ReduceNightTimeLightingLoads_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>89E602E8</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.0.0</identifier>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>6F4FF2B3</checksum>
+    </file>
+  </files>
+</measure>

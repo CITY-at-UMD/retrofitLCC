@@ -1,5 +1,5 @@
-a AEDGSmalltoMediumOfficeExteriorWallConstructionCopy 0
-b ReduceNightTimeVentilation 0
+a ReduceLPD 0
+b ReduceNightTimeLightingLoads 0
 c ReplaceThermostatSchedulesHeating 0
 d SetBoilerThermalEfficiencyAndAutosize 1
 e SetCOPforTwoSpeedDXCoolingUnitsAndAutosize 1
