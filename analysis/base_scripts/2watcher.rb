@@ -10,8 +10,8 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
   end
 
   def jobFinishedDetails(t_jobId, t_jobType, t_lastRun, t_errors, t_outputFiles, t_inputParams, t_isMergedJob, t_mergedIntoJobId)
-    #puts "JobFinished: #{t_jobId} #{t_jobType.valueName} #{t_lastRun} #{t_errors.succeeded} #{t_outputFiles.files.size} #{t_outputFiles.files.at(0).fullPath} #{t_inputParams.params.size} #{t_isMergedJob} #{t_mergedIntoJobId}\n"
-	puts "Job Id:#{t_jobType.valueName}\nRun Time:#{t_lastRun}\nNo Errors?:#{t_errors.succeeded}\nNumber Files Output:#{t_outputFiles.files.size}\nFile Path:#{t_outputFiles.files.at(0).fullPath}\n"
+    #puts "JobFinished: #{t_jobId} #{t_jobType.valueName} Run Time:#{t_lastRun} #{t_errors.succeeded} #{t_outputFiles.files.size} #{t_outputFiles.files.at(0).fullPath} #{t_inputParams.params.size} #{t_isMergedJob} #{t_mergedIntoJobId}\n"
+	puts "\nJob Type:#{t_jobType.valueName}\nJob Executed With No Errors?:#{t_errors.succeeded}\nFile Path:#{t_outputFiles.files.at(0).fullPath}\n"
 
     if not @m_finishedCounts[t_jobType.value]
       @m_finishedCounts[t_jobType.value] = 1
@@ -21,7 +21,7 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
   end
 
   def treeFinished(t_job)
-    puts "\nTree Finished"
+    puts "\nJob Tree Finished"
     if not @m_finishedCounts[999]
       @m_finishedCounts[999] = 1
     else

@@ -1,23 +1,26 @@
-#run_master.rb
-# runs all the ruby scripts for each unique simulation, and deletes extraneous files after each simulation.
+# run master.rb
+# runs all the ruby scripts for each unique simulation,
+# and deletes extraneous files.
 #
 # Building Science Group 2014
 #
-# Contributors: 
+# Contributors:
 # Matthew G. Dahlhausen
 
-#should really be doing this with a rake file
-#task :default do
+# should really be doing this with a rake file
+# task :default do
 #    FileList['file*.rb'].each { |file| ruby file }
-#end
+# end
 
-run_scripts = Dir["./run_scripts/*.rb"]
+run_scripts = Dir["run_scripts/*.rb"]
+
+puts "#{run_scripts}"
 
 run_scripts.each do |script|
-  puts "\nRUNNING SCRIPT: #{script} \n" 
+  puts "\n***************\nRUNNING SCRIPT: #{script} \n"
   output = system("ruby #{script}")
-  puts "\nRESULT: #{output} \n\n"
+  puts "\nSCRIPT COMPLETED SUCCESSFULLY: #{output} \n***************\n"
 end
 
 # to set to prior directory
-#{File.expand_path("..",Dir.pwd)
+# {File.expand_path("..",Dir.pwd)
