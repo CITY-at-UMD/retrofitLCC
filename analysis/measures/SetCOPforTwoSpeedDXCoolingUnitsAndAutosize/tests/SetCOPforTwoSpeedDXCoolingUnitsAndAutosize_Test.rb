@@ -1,22 +1,24 @@
 require 'openstudio'
 require 'openstudio/ruleset/ShowRunnerOutput'
-
+require 'minitest/autorun'
 require "#{File.dirname(__FILE__)}/../measure.rb"
 
-require 'test/unit'
-
-class SetCOPforTwoSpeedDXCoolingUnits_Test < Test::Unit::TestCase
+class SetCOPforTwoSpeedDXCoolingUnitsAndAutosize_Test < MiniTest::Test
   
-  def test_SetCOPforTwoSpeedDXCoolingUnits_single_loop
+  def test_SSetCOPforTwoSpeedDXCoolingUnitsAndAutosize_single_loop
      
     # create an instance of the measure
-    measure = SetCOPforTwoSpeedDXCoolingUnits.new
+    measure = SetCOPforTwoSpeedDXCoolingUnitsAndAutosize.new
     
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
     
-    # make an empty model
-    model = OpenStudio::Model::Model.new
+    # load model
+	translator = OpenStudio::OSVersion::VersionTranslator.new
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/Bldg101_StagingPreSetback.osm")
+    model = translator.loadModel(path)
+    assert((not model.empty?))
+    model = model.get
 
     # get arguments and test that they are what we are expecting
     arguments = measure.arguments(model)
@@ -100,10 +102,10 @@ class SetCOPforTwoSpeedDXCoolingUnits_Test < Test::Unit::TestCase
     
   end
 
-  def test_SetCOPforTwoSpeedDXCoolingUnits_all_loop
+  def test_SetCOPforTwoSpeedDXCoolingUnitsAndAutosize_all_loop
 
     # create an instance of the measure
-    measure = SetCOPforTwoSpeedDXCoolingUnits.new
+    measure = SetCOPforTwoSpeedDXCoolingUnitsAndAutosize.new
 
     # create an instance of a runner
     runner = OpenStudio::Ruleset::OSRunner.new
@@ -129,7 +131,7 @@ class SetCOPforTwoSpeedDXCoolingUnits_Test < Test::Unit::TestCase
 
     # load the test model
     translator = OpenStudio::OSVersion::VersionTranslator.new
-    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/0320_ModelWithHVAC_01.osm")
+    path = OpenStudio::Path.new(File.dirname(__FILE__) + "/Bldg101_StagingPreSetback.osm")
     model = translator.loadModel(path)
     assert((not model.empty?))
     model = model.get
@@ -189,7 +191,9 @@ class SetCOPforTwoSpeedDXCoolingUnits_Test < Test::Unit::TestCase
     show_output(result)
     assert(result.value.valueName == "Success")
     #assert(result.warnings.size == 2)
-    #assert(result.info.size == 1)
+    #assert(result.info.size == 1)	
+	#save_path = OpenStudio::Path.new("#{Dir.pwd}/test_out.osm")
+    #model.save(save_path,true)
 
   end
 

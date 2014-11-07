@@ -1,7 +1,7 @@
 require 'openstudio'
 require 'openstudio/ruleset/ShowRunnerOutput'
-require "#{File.dirname(__FILE__)}/../measure.rb"
 require 'minitest/autorun'
+require "#{File.dirname(__FILE__)}/../measure.rb"
 
 class ReduceLPD_Test < MiniTest::Test
   def test_ReduceLPD

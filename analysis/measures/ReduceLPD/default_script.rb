@@ -1,18 +1,10 @@
 # Reduce Lighting Power Density Measure
 
-#populate choices for argument for fans in the model
-light_handles = OpenStudio::StringVector.new
+#populate choices for argument for lights in the model
 light_display_names = OpenStudio::StringVector.new
-
-light_hash = {}  # putting fan names into hash
-model.getLightsDefinitions.each do |light|
-  light_hash[light.name.to_s] = light
-end	
-
-light_hash.sort.map do |light_name, light|  # looping through sorted hash of zones
-  light_handles << light.handle.to_s
-  light_display_names << light_name
-end
+light_display_names << ''
+light_display_names << 'Bldg101_Office_LightingPowerDensity'
+light_display_names << 'Bldg101_Conference_LightingPowerDensity'
 
 # Reduce lighting power density from 1.15 to 0.68 W/ft2 in offices and 2.32 to 0.77 W/ft2 in conference rooms 
 dir = OpenStudio::Path.new("#{Dir.pwd}/measures/ReduceLPD/") # link to measure directory

@@ -1,21 +1,31 @@
 
 OS:Version,
-  {27a1319e-edce-404d-b5c3-7de63969fb77}, !- Handle
-  1.3.0;                                  !- Version Identifier
+  {2f95e828-1e15-4fb3-afb4-cfde67e8af76}, !- Handle
+  1.0.0;                                  !- Version Identifier
 
 OS:Schedule:Constant,
-  {232fef3c-8c0e-47df-96d9-3cfffb2d2951}, !- Handle
+  {40002a99-eb0d-4927-b52b-ce374cb0b927}, !- Handle
   Always On Discrete,                     !- Name
-  {db14a9bb-88b0-45c9-a297-5d38f44ce0e4}, !- Schedule Type Limits Name
+  {d559ad83-3cc8-4f60-bb58-33de1c5cfa54}, !- Schedule Type Limits Name
   1;                                      !- Value
 
 OS:ScheduleTypeLimits,
-  {db14a9bb-88b0-45c9-a297-5d38f44ce0e4}, !- Handle
+  {d559ad83-3cc8-4f60-bb58-33de1c5cfa54}, !- Handle
   Always On Discrete Limits,              !- Name
   0,                                      !- Lower Limit Value {BasedOnField A4}
   1,                                      !- Upper Limit Value {BasedOnField A4}
   Discrete,                               !- Numeric Type
   Availability;                           !- Unit Type
+
+OS:Building,
+  {a3a51906-9a84-471c-8162-778785896008}, ! Handle
+  Large Hotel,                            ! Name
+  ,                                       ! Building Type
+  -0,                                     ! North Axis
+  ,                                       ! Nominal Floor to Floor Height
+  ,                                       ! Space Type Name
+  {63491e98-8a3d-4999-b596-91d469fa1d5e}, ! Default Construction Set Name
+  ;                                       ! Default Schedule Set Name
 
 OS:Construction,
   {cf81dd0b-fee6-4952-8177-441f534451c5}, ! Handle
@@ -13831,7 +13841,7 @@ OS:PortList,
 OS:ThermalZone,
   {fb8e6946-ac33-400c-87e2-cb484f18fa42}, !- Handle
   Thermal Zone: Space 104,                !- Name
-  2,                                      !- Multiplier
+  ,                                       !- Multiplier
   ,                                       !- Ceiling Height {m}
   ,                                       !- Volume {m3}
   ,                                       !- Floor Area {m2}
@@ -14317,7 +14327,7 @@ OS:SubSurface,
   ,                                       !- View Factor to Ground
   ,                                       !- Shading Control Name
   ,                                       !- Frame and Divider Name
-  3,                                      !- Multiplier
+  ,                                       !- Multiplier
   ,                                       !- Number of Vertices
   -2.62512818101877, 0, 2.40504277120872, !- X,Y,Z Vertex 1 {m}
   -2.62512818101877, 0, 1.38745527120872, !- X,Y,Z Vertex 2 {m}
@@ -14336,7 +14346,7 @@ OS:Material:NoMass,
 OS:Construction,
   {f7c66860-ed61-4126-baaa-664b0f43fb9d}, !- Handle
   Test_Air Gap,                           !- Name
-  {2f03ab6d-e96e-4bed-939a-99dfda4a50f3}, !- Surface Rendering Name
+  ,                                       !- Surface Rendering Name
   {46a07526-59bd-4a42-a66b-60885191fd13}, !- Layer 1
   {97242a27-6e9e-4c19-8ef5-12f38e37ef76}, !- Layer 2
   {4947ef83-cbe7-47bf-b3b6-b08f46be7557}; !- Layer 3
@@ -14344,7 +14354,7 @@ OS:Construction,
 OS:Construction,
   {fb76d8ec-d333-4a19-8a9e-1272f230468e}, !- Handle
   Test_No Insulation,                     !- Name
-  {6150007e-e76b-4929-93fe-d0a2baef50a9}, !- Surface Rendering Name
+  ,                                       !- Surface Rendering Name
   {4947ef83-cbe7-47bf-b3b6-b08f46be7557}, !- Layer 1
   {e2c10280-d962-4a1a-9f22-0a2ea5a5dc13}, !- Layer 2
   {9d7a650f-da6a-4881-a717-5edacbdaa0ce}; !- Layer 3
@@ -14362,197 +14372,42 @@ OS:Construction,
   {cc368632-56b3-4302-b26c-e12c7b0627a6}, ! Layer 2
   {9d7a650f-da6a-4881-a717-5edacbdaa0ce}; ! Layer 3
 
-OS:Rendering:Color,
-  {6150007e-e76b-4929-93fe-d0a2baef50a9}, !- Handle
-  Rendering Color 6,                      !- Name
-  144,                                    !- Rendering Red Value
-  238,                                    !- Rendering Green Value
-  144;                                    !- Rendering Blue Value
+OS:LifeCycleCost,
+  {29197d76-d434-4caf-b32c-18e51c072d43}, !- Handle
+  LCC_Mat - ASHRAE_189.1-2009_ExtWindow_ClimateZone_alt-res 4-5, !- Name
+  Construction,                           !- Category
+  Construction,                           !- Item Type
+  {6c574b52-b8e1-4d5a-bb06-1a4e6ef44eac}, !- Item Name
+  1076.39104167097,                       !- Cost
+  CostPerArea,                            !- Cost Units
+  ,                                       !- Start of Costs
+  ,                                       !- Years from Start
+  ,                                       !- Months from Start
+  20;                                     !- Repeat Period Years
 
-OS:Rendering:Color,
-  {2f03ab6d-e96e-4bed-939a-99dfda4a50f3}, !- Handle
-  Rendering Color 7,                      !- Name
-  105,                                    !- Rendering Red Value
-  105,                                    !- Rendering Green Value
-  105;                                    !- Rendering Blue Value
+OS:LifeCycleCost,
+  {4f5e700e-d924-4ce0-a3c7-6002befba7d4}, !- Handle
+  LCC_Demo - ASHRAE_189.1-2009_ExtWindow_ClimateZone_alt-res 4-5, !- Name
+  Salvage,                                !- Category
+  Construction,                           !- Item Type
+  {6c574b52-b8e1-4d5a-bb06-1a4e6ef44eac}, !- Item Name
+  107.639104167097,                       !- Cost
+  CostPerArea,                            !- Cost Units
+  ,                                       !- Start of Costs
+  20,                                     !- Years from Start
+  ,                                       !- Months from Start
+  20;                                     !- Repeat Period Years
 
-OS:BuildingStory,
-  {24049f33-48e2-41e2-8026-c4cc318c77af}, !- Handle
-  Building Story 2,                       !- Name
-  0,                                      !- Nominal Z Coordinate {m}
-  3.048,                                  !- Nominal Floor to Floor Height {m}
-  ,                                       !- Default Construction Set Name
-  ,                                       !- Default Schedule Set Name
-  {14ab3a24-edd3-4e65-8455-e5c695e67c09}; !- Group Rendering Name
-
-OS:Space,
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Handle
-  Space without Zone,                     !- Name
-  ,                                       !- Space Type Name
-  ,                                       !- Default Construction Set Name
-  ,                                       !- Default Schedule Set Name
-  180,                                    !- Direction of Relative North {deg}
-  19.8437267461223,                       !- X Origin {m}
-  3.44214574335646,                       !- Y Origin {m}
-  0,                                      !- Z Origin {m}
-  {24049f33-48e2-41e2-8026-c4cc318c77af}, !- Building Story Name
-  ,                                       !- Thermal Zone Name
-  ,                                       !- Part of Total Floor Area
-  ;                                       !- Design Specification Outdoor Air Object Name
-
-OS:Surface,
-  {5a151ff5-b881-46ae-8c45-7fa3afadd0e0}, !- Handle
-  Surface 25,                             !- Name
-  Floor,                                  !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Ground,                                 !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  NoSun,                                  !- Sun Exposure
-  NoWind,                                 !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  0, 4.2338625, 0,                        !- X,Y,Z Vertex 1 {m}
-  0, 0, 0,                                !- X,Y,Z Vertex 2 {m}
-  -3.1416625, 0, 0,                       !- X,Y,Z Vertex 3 {m}
-  -3.1416625, 4.2338625, 0;               !- X,Y,Z Vertex 4 {m}
-
-OS:Surface,
-  {a99ecee4-ae48-4099-8f0e-e267d644386b}, !- Handle
-  Surface 26,                             !- Name
-  Wall,                                   !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Outdoors,                               !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  SunExposed,                             !- Sun Exposure
-  WindExposed,                            !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  -3.1416625, 0, 3.048,                   !- X,Y,Z Vertex 1 {m}
-  -3.1416625, 0, 0,                       !- X,Y,Z Vertex 2 {m}
-  0, 0, 0,                                !- X,Y,Z Vertex 3 {m}
-  0, 0, 3.048;                            !- X,Y,Z Vertex 4 {m}
-
-OS:Surface,
-  {ce8514b3-5d22-4e26-adf0-943811276421}, !- Handle
-  Surface 27,                             !- Name
-  Wall,                                   !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Outdoors,                               !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  SunExposed,                             !- Sun Exposure
-  WindExposed,                            !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  -3.1416625, 4.2338625, 3.048,           !- X,Y,Z Vertex 1 {m}
-  -3.1416625, 4.2338625, 0,               !- X,Y,Z Vertex 2 {m}
-  -3.1416625, 0, 0,                       !- X,Y,Z Vertex 3 {m}
-  -3.1416625, 0, 3.048;                   !- X,Y,Z Vertex 4 {m}
-
-OS:Surface,
-  {02cd4ebb-b347-4417-a447-7ec2943df4e8}, !- Handle
-  Surface 28,                             !- Name
-  Wall,                                   !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Outdoors,                               !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  SunExposed,                             !- Sun Exposure
-  WindExposed,                            !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  0, 4.2338625, 3.048,                    !- X,Y,Z Vertex 1 {m}
-  0, 4.2338625, 0,                        !- X,Y,Z Vertex 2 {m}
-  -3.1416625, 4.2338625, 0,               !- X,Y,Z Vertex 3 {m}
-  -3.1416625, 4.2338625, 3.048;           !- X,Y,Z Vertex 4 {m}
-
-OS:Surface,
-  {964aa99f-e5be-48ac-9cfa-62c9656b588a}, !- Handle
-  Surface 29,                             !- Name
-  Wall,                                   !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Outdoors,                               !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  SunExposed,                             !- Sun Exposure
-  WindExposed,                            !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  0, 0, 3.048,                            !- X,Y,Z Vertex 1 {m}
-  0, 0, 0,                                !- X,Y,Z Vertex 2 {m}
-  0, 4.2338625, 0,                        !- X,Y,Z Vertex 3 {m}
-  0, 4.2338625, 3.048;                    !- X,Y,Z Vertex 4 {m}
-
-OS:Surface,
-  {98395ab2-9e0a-4f84-9ea0-d4cdaa77940d}, !- Handle
-  Surface 30,                             !- Name
-  RoofCeiling,                            !- Surface Type
-  ,                                       !- Construction Name
-  {53efdc3f-0fb0-4b4d-8bd7-9a80af9889b6}, !- Space Name
-  Outdoors,                               !- Outside Boundary Condition
-  ,                                       !- Outside Boundary Condition Object
-  SunExposed,                             !- Sun Exposure
-  WindExposed,                            !- Wind Exposure
-  ,                                       !- View Factor to Ground
-  ,                                       !- Number of Vertices
-  0, 0, 3.048,                            !- X,Y,Z Vertex 1 {m}
-  0, 4.2338625, 3.048,                    !- X,Y,Z Vertex 2 {m}
-  -3.1416625, 4.2338625, 3.048,           !- X,Y,Z Vertex 3 {m}
-  -3.1416625, 0, 3.048;                   !- X,Y,Z Vertex 4 {m}
-
-OS:Rendering:Color,
-  {14ab3a24-edd3-4e65-8455-e5c695e67c09}, !- Handle
-  Rendering Color 8,                      !- Name
-  0,                                      !- Rendering Red Value
-  255,                                    !- Rendering Green Value
-  0;                                      !- Rendering Blue Value
-
-OS:Building,
-  {a3a51906-9a84-471c-8162-778785896008}, !- Handle
-  Large Hotel,                            !- Name
-  ,                                       !- Building Sector Type
-  90,                                     !- North Axis {deg}
-  3.00000000000001,                       !- Nominal Floor to Floor Height {m}
-  ,                                       !- Space Type Name
-  {63491e98-8a3d-4999-b596-91d469fa1d5e}, !- Default Construction Set Name
-  ,                                       !- Default Schedule Set Name
-  ,                                       !- Standards Number of Stories
-  ,                                       !- Standards Number of Above Ground Stories
-  ;                                       !- Standards Building Type
-
-OS:SubSurface,
-  {11ffa06e-df29-403a-aea7-21fb483e08d4}, !- Handle
-  Sub Surface 6,                          !- Name
-  FixedWindow,                            !- Sub Surface Type
-  ,                                       !- Construction Name
-  {ce8514b3-5d22-4e26-adf0-943811276421}, !- Surface Name
-  ,                                       !- Outside Boundary Condition Object
-  ,                                       !- View Factor to Ground
-  ,                                       !- Shading Control Name
-  ,                                       !- Frame and Divider Name
-  ,                                       !- Multiplier
-  ,                                       !- Number of Vertices
-  -3.1416625, 4.2084625, 1.99600622390892, !- X,Y,Z Vertex 1 {m}
-  -3.1416625, 4.2084625, 0.762,           !- X,Y,Z Vertex 2 {m}
-  -3.1416625, 0.0253999999999994, 0.762,  !- X,Y,Z Vertex 3 {m}
-  -3.1416625, 0.0253999999999994, 1.99600622390892; !- X,Y,Z Vertex 4 {m}
-
-OS:SubSurface,
-  {903d17a0-e2d0-4bed-bd85-be7c62d3c148}, !- Handle
-  Sub Surface 7,                          !- Name
-  FixedWindow,                            !- Sub Surface Type
-  ,                                       !- Construction Name
-  {d7644043-c09e-46d0-8fff-24dbbce88632}, !- Surface Name
-  ,                                       !- Outside Boundary Condition Object
-  ,                                       !- View Factor to Ground
-  ,                                       !- Shading Control Name
-  ,                                       !- Frame and Divider Name
-  ,                                       !- Multiplier
-  ,                                       !- Number of Vertices
-  0, 0.0254, 1.99073664140797,            !- X,Y,Z Vertex 1 {m}
-  0, 0.0254, 0.762,                       !- X,Y,Z Vertex 2 {m}
-  0, 6.5198625, 0.762,                    !- X,Y,Z Vertex 3 {m}
-  0, 6.5198625, 1.99073664140797;         !- X,Y,Z Vertex 4 {m}
+OS:LifeCycleCost,
+  {5df37c99-d604-4631-86d1-4edf2eb9cb53}, !- Handle
+  LCC_OM - ASHRAE_189.1-2009_ExtWindow_ClimateZone_alt-res 4-5, !- Name
+  Maintenance,                            !- Category
+  Construction,                           !- Item Type
+  {6c574b52-b8e1-4d5a-bb06-1a4e6ef44eac}, !- Item Name
+  0,                                      !- Cost
+  CostPerArea,                            !- Cost Units
+  ,                                       !- Start of Costs
+  ,                                       !- Years from Start
+  ,                                       !- Months from Start
+  1;                                      !- Repeat Period Years
 

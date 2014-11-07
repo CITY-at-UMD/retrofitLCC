@@ -3,4 +3,4 @@ b ReduceNightTimeLightingLoads 0
 c ReplaceThermostatSchedulesHeating 0
 d SetBoilerThermalEfficiencyAndAutosize 1
 e SetCOPforTwoSpeedDXCoolingUnitsAndAutosize 1
-f SetWindowtoWallRatiobyFacade 0
+f ReplaceExteriorWindowConstruction 0

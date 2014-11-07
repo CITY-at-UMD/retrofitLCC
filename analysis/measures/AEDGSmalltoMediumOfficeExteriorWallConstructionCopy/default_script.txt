@@ -1,9 +1,0 @@
-dir = OpenStudio::Path.new("#{Dir.pwd}/measures/AEDGSmalltoMediumOfficeExteriorWallConstructionCopy/"); # link to measure directory
-measure = OpenStudio::BCLMeasure::load(dir);  # load measure
-args  = OpenStudio::Ruleset::OSArgumentVector.new(); # make a new argument vector
-material_cost_insulation_increase_ip = OpenStudio::Ruleset::OSArgument::makeDoubleArgument("material_cost_insulation_increase_ip"); # make a new double argument
-material_cost_insulation_increase_ip.setValue(5.0) # set value for this argument
-args << material_cost_insulation_increase_ip # add it to the arguments array
-rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args); # build job from measure and args
-rubyjobbuilder.setIncludeDir(OpenStudio::getOpenStudioRubyIncludePath()); # include its path in search tree
-wf.addJob(rubyjobbuilder.toWorkItem()); # set the measure as the first job in the queue
