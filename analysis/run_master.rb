@@ -14,7 +14,7 @@
 
 run_scripts = Dir["run_scripts/*.rb"]
 
-puts "#{run_scripts}"
+#puts "#{run_scripts}"
 
 run_scripts.each do |script|
   puts "\n***************\nRUNNING SCRIPT: #{script} \n"

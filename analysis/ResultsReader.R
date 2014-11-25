@@ -9,12 +9,12 @@
 # Package Dependencies: 
 library(DBI) # interface definitions for communicating with relational databases
 library(RSQLite)  # embeds SQLite database in R for DBI
-library(RSQLite.extfuns) # extends math and string functions to RSQLite
 library(sqldf) # perform SQL selects on R data frames
 #
 # 
 rm(list=ls())  # clear variables 
 
+print(paste("reading simulation results..."))
 # locate directories where to find .sql files
 dirs <- list.dirs(path = "./run_scripts/results",
                                     recursive = FALSE)
@@ -125,10 +125,10 @@ for (i in 1:num.files) {
     annual.energy.cost.intensity.units[i] <- sqldf(annual.energy.cost.intensity.sql, dbname = sql.file)[,"Units"]        
   }, error = function(e) {print(paste("annual.energy.cost.intensity unavailable for run:", run.name))}) 
   tryCatch({
-    boiler.size[i] <- as.numeric(sqldf(boiler.size.sql, dbname = sql.file)[,"Value"])        
+    boiler.size[i] <- as.numeric(sqldf(boiler.size.sql, dbname = sql.file)[,"Value"])    
   }, error = function(e) {print(paste("boiler.size unavailable for run:", run.name))}) 
   tryCatch({
-    cu.size[i] <- sum(as.numeric(sqldf(cu.size.sql, dbname = sql.file)[,"Value"]))        
+    cu.size[i] <- sum(as.numeric(sqldf(cu.size.sql, dbname = sql.file)[,"Value"])) 
   }, error = function(e) {print(paste("cu.size unavailable for run:", run.name))}) 
 }
 
@@ -140,7 +140,8 @@ simulation.results <- data.frame(run.name = run.names, site.energy, site.energy.
                                  annual.electric.cost, annual.electric.cost.units, annual.gas.cost, annual.gas.cost.units,
                                  total.annual.energy.cost, total.annual.energy.cost.units, 
                                  annual.energy.cost.intensity, annual.energy.cost.intensity.units,
-                                 boiler.size, cu.size,
+                                 boiler.size, cu.size, 
                                  stringsAsFactors=FALSE)
 save(simulation.results, file="./run_scripts/results/simulation_results.RData")
+print(paste("simulation results saved to: ./run_scripts/results/simulation_results.RData"))
 rm(list=ls()) 

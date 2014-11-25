@@ -67,9 +67,21 @@ File.readlines(fname_runs).each do |seq|
         mergedFile << File.read(default_fname)
       end
 
-    mergedFile << '# END OSM MEASURES' + "\n\n" + f5 + "\n\n" +
+    mergedFile << "\n" + '# END OSM MEASURES' + "\n\n" + f5 + "\n\n" +
                               '# add EnergyPlus measures' + "\n" + f6 + "\n\n" +
-                              f7 + "\n" + '# ouput directory' + "\n\n"+f8 + "\n\n" + f9 + "\n"
+                              f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
   end
 
 end
+
+# create the baseline run
+  # set output file directory for the script
+  script_fname = "#{Dir.pwd}/run_scripts/baseline.rb"
+  # output directory for the run results
+  f8 = 'outdir = OpenStudio::Path.new("#{Dir.pwd}/run_scripts/results/' +
+          "baseline" '")'
+  File.open(script_fname, 'w') do |mergedFile|
+    mergedFile << f1 + "\n" + f2 + "\n" + f3 + "\n" + f5 + "\n\n" +
+                  '# add EnergyPlus measures' + "\n" + f6 + "\n\n" +
+                  f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
+  end

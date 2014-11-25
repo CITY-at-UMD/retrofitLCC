@@ -16,139 +16,68 @@ library(zoo)
 #
 rm(list=ls())  # clear variables 
 #
-### Import function dependencies
-source("./lib/npv.R") # Import financial calculation
-source("./lib/escalationRates.R") # Import NIST escalation rates
-source("./lib/permute.R")
-source("./lib/vectorRecursion.R")
-invisible(ImportEscalationRates())
+### Import data
+load('./run_scripts/results/simulation_results.RData')
 
-##############################
-# IMPORT SIMULATION RESULTS ##
-##############################
-# simulation data requirement:
+npv.vs.eui <- ggplot(data = simulation.results,
+                      aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
+  geom_point() +
+  geom_text(hjust=1, vjust=1, size = 3) + 
+  #coord_cartesian(ylim=c(-100000, 135000), xlim=c(100, 75)) + 
+  #scale_y_continuous(breaks=seq(100000, 135000, 5000), labels = dollar) + 
+  labs(title = "Net Present Value Relative to Baseline for Measure Combinations",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(npv.vs.eui)
 
-#test data as a matrix
-test.cost<- matrix(0, nrow=r, ncol=c)
-for (j in 1:c) {
-  for(i in 1:r) {
-    test.cost[i,j]  <- runif(1, (c-j+1)*5, (c-j+1)*10)
-  }
-}
-test.energy <- matrix(0, nrow=r, ncol=c)
-for (j in 1:c) {
-  for(i in 1:r) {
-    test.energy[i,j]  <- runif(1, (c-j+1)*5, (c-j+1)*10)
-  }
-}
+cusize.vs.eui <- ggplot(data = simulation.results,
+                        aes(x = site.energy.intensity*0.947817120/10.7639, y = cu.size, label = run.name)) + 
+  geom_point() +
+  geom_text(hjust=1, vjust=1, size = 3) + 
+  coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
+  scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  labs(title = "Condensing Unit Size of Measure Options",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Capacity (W)"))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(cusize.vs.eui)
 
-# central data frames
+boilersize.vs.eui <- ggplot(data = simulation.results,
+                            aes(x = site.energy.intensity*0.947817120/10.7639, y = boiler.size, label = run.name)) + 
+  geom_point() +
+  geom_text(hjust=1, vjust=1, size = 3) + 
+  coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
+  scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  labs(title = "Boiler Size of Measure Options",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Capacity (W)"))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(boilersize.vs.eui)
 
-
-##############################
-# CALCULATE LIFE CYCLE COST ##
-##############################
-lifetime <- 20   # Use a 20 year life time to calculate NPV (include year 0 in costs) 
-discount.rate <- 0.03 	# 3% discount rate
-cash.flow <- matrix(0, nrow = num.runs, ncol = lifetime + 1) 
-
-# CREATE PATHS FOR REPRESENTATIVE CASES
-# BASELINE CASE
-baseline.case <- simulation.results[simulation.results$run.names %in% c("Baseline",
-                                                                        "CU",
-                                                                        "Boiler",
-                                                                        "CU_Boiler"),]
-capital.cost <- c(rep(0, 6),
-                  -cu.cost(simulation.results$cu.size[simulation.results$run.names %in% "CU"]), 
-                  rep(0, 4),
-                  -boiler.cost(simulation.results$cu.size[simulation.results$run.names %in% "CU"]),
-                  rep(0, 9))
-energy.cost <- c(-1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% "Baseline"], 6),
-                 -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% "CU"], 5),
-                 -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% "CU_Boiler"], 10))
-cash.flow <- capital.cost + energy.cost
-npv.baseline <- npv(discount.rate, cash.flow)
-rm(capital.cost, energy.cost, cash.flow)
-
-# HEATING REDUCTION
-heating.case <- simulation.results[simulation.results$run.names %in% c("HeatSetback_CoolSetback",
-                                                                       "HeatSetback_CoolSetback_Infltr30",
-                                                                       "HeatSetback_CoolSetback_AEDGExtWall",
-                                                                       "HeatSetback_CoolSetback_Infltr30_AEDGExtWall"),]
-net.present.value <- c(rep(0, 4) )
-npv.relative <- c(rep(0, 4) )
-for (i in 1:4) {
-  this.run.name <- heating.case$run.names[i]
-  first.year.cost <- 0
-  names <- strsplit(this.run.name, "_")
-  for (j in 1:length(names[[1]])) {
-    measure.cost <- measures$cost[measures$name %in% names[[1]][j]]
-    first.year.cost <- first.year.cost + measure.cost
-  }
-  cu.run.name <- paste(this.run.name, "_CU", sep="")  
-  cu.boiler.run.name <- paste(this.run.name, "_CU_Boiler", sep="")
-  capital.cost <- c(-first.year.cost,
-                    rep(0, 5),
-                    -cu.cost(simulation.results$cu.size[simulation.results$run.names %in% cu.run.name]), 
-                    rep(0, 4),
-                    -boiler.cost(simulation.results$cu.size[simulation.results$run.names %in% cu.boiler.run.name]),
-                    rep(0, 9))
-  energy.cost <- c(-1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% this.run.name], 6),
-                   -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% cu.run.name], 5),
-                   -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% cu.boiler.run.name], 10))
-  print(this.run.name)
-  print(capital.cost)
-  print(energy.cost)
-  cash.flow <- capital.cost + energy.cost
-  net.present.value[i] <- npv(discount.rate, cash.flow)   
-  npv.relative[i] <- net.present.value[i] - npv.baseline
-}
-heating.case <- cbind(heating.case, net.present.value, npv.relative)
-rm(first.year.cost, names, measure.cost, this.run.name, cu.run.name, cu.boiler.run.name, capital.cost, energy.cost, cash.flow, net.present.value, npv.relative)                                                                       
-                                                         
-# COOLING REDUCTION                                                                       
-cooling.case <- simulation.results[simulation.results$run.names %in% c("HeatSetback_CoolSetback",
-                                                                       "HeatSetback_CoolSetback_ReduceLPD",
-                                                                       "HeatSetback_CoolSetback_ReduceNightLight",
-                                                                       "HeatSetback_CoolSetback_WindowFilm",
-                                                                       "HeatSetback_CoolSetback_ReduceLPD_WindowFilm",
-                                                                       "HeatSetback_CoolSetback_ReduceNightLight_ReduceLPD",
-                                                                       "HeatSetback_CoolSetback_ReduceNightLight_WindowFilm",
-                                                                       "HeatSetback_CoolSetback_ReduceNightLight_ReduceLPD_WindowFilm"),]
-net.present.value <- c(rep(0, 8) )
-npv.relative <- c(rep(0, 8) )
-for (i in 1:8) {
-  this.run.name <- cooling.case$run.names[i]
-  first.year.cost <- 0
-  names <- strsplit(this.run.name, "_")
-  for (j in 1:length(names[[1]])) {
-    measure.cost <- measures$cost[measures$name %in% names[[1]][j]]
-    first.year.cost <- first.year.cost + measure.cost
-  }
-  cu.run.name <- paste(this.run.name, "_CU", sep="")  
-  cu.boiler.run.name <- paste(this.run.name, "_CU_Boiler", sep="")
-  capital.cost <- c(-first.year.cost,
-                    rep(0, 5),
-                    -cu.cost(simulation.results$cu.size[simulation.results$run.names %in% cu.run.name]), 
-                    rep(0, 4),
-                    -boiler.cost(simulation.results$cu.size[simulation.results$run.names %in% cu.boiler.run.name]),
-                    rep(0, 9))
-  energy.cost <- c(-1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% this.run.name], 6),
-                   -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% cu.run.name], 5),
-                   -1*rep(simulation.results$total.annual.energy.cost[simulation.results$run.names %in% cu.boiler.run.name], 10))
-  print(this.run.name)
-  print(capital.cost)
-  print(energy.cost)
-  cash.flow <- capital.cost + energy.cost
-  net.present.value[i] <- npv(discount.rate, cash.flow)   
-  npv.relative[i] <- net.present.value[i] - npv.baseline
-}
-cooling.case <- cbind(cooling.case, net.present.value, npv.relative)
-rm(first.year.cost, names, measure.cost, this.run.name, cu.run.name, cu.boiler.run.name, capital.cost, energy.cost, cash.flow, net.present.value, npv.relative)                                                                       
+#pushViewport(viewport(layout = grid.layout(2, 4, heights = unit(c(1, 9), "null"))))
+#print(npv.eui, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
+#grid.text("Impact of Setbacks on Annual Energy Use and Cost", gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1:4))
 
 ############################################################
 # PLOTS OF NET PRESENT VALUE VERSUS SITE ENERGY INTENSITY ##
 ############################################################
+if (FALSE) {
 
 area <- 59398.75 # ft^2
 baseline.site.energy <- (0.947817120/10.7639)*simulation.results$site.energy.intensity[simulation.results$run.names %in% "Baseline"]
@@ -205,7 +134,7 @@ print(plot.cooling, vp = viewport(layout.pos.row = 6:9, layout.pos.col = 1))
 grid.text("Life Cycle Cost of Measure Bundle Options Relative to Baseline", 
           gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
 
-if (FALSE) {
+
   net.present.value <- c(rep(0, num.runs) )
   for (i in 1:num.runs) {
     cash.flow[i,] <- c(-1*rep(simulation.results$total.annual.energy.cost[i], lifetime + 1))
