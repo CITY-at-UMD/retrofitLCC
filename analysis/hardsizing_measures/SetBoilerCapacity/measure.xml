@@ -1,0 +1,104 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>SetBoilerCapacity</name>
+  <uid>8bd788ce-b4d9-4136-b716-ac14d5b165d9</uid>
+  <version_id>4784ee70-fa7b-473d-a749-4aa6f54d4494</version_id>
+  <xml_checksum>923C3E7F</xml_checksum>
+  <class_name>SetBoilerCapacity</class_name>
+  <display_name>SetBoilerCapacity</display_name>
+  <description>This measure reads the boiler capacity from an EnergyPlus output file, and sets the boiler capacity in the model to that value.  This prevents the autosizing of the boiler, so the simulation will capture the proper part-load efficiency if other energy efficiency measures are implemented.</description>
+  <modeler_description>Reads the Boiler Nominal Capacity from an EnergyPlus eplusout.sql file and hardsizes the Nominal Capacity of the Boiler to this value.</modeler_description>
+  <arguments>
+    <argument>
+      <name>boiler_bool</name>
+      <display_name>Boiler Boolean</display_name>
+      <description>This determines measure applicability.</description>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+      <argument>
+      <name>boiler_name</name>
+      <display_name>Boiler Name</display_name>
+      <description>Please select the Boiler to be hard-sized.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>sql_fname</name>
+      <display_name>SQL filename</display_name>
+      <description>Please select the SQL file to use for hard-sizing.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <provenances/>
+  <tags>
+    <tag>HVAC.Heating</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.1</identifier>
+        <min_compatible>1.5.1</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>F17B9765</checksum>
+    </file>
+    <file>
+      <filename>SetBoilerCapacity_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>0AA1649B</checksum>
+    </file>
+	    <file>
+      <filename>Bldg101_StagingPreSetback</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum></checksum>
+    </file>
+	    <file>
+      <filename>eplusout.sql</filename>
+      <filetype>sql</filetype>
+      <usage_type>test</usage_type>
+      <checksum></checksum>
+    </file>
+  </files>
+</measure>
