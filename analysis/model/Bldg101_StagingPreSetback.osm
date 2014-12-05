@@ -1,7 +1,7 @@
 
 OS:Version,
-  {0cb3bed9-a1dd-422b-b166-e952996a7a2c}, !- Handle
-  1.3.0;                                  !- Version Identifier
+  {aa72d90c-86a0-473c-bcab-be663ae64f55}, !- Handle
+  1.5.1;                                  !- Version Identifier
 
 OS:Schedule:Constant,
   {5362ad87-1b35-4912-9c6a-e637bd4c4ffd}, !- Handle
@@ -387,10 +387,10 @@ OS:SimulationControl,
   No,                                     ! Do Plant Sizing Calculation
   No,                                     ! Run Simulation for Sizing Periods
   Yes,                                    ! Run Simulation for Weather File Run Periods
-  0.040000000000000001,                   ! Loads Convergence Tolerance Value
+  0.075,                                  ! Loads Convergence Tolerance Value
   0.40000000000000002,                    ! Temperature Convergence Tolerance Value
   FullExterior,                           ! Solar Distribution
-  25;                                     ! Maximum Number of Warmup Days
+  50;                                     ! Maximum Number of Warmup Days
 
 OS:ThermostatSetpoint:DualSetpoint,
   {c88ac18f-c615-49c3-9fcc-d0b9ae67be58}, ! Handle
@@ -1134,7 +1134,7 @@ OS:Schedule:Day,
 
 OS:Schedule:Ruleset,
   {694cceca-1b0f-4555-b96e-1d68a1080f78}, ! Handle
-  Bldg101 HtgSetp,                        ! Name
+  Bldg101 HtgSetp 70F,                    ! Name
   {b2323053-24fd-48bf-91c8-981699edab0b}, ! Schedule Type Limits Name
   {063e5629-a170-4418-8757-3f0125e1d80d}, ! Default Day Schedule Name
   {616fcb29-21a5-40d4-860d-78070ea5676b}, ! Summer Design Day Schedule Name
@@ -1622,7 +1622,7 @@ OS:Schedule:Day,
 
 OS:Schedule:Ruleset,
   {cf910c2b-7c8a-463b-a623-5a7996457a2d}, ! Handle
-  Bldg101 ClgSetp,                        ! Name
+  Bldg101 ClgSetp 72F,                    ! Name
   {a1b286a2-734b-4de1-aca9-74651817c459}, ! Schedule Type Limits Name
   {5c11f371-6961-45b9-aeb1-7162111d5839}, ! Default Day Schedule Name
   {5c2aba1b-f93c-4afd-ad14-41f7951dc245}, ! Summer Design Day Schedule Name
@@ -1752,7 +1752,8 @@ OS:ScheduleTypeLimits,
 OS:YearDescription,
   {809b5ab2-87e8-4866-bec9-d980e49142d1}, !- Handle
   ,                                       !- Calendar Year
-  Sunday;                                 !- Day of Week for Start Day
+  Sunday,                                 !- Day of Week for Start Day
+  ;                                       !- Is Leap Year
 
 OS:BuildingStory,
   {e78a8b2a-d228-490a-8096-659525d9aa5d}, !- Handle
@@ -12489,7 +12490,7 @@ OS:OutputControl:ReportingTolerances,
 OS:ConvergenceLimits,
   {482a9256-36b1-4fda-b8e8-261f6712d6b9}, !- Handle
   ,                                       !- Minimum System Timestep {minutes}
-  75,                                     !- Maximum HVAC Iterations
+  100,                                    !- Maximum HVAC Iterations
   2,                                      !- Minimum Plant Iterations
   10;                                     !- Maximum Plant Iterations
 
@@ -12550,7 +12551,7 @@ OS:WeatherFile,
   -5,                                     !- Time Zone {hr}
   2,                                      !- Elevation {m}
   file:files/USA_PA_Philadelphia.Intl.AP.724080_TMY3.epw, !- Url
-  6B565F12;                               !- Checksum
+  EF3F8F7B;                               !- Checksum
 
 OS:Site,
   {acbcef81-0063-4581-89dc-9fd767960c38}, !- Handle
@@ -13457,7 +13458,7 @@ OS:Schedule:Day,
 OS:SpaceType,
   {3589b451-9b2b-4d38-ae9f-af80d8fcd642}, ! Handle
   Bldg101_Aggregate,                      ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {a48bde36-837a-4c9a-b9c3-9ad0a31a74e1}; !- Design Specification Outdoor Air Object Name
@@ -13588,7 +13589,7 @@ OS:People:Definition,
 OS:SpaceType,
   {19a0ea75-6291-472f-8471-3585b5535fe4}, ! Handle
   Bldg101_Office,                         ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {48f94045-a807-40a1-9fd1-3a19a0ceaec7}; !- Design Specification Outdoor Air Object Name
@@ -13603,7 +13604,7 @@ OS:People,
 OS:SpaceType,
   {892ab767-da86-4c5e-a813-f193197b7fba}, ! Handle
   Bldg101_Conference,                     ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {45e4c6f8-d1b9-41bd-aae2-2ade39ef48f5}; !- Design Specification Outdoor Air Object Name
@@ -13618,7 +13619,7 @@ OS:People,
 OS:SpaceType,
   {0d9923c7-f48c-48fb-8d76-0be699c57025}, ! Handle
   Bldg101_Bathroom,                       ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {2ec1b40c-3539-4621-8e2c-bba09e0b0319}; !- Design Specification Outdoor Air Object Name
@@ -13633,7 +13634,7 @@ OS:People,
 OS:SpaceType,
   {5713da02-9030-467b-aa98-42420d952fc0}, ! Handle
   Bldg101_Lobby,                          ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {28133c28-27c1-4ede-888c-6d5aa94f294a}; !- Design Specification Outdoor Air Object Name
@@ -13641,7 +13642,7 @@ OS:SpaceType,
 OS:SpaceType,
   {32a18572-5e8e-4c3a-8410-9550873a7e42}, ! Handle
   Bldg101_Unoccupied,                     ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {d483ed16-cd58-4227-88b1-dc3cc0193c0e}; !- Design Specification Outdoor Air Object Name
@@ -16359,7 +16360,7 @@ OS:ElectricEquipment:Definition,
 OS:SpaceType,
   {74419d14-6a56-4ed7-86eb-3f305e39f83c}, ! Handle
   Bldg101_Stair,                          ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {c891a562-e641-4436-89f8-9a9e0a8fae39}; !- Design Specification Outdoor Air Object Name
@@ -16436,7 +16437,7 @@ OS:ElectricEquipment,
 OS:SpaceType,
   {a21d1332-50f1-4553-bc3f-d62521030b4c}, ! Handle
   Bldg101_IntensiveOffice,                ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {5837710a-f85b-4ca6-bb4d-2d1317921406}; !- Design Specification Outdoor Air Object Name
@@ -16506,7 +16507,7 @@ OS:People,
 OS:SpaceType,
   {38a60c19-88c9-4e08-99d9-06d2b4fe87ca}, ! Handle
   Bldg101_OfficeMoveInMay,                ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {53ca9e6b-4886-44de-8bb2-fb4b8750d30b}; !- Design Specification Outdoor Air Object Name
@@ -16997,7 +16998,7 @@ OS:Schedule:Day,
 
 OS:Schedule:Ruleset,
   {197d9fed-e292-4e64-9774-5f020b3026fc}, ! Handle
-  FanSchedule,                            ! Name
+  FanSchedule Always On,                  ! Name
   {860056cb-f9ed-447b-aaaf-630c68f1cc0e}, ! Schedule Type Limits Name
   {0c7facdb-1160-49b6-8bdd-e6c7b9463825}, ! Default Day Schedule Name
   {e8e0d5d2-2a7f-4b06-8ed3-6b0acc9711dc}, ! Summer Design Day Schedule Name
@@ -17157,7 +17158,7 @@ OS:ElectricEquipment,
 OS:SpaceType,
   {23e9aa95-1c84-4a78-a288-fcc084e14682}, ! Handle
   Bldg101_Unoccupied_Office,              ! Name
-  {0d488488-262d-47e1-a8ba-06e750f7c74e}, ! Default Construction Set Name
+  ,                                       ! Default Construction Set Name
   {84c5fde7-68b9-410f-959d-12c435849159}, ! Default Schedule Set Name
   {dca0f93c-b0ab-49ea-a058-869b6aa0620c}, ! Group Rendering Name
   {87f042b0-cea5-4908-a9b9-8e6ee5316aa7}; !- Design Specification Outdoor Air Object Name
@@ -17541,10 +17542,10 @@ OS:Coil:Cooling:DX:TwoSpeed,
   {d21810c1-e532-4b38-9517-52a27a7fb8d8}, !- Handle
   Coil Cooling DX Two Speed 1,            !- Name
   {5362ad87-1b35-4912-9c6a-e637bd4c4ffd}, !- Availability Schedule Name
-  135408.212693812,                       !- Rated High Speed Total Cooling Capacity {W}
+  135408.21269381,                        !- Rated High Speed Total Cooling Capacity {W}
   0.676083,                               !- Rated High Speed Sensible Heat Ratio
   2.93,                                   !- Rated High Speed COP {W/W}
-  5.34897680963789,                       !- Rated High Speed Air Flow Rate {m3/s}
+  5.3489768096379,                        !- Rated High Speed Air Flow Rate {m3/s}
   {530df18d-e039-42b7-9912-1de954d17811}, !- Air Inlet Node Name
   {ed3b9a14-909e-4d8d-baaf-4eef9b93d8fe}, !- Air Outlet Node Name
   {a8c93bc7-6273-49b7-954e-2a4ffa631b72}, !- Total Cooling Capacity Function of Temperature Curve Name
@@ -17552,10 +17553,10 @@ OS:Coil:Cooling:DX:TwoSpeed,
   {a4c1ff5d-1b7e-4b18-9af6-135989f0e3a9}, !- Energy Input Ratio Function of Temperature Curve Name
   {41690402-1201-4ea5-82af-dc89ee818488}, !- Energy Input Ratio Function of Flow Fraction Curve Name
   {a9ffb998-2db6-4a11-a1fa-d92da200bb49}, !- Part Load Fraction Correlation Curve Name
-  45129.6917176433,                       !- Rated Low Speed Total Cooling Capacity {W}
+  45129.691717643,                        !- Rated Low Speed Total Cooling Capacity {W}
   0.676083,                               !- Rated Low Speed Sensible Heat Ratio
   3.36002,                                !- Rated Low Speed COP {W/W}
-  1.77999980845778,                       !- Rated Low Speed Air Flow Rate {m3/s}
+  1.7799998084578,                        !- Rated Low Speed Air Flow Rate {m3/s}
   {c87b21c8-3db9-4bb2-ad68-695615a7294e}, !- Low Speed Total Cooling Capacity Function of Temperature Curve Name
   {afc1f154-0df0-486c-85b6-c5c734a28196}, !- Low Speed Energy Input Ratio Function of Temperature Curve Name
   ,                                       !- Condenser Air Inlet Node Name
@@ -18512,10 +18513,10 @@ OS:Coil:Cooling:DX:TwoSpeed,
   {bfeda5e5-7eea-4dd3-9078-3d78d6b4f1c3}, !- Handle
   Coil Cooling DX Two Speed 2,            !- Name
   {5362ad87-1b35-4912-9c6a-e637bd4c4ffd}, !- Availability Schedule Name
-  215717.598839896,                       !- Rated High Speed Total Cooling Capacity {W}
+  215717.5988399,                         !- Rated High Speed Total Cooling Capacity {W}
   0.716168,                               !- Rated High Speed Sensible Heat Ratio
   3.077,                                  !- Rated High Speed COP {W/W}
-  10.1077361468099,                       !- Rated High Speed Air Flow Rate {m3/s}
+  10.10773614681,                         !- Rated High Speed Air Flow Rate {m3/s}
   {c056a2f2-681f-43fd-a18e-79a0b8ee01bb}, !- Air Inlet Node Name
   {f0cc068d-391a-4ec9-a852-6200076a5a1e}, !- Air Outlet Node Name
   {06ebdfb7-c3ce-49ac-9a2a-801bcf9479b5}, !- Total Cooling Capacity Function of Temperature Curve Name
@@ -18523,10 +18524,10 @@ OS:Coil:Cooling:DX:TwoSpeed,
   {47396e89-7be5-442d-b7f8-786087eff528}, !- Energy Input Ratio Function of Temperature Curve Name
   {fe3de89e-61be-45ac-9494-a54e4aaa47c9}, !- Energy Input Ratio Function of Flow Fraction Curve Name
   {60049687-75a7-41a4-a594-3e9655f31a16}, !- Part Load Fraction Correlation Curve Name
-  21071.4230915701,                       !- Rated Low Speed Total Cooling Capacity {W}
+  21071.42309157,                         !- Rated Low Speed Total Cooling Capacity {W}
   0.716168,                               !- Rated Low Speed Sensible Heat Ratio
   3.780645,                               !- Rated Low Speed COP {W/W}
-  3.37000018354744,                       !- Rated Low Speed Air Flow Rate {m3/s}
+  3.3700001835474,                        !- Rated Low Speed Air Flow Rate {m3/s}
   {b7c15b0a-84b9-4407-9dbe-dab74c1de26a}, !- Low Speed Total Cooling Capacity Function of Temperature Curve Name
   {152c4a57-2581-4ad8-913d-525f9cb91a9b}, !- Low Speed Energy Input Ratio Function of Temperature Curve Name
   ,                                       !- Condenser Air Inlet Node Name
@@ -22882,7 +22883,7 @@ OS:SetpointManager:Scheduled,
 
 OS:Schedule:Ruleset,
   {896a42a1-f041-4116-b03c-508aaa195ecb}, ! Handle
-  Hot Water Temperature 1,                ! Name
+  Hot Water Temperature 180F,             ! Name
   {721037ef-d6d3-4aa5-ac71-f0ffc35c620a}, ! Schedule Type Limits Name
   {2c22be5e-e1a5-44a5-b432-0ebd5bc717aa}, ! Default Day Schedule Name
   {e471d18c-e108-432a-885a-d4bdfceedd65}, ! Summer Design Day Schedule Name
@@ -22935,9 +22936,10 @@ OS:Material,
 
 OS:WindowMaterial:SimpleGlazingSystem,
   {34db5fab-1f8b-4471-90b3-a57d96c08ab0}, !- Handle
-  Window Material Simple Glazing System 1, !- Name
+  Bldg101 Window with Window Film,        !- Name
   2.66991942299156,                       !- U-Factor {W/m2-K}
-  0.38;                                   !- Solar Heat Gain Coefficient
+  0.38,                                   !- Solar Heat Gain Coefficient
+  0.5;                                    !- Visible Transmittance
 
 OS:Building,
   {08678ddd-175a-469b-9626-2f02c40b6916}, !- Handle
@@ -22950,7 +22952,7 @@ OS:Building,
   {84c5fde7-68b9-410f-959d-12c435849159}; !- Default Schedule Set Name
 
 OS:ClimateZones,
-  {9f338a01-b54f-4d47-a7a1-e5a10c471a8f}, !- Handle
+  {73934940-8ba9-4f7c-815d-6bc8f42f8e99}, !- Handle
   ,                                       !- Active Institution
   ,                                       !- Active Year
   ASHRAE,                                 !- Climate Zone Institution Name 1
@@ -22963,11 +22965,187 @@ OS:ClimateZones,
   ;                                       !- Climate Zone Value 2
 
 OS:StandardsInformation:Construction,
-  {4513075f-f163-44b1-a788-32e1c685a0c0}, !- Handle
+  {3fcdcbc0-33e5-4c12-8688-3d23fa43874a}, !- Handle
   {a442b3af-e43f-4125-980b-b1200782affa}, !- Construction Name
   GroundContactFloor;                     !- Intended Surface Type
 
 OS:StandardsInformation:Construction,
-  {2969934a-4754-42db-9544-15f4eedd7ac1}, !- Handle
-  {b09a8a1c-d2ef-47c1-87d1-ebed9781986c}; !- Construction Name
+  {e502d60b-0649-41f5-b793-b7e0901aead1}, !- Handle
+  {b09a8a1c-d2ef-47c1-87d1-ebed9781986c}, !- Construction Name
+  ExteriorDoor;                           !- Intended Surface Type
+
+OS:StandardsInformation:Construction,
+  {e768ad57-86c8-40a5-83d9-5f882a2449dd}, !- Handle
+  {73813707-3fc0-42d1-aff6-580bcc139e24}, !- Construction Name
+  ExteriorWindow;                         !- Intended Surface Type
+
+OS:Construction,
+  {e0830c49-98b2-45aa-9b46-dd2cbb17d2c0}, !- Handle
+  Bldg101 Window with Window Film Construction, !- Name
+  {daabb36b-1a21-42d4-81aa-18e9fe52ec55}, !- Surface Rendering Name
+  {34db5fab-1f8b-4471-90b3-a57d96c08ab0}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {6ffbc3c3-0fb7-4b66-89ba-a6a09c272d78}, !- Handle
+  {e0830c49-98b2-45aa-9b46-dd2cbb17d2c0}, !- Construction Name
+  ExteriorWindow;                         !- Intended Surface Type
+
+OS:Schedule:Ruleset,
+  {50bb43cd-b48d-4178-a149-82fb40e5c2e2}, !- Handle
+  FanSchedule SetBack 17:00 to 5:00,      !- Name
+  {c98ef19c-d7f7-4153-9d3f-547e70294320}, !- Schedule Type Limits Name
+  {f71f6282-6362-43c3-8c71-3cb68604a534}, !- Default Day Schedule Name
+  {fc15fb83-7e8e-4748-a4d5-660e5cf61230}, !- Summer Design Day Schedule Name
+  {b433301a-2cb9-432b-ac37-8c540cae6b5c}; !- Winter Design Day Schedule Name
+
+OS:Schedule:Day,
+  {f71f6282-6362-43c3-8c71-3cb68604a534}, !- Handle
+  Schedule Day 7,                         !- Name
+  {c98ef19c-d7f7-4153-9d3f-547e70294320}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  5,                                      !- Hour 1
+  0,                                      !- Minute 1
+  0,                                      !- Value Until Time 1
+  17,                                     !- Hour 2
+  0,                                      !- Minute 2
+  1,                                      !- Value Until Time 2
+  24,                                     !- Hour 3
+  0,                                      !- Minute 3
+  0;                                      !- Value Until Time 3
+
+OS:Schedule:Day,
+  {fc15fb83-7e8e-4748-a4d5-660e5cf61230}, !- Handle
+  Schedule Day 20,                        !- Name
+  {c98ef19c-d7f7-4153-9d3f-547e70294320}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  1;                                      !- Value Until Time 1
+
+OS:Schedule:Day,
+  {b433301a-2cb9-432b-ac37-8c540cae6b5c}, !- Handle
+  Schedule Day 21,                        !- Name
+  {c98ef19c-d7f7-4153-9d3f-547e70294320}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  1;                                      !- Value Until Time 1
+
+OS:ScheduleTypeLimits,
+  {326ac0ab-8df2-4514-aeca-97f9d821bca0}, !- Handle
+  Temperature 14,                         !- Name
+  ,                                       !- Lower Limit Value {BasedOnField A4}
+  ,                                       !- Upper Limit Value {BasedOnField A4}
+  Continuous,                             !- Numeric Type
+  Temperature;                            !- Unit Type
+
+OS:Schedule:Ruleset,
+  {2d55a8f5-dcb2-4130-bd1c-2c88a152387a}, !- Handle
+  Bldg101 HtgSetp 70F SetBack to 55F 17:00 to 5:00, !- Name
+  {326ac0ab-8df2-4514-aeca-97f9d821bca0}, !- Schedule Type Limits Name
+  {92732f16-ef28-49cf-b4c9-9463fdb6fa24}; !- Default Day Schedule Name
+
+OS:Schedule:Day,
+  {92732f16-ef28-49cf-b4c9-9463fdb6fa24}, !- Handle
+  Schedule Day 19,                        !- Name
+  {326ac0ab-8df2-4514-aeca-97f9d821bca0}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  5,                                      !- Hour 1
+  0,                                      !- Minute 1
+  12.7777777777778,                       !- Value Until Time 1
+  17,                                     !- Hour 2
+  0,                                      !- Minute 2
+  21.1111111111111,                       !- Value Until Time 2
+  24,                                     !- Hour 3
+  0,                                      !- Minute 3
+  12.7777777777778;                       !- Value Until Time 3
+
+OS:ScheduleTypeLimits,
+  {941fc08a-a6cb-44a1-8883-25a627c34295}, !- Handle
+  Temperature 15,                         !- Name
+  ,                                       !- Lower Limit Value {BasedOnField A4}
+  ,                                       !- Upper Limit Value {BasedOnField A4}
+  Continuous,                             !- Numeric Type
+  Temperature;                            !- Unit Type
+
+OS:Schedule:Ruleset,
+  {2f4df833-a6bb-49e3-91b0-120b17c1904d}, !- Handle
+  Bldg101 ClgSetp 72F SetBack to 85F 17:00 to 5:00, !- Name
+  {941fc08a-a6cb-44a1-8883-25a627c34295}, !- Schedule Type Limits Name
+  {3ed5bcc7-58ba-4c6a-8a11-35a9a0fdd5b2}; !- Default Day Schedule Name
+
+OS:Schedule:Day,
+  {3ed5bcc7-58ba-4c6a-8a11-35a9a0fdd5b2}, !- Handle
+  Schedule Day 22,                        !- Name
+  {941fc08a-a6cb-44a1-8883-25a627c34295}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  5,                                      !- Hour 1
+  0,                                      !- Minute 1
+  22.2222222222223,                       !- Value Until Time 1
+  17,                                     !- Hour 2
+  0,                                      !- Minute 2
+  29.4444444444445,                       !- Value Until Time 2
+  24,                                     !- Hour 3
+  0,                                      !- Minute 3
+  22.2222222222223;                       !- Value Until Time 3
+
+OS:ScheduleTypeLimits,
+  {c8bfa63b-624f-4a94-8f9a-feed92102b81}, !- Handle
+  Temperature 16,                         !- Name
+  ,                                       !- Lower Limit Value {BasedOnField A4}
+  ,                                       !- Upper Limit Value {BasedOnField A4}
+  Continuous,                             !- Numeric Type
+  Temperature;                            !- Unit Type
+
+OS:Schedule:Ruleset,
+  {b14923d0-fdf7-43d6-a1f6-0b2604ddfca0}, !- Handle
+  Hot Water Temperature 140F,             !- Name
+  {c8bfa63b-624f-4a94-8f9a-feed92102b81}, !- Schedule Type Limits Name
+  {7e8e07b7-e15a-4605-a39f-34143e7a3206}, !- Default Day Schedule Name
+  {81504f40-0143-4732-84bb-f2bf2aa12a5a}, !- Summer Design Day Schedule Name
+  {575c4935-e9fd-45cc-8851-762375f3b56c}; !- Winter Design Day Schedule Name
+
+OS:Schedule:Day,
+  {7e8e07b7-e15a-4605-a39f-34143e7a3206}, !- Handle
+  Schedule Day 23,                        !- Name
+  {c8bfa63b-624f-4a94-8f9a-feed92102b81}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  60.0000000000001;                       !- Value Until Time 1
+
+OS:Schedule:Day,
+  {81504f40-0143-4732-84bb-f2bf2aa12a5a}, !- Handle
+  Schedule Day 25,                        !- Name
+  {c8bfa63b-624f-4a94-8f9a-feed92102b81}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  60.0000000000001;                       !- Value Until Time 1
+
+OS:Schedule:Day,
+  {575c4935-e9fd-45cc-8851-762375f3b56c}, !- Handle
+  Schedule Day 26,                        !- Name
+  {c8bfa63b-624f-4a94-8f9a-feed92102b81}, !- Schedule Type Limits Name
+  ,                                       !- Interpolate to Timestep
+  24,                                     !- Hour 1
+  0,                                      !- Minute 1
+  60.0000000000001;                       !- Value Until Time 1
+
+OS:LifeCycleCost:Parameters,
+  {c238909c-587e-443c-99c0-e5fbda63a4be}, !- Handle
+  FEMP,                                   !- Analysis Type
+  ,                                       !- Discounting Convention
+  ,                                       !- Inflation Approach
+  ,                                       !- Real Discount Rate
+  ,                                       !- Nominal Discount Rate
+  ,                                       !- Inflation
+  ,                                       !- Base Date Month
+  ,                                       !- Base Date Year
+  ,                                       !- Service Date Month
+  ,                                       !- Service Date Year
+  25,                                     !- Length of Study Period in Years
+  ,                                       !- Tax Rate
+  ,                                       !- Depreciation Method
+  Yes;                                    !- Use NIST Fuel Escalation Rates
 
