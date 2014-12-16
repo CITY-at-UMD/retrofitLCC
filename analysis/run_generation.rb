@@ -39,6 +39,17 @@ File.open(fname_map) do |f|
   end
 end
 
+num_scripts = 0
+# create the baseline run
+script_fname = "#{Dir.pwd}/run_scripts/baseline.rb"
+f8 = 'outdir = OpenStudio::Path.new("#{Dir.pwd}/run_scripts/results/' + "baseline" '")'
+File.open(script_fname, 'w') do |mergedFile|
+  mergedFile << f1 + "\n" + f2 + "\n" + f3 + "\n" + f5 + "\n\n" +
+                '# add EnergyPlus measures' + "\n" + f6 + "\n\n" +
+                f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
+end
+num_scripts = num_scripts + 1 
+
 # for each unique simulation, construct a run_script
 File.readlines(fname_runs).each do |seq|
   
@@ -69,13 +80,13 @@ File.readlines(fname_runs).each do |seq|
 	  end
       #puts "INDEX: #{index}, runs: #{preceding_sim}"
 	  #puts "preceding_measure: #{preceding_measure}"
-	  
-	  preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")
-	  preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}
-	  preceding_eplus_folder = "#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}" + "/" + "#{preceding_eplus_folder[0]}" +"/"
-	  
+
 	  # if an HVAC measure is preceding, hardsize model based on prior run	  
       if dependence_hash[preceding_measure].to_i == 1
+	    preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")
+	    preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}
+	    preceding_eplus_folder = "#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}" + "/" + "#{preceding_eplus_folder[0]}" +"/"
+		
 		if measure_hash[preceding_measure].include? "Boiler"
 	      sql_path = "#{preceding_eplus_folder}" + "eplusout.sql"
 		  mergedFile << "sql_path =" + "'#{sql_path}'"
@@ -98,13 +109,8 @@ File.readlines(fname_runs).each do |seq|
                   '# add E+ measures' + "\n" + f6 + "\n\n" +
                   f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
   end
+  
+  num_scripts = num_scripts + 1
 end
 
-# create the baseline run
-script_fname = "#{Dir.pwd}/run_scripts/baseline.rb"
-f8 = 'outdir = OpenStudio::Path.new("#{Dir.pwd}/run_scripts/results/' + "baseline" '")'
-File.open(script_fname, 'w') do |mergedFile|
-  mergedFile << f1 + "\n" + f2 + "\n" + f3 + "\n" + f5 + "\n\n" +
-                '# add EnergyPlus measures' + "\n" + f6 + "\n\n" +
-                f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
-end
+puts "successfully wrote #{num_scripts} scripts to the run_scripts directory"

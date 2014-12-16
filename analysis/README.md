@@ -4,10 +4,12 @@
 * **OpenStudio 1.5.1 or greater**
 * **Ruby 2.0.0 or greater** 
     * add *Ruby200\bin* to path
+* **OpenStudio gem**	
     * add a file **openstudio.rb** to *Ruby\lib\ruby\site_ruby* with this in it:
 ```ruby
 require 'C:\Program Files (x86)\OpenStudio 1.5.0\Ruby\openstudio.rb'
 ```
+* **minitest 5.4.2 gem or greater**
 * **R, recommend RStudio 0.98.1083 or greater**
 
 ##Folders: 
