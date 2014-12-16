@@ -14,10 +14,10 @@ library(reshape2)
 library(gridExtra)
 library(zoo)
 #
-rm(list=ls())  # clear variables 
+#rm(list=ls())  # clear variables 
 #
 ### Import data
-load('./run_scripts/results/simulation_results.RData')
+#load('./run_scripts/results/simulation_results.RData')
 
 npv.vs.eui <- ggplot(data = simulation.results,
                       aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
