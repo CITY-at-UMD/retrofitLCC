@@ -66,8 +66,9 @@ class SetBoilerCapacity < OpenStudio::Ruleset::ModelUserScript
 	
     # the sql filename and location to be used
     sql_fname = OpenStudio::Ruleset::OSArgument.makeStringArgument("sql_fname", true)
+	sql_fname.setDescription("Please select the SQL file to use for hard-sizing.")
     sql_fname.setDisplayName("sql_fname")
-    sql_fname.setDescription("Please select the SQL file to use for hard-sizing.")
+	sql_fname.setDefaultValue("sql_fname")    
     args << sql_fname
 
     return args
@@ -83,6 +84,7 @@ class SetBoilerCapacity < OpenStudio::Ruleset::ModelUserScript
     end
 	
 	# Determine if the measure is applicable to the model, if not just return and no changes are made.
+	# boiler_bool is false if the measure is applicable, and true if it is not
 	boiler_bool = runner.getBoolArgumentValue("boiler_bool", user_arguments)
 	if boiler_bool
 	  runner.registerInfo("This measure is not applicable.")

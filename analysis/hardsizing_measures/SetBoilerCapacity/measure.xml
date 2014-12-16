@@ -88,13 +88,13 @@
       <usage_type>test</usage_type>
       <checksum>0AA1649B</checksum>
     </file>
-	    <file>
-      <filename>Bldg101_StagingPreSetback</filename>
+	<file>
+      <filename>Bldg101_StagingPreSetback.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
       <checksum></checksum>
     </file>
-	    <file>
+	<file>
       <filename>eplusout.sql</filename>
       <filetype>sql</filetype>
       <usage_type>test</usage_type>

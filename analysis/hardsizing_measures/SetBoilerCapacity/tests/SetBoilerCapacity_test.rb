@@ -1,6 +1,8 @@
 require 'openstudio'
 require 'openstudio/ruleset/ShowRunnerOutput'
 require 'minitest/autorun'
+require_relative '../measure.rb'
+require 'fileutils'
 require "#{File.dirname(__FILE__)}/../measure.rb"
 
 class SetBoilerCapacity_Test < MiniTest::Test
@@ -27,6 +29,7 @@ class SetBoilerCapacity_Test < MiniTest::Test
 
     # set argument values to good values and run the measure on model
     argument_map = OpenStudio::Ruleset::OSArgumentMap.new
+	
     boiler_bool = arguments[0].clone
     assert(boiler_bool.setValue(false))
     argument_map["boiler_bool"] = boiler_bool
