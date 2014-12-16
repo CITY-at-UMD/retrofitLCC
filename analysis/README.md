@@ -1,4 +1,11 @@
 #Analysis Directions: 
+##Software Dependencies: 
+-**Ruby 2.1.5**
+-**EnergyPlus 8.1**
+-**OpenStudio 1.5.1**
+-**OpenStudio gem**
+-**R, recommend RStudio 0.98.1083 or greater
+
 ##Folders: 
 -**autosize_measure**
  contains the autosizing measure to hard size HVAC equipment to values from a prior simulation run.
@@ -23,7 +30,7 @@
 
 -**weather**
  contains the weather file
- 
+
 ##Execute these files in order:
 1)**RetrofitPermute.R**
  Reads in measure names and generates all possible permutations.
