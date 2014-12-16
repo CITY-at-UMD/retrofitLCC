@@ -1,23 +1,25 @@
 #Analysis Directions: 
 ##Software Dependencies: 
-* **EnergyPlus 8.1**
+* **[EnergyPlus 8.1](http://apps1.eere.energy.gov/buildings/energyplus/energyplus_about.cfm)**
 * **OpenStudio 1.5.1, 1.5.2, or 1.5.3**
-	* Download the OpenStudio 1.5.1 from this [link](http://developer.nrel.gov/downloads/buildings/openstudio/builds/1.5.1/OpenStudio-1.5.1.0c740efe7c-Windows.exe)
-* **Ruby 2.0.0** 
-    * add *Ruby200\bin* to path in the Environmental Variables
+	* [Download OpenStudio 1.5.1 here](http://developer.nrel.gov/downloads/buildings/openstudio/builds/)
+* **Ruby 2.0.0**
+    * [Download Ruby 2.0.0 here](https://www.ruby-lang.org/en/documentation/installation/) 
+    * add *Ruby200\bin* to the [path Environmental Variable](http://en.wikipedia.org/wiki/Environment_variable)
 * **OpenStudio gem**	
-    * add a file **openstudio.rb** to *Ruby\lib\ruby\site_ruby* with this in it:
+    * add a file **openstudio.rb** to *Ruby\lib\ruby\site_ruby* with this in it (Windows machine):
 ```ruby
-require 'C:\Program Files (x86)\OpenStudio 1.5.0\Ruby\openstudio.rb'
+require 'C:\Program Files (x86)\OpenStudio 1.5.1\Ruby\openstudio.rb'
 ```
 * **minitest 5.4.2 gem or greater**
-    * Download minitest 5.4.2 from [this link](https://rubygems.org/downloads/minitest-5.4.2.gem)
+    * [Download minitest 5.4.2](https://rubygems.org/downloads/minitest-5.4.2.gem)
     * Put the file in the `C:\Ruby200\lib\ruby\gems\2.0.0\gems`
     * Go to the command line and navigate to the folder
     * Type `gem install minitest-5.4.2.gem`
     * You should see a new folder *minitest-5.4.2*
 
 * **R, recommend RStudio 0.98.1083 or greater**
+	* [Download RStudio](http://www.rstudio.com/products/RStudio/)
 
 ##Folders: 
 * **autosize_measure**
