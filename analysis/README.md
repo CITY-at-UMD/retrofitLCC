@@ -1,9 +1,10 @@
 #Analysis Directions: 
 ##Software Dependencies: 
-* **EnergyPlus 8.1 or greater**
-* **OpenStudio 1.5.1 or greater**
-* **Ruby 2.0.0 or greater** 
-    * add *Ruby200\bin* to path
+* **EnergyPlus 8.1**
+* **OpenStudio 1.5.1, 1.5.2, or 1.5.3**
+	* Download the OpenStudio 1.5.1 from this [link](http://developer.nrel.gov/downloads/buildings/openstudio/builds/1.5.1/OpenStudio-1.5.1.0c740efe7c-Windows.exe)
+* **Ruby 2.0.0** 
+    * add *Ruby200\bin* to path in the Environmental Variables
 * **OpenStudio gem**	
     * add a file **openstudio.rb** to *Ruby\lib\ruby\site_ruby* with this in it:
 ```ruby
