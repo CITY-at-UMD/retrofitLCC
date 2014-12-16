@@ -10,6 +10,12 @@
 require 'C:\Program Files (x86)\OpenStudio 1.5.0\Ruby\openstudio.rb'
 ```
 * **minitest 5.4.2 gem or greater**
+    * Download minitest 5.4.2 from [this link](https://rubygems.org/downloads/minitest-5.4.2.gem)
+    * Put the file in the `C:\Ruby200\lib\ruby\gems\2.0.0\gems`
+    * Go to the command line and navigate to the folder
+    * Type `gem install minitest-5.4.2.gem`
+    * You should see a new folder *minitest-5.4.2*
+
 * **R, recommend RStudio 0.98.1083 or greater**
 
 ##Folders: 
