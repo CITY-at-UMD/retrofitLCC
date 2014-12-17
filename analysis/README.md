@@ -3,8 +3,11 @@
 * **[EnergyPlus 8.1](http://apps1.eere.energy.gov/buildings/energyplus/energyplus_about.cfm)**
 * **OpenStudio 1.5.1, 1.5.2, or 1.5.3**
 	* [Download OpenStudio 1.5.1 here](http://developer.nrel.gov/downloads/buildings/openstudio/builds/)
+    * Make sure that you select the Windows version not the 64bit version (For example, for the 1.5.1, the donwloaded file has `OpenStudio-1.5.1.0c740efe7c-Windows.exe` name)    
 * **Ruby 2.0.0**
-    * [Download Ruby 2.0.0 here](https://www.ruby-lang.org/en/documentation/installation/) 
+    * [Download Ruby 2.0.0 here](https://www.ruby-lang.org/en/documentation/installation/)
+    * Make sure that you select the regular version of the ruby 2.0.0-p598 version not the 64bit version (The donwloaded file has this name: `rubyinstaller-2.0.0-p598`)
+    * If you select the 64bit versions for the OpenStudio and ruby, OpenStudio will show a Win32 error message. 
     * add *Ruby200\bin* to the [path Environmental Variable](http://en.wikipedia.org/wiki/Environment_variable)
 * **OpenStudio gem**	
     * add a file **openstudio.rb** to *Ruby\lib\ruby\site_ruby* with this in it (Windows machine):
