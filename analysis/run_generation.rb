@@ -73,7 +73,7 @@ File.readlines(fname_runs).each do |seq|
 	
 	  if index == 0
 	    preceding_sim = "baseline"
-		preceding_measure = "baseline"
+		preceding_measure = "baseline"		
 	  else
 	    preceding_sim = "#{runs.slice(0,index).join("_")}"
 		preceding_measure = runs[index-1]
@@ -83,18 +83,19 @@ File.readlines(fname_runs).each do |seq|
 
 	  # if an HVAC measure is preceding, hardsize model based on prior run	  
       if dependence_hash[preceding_measure].to_i == 1
-	    preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")
-	    preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}
-	    preceding_eplus_folder = "#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}" + "/" + "#{preceding_eplus_folder[0]}" +"/"
+	    mergedFile << 'preceding_sim = ' + "'#{preceding_sim}'" + "\n"
+	    mergedFile << 'preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")'
+	    mergedFile << 'preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}'
+	    mergedFile << 'preceding_eplus_folder = "#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}" + "/" + "#{preceding_eplus_folder[0]}" + "/"' + "\n"
 		
 		if measure_hash[preceding_measure].include? "Boiler"
-	      sql_path = "#{preceding_eplus_folder}" + "eplusout.sql"
-		  mergedFile << "sql_path =" + "'#{sql_path}'"
+	      mergedFile << 'sql_path = "#{preceding_eplus_folder}" + "eplusout.sql"' + "\n"
+		  mergedFile << 'sql_path = "#{sql_path}"' + "\n\n"
 		  mergedFile << f_boiler + "\n\n"
 		end
 		if measure_hash[preceding_measure].include? "TwoSpeedDXCooling"
-	      eio_path = "#{preceding_eplus_folder}" + "eplusout.eio"
-		  mergedFile << "eio_path = #{eio_path}"
+	      mergedFile << 'eio_path = "#{preceding_eplus_folder}" + "eplusout.eio"' + "\n"
+		  mergedFile << 'eio_path = "#{eio_path}"' + "\n\n"
 		  mergedFile << f_cu + "\n\n"
 		end
       end
