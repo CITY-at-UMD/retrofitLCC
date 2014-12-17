@@ -7,6 +7,7 @@
 * **Ruby 2.0.0**
     * [Download Ruby 2.0.0 here](https://www.ruby-lang.org/en/documentation/installation/)
     * Make sure that you select the regular version of the ruby 2.0.0-p598 version not the 64bit version (The donwloaded file has this name: `rubyinstaller-2.0.0-p598`)
+    * During the installation make sure thay you check the 2nd and 3rd boxes to add ruby to the environmental paths and assocaited files. 
     * If you select the 64bit versions for the OpenStudio and ruby, OpenStudio will show a Win32 error message. 
     * add *Ruby200\bin* to the [path Environmental Variable](http://en.wikipedia.org/wiki/Environment_variable)
 * **OpenStudio gem**	
