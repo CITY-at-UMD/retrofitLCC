@@ -24,6 +24,7 @@ require 'C:\Program Files (x86)\OpenStudio 1.5.1\Ruby\openstudio.rb'
 
 * **R, recommend RStudio 0.98.1083 or greater**
 	* [Download RStudio](http://www.rstudio.com/products/RStudio/)
+	* Install packages DBI, grid, gridExtra, gsubfn, ggplot2, proto, reshape2, RSQLite, scales, sqldf, tcltk, zoo
 
 ##Folders: 
 * **autosize_measure**
