@@ -109,6 +109,7 @@ Rated Low Speed Air Flow Rate"
           coil_sizing_hash[key] = a[4] 
           end
       end
+	  runner.registerInfo("Coil sizing information pulled from #{eio_fname}.")
 	end
 	hs_cap = "DESIGN SIZE RATED HIGH SPEED TOTAL COOLING CAPACITY"
 	hs_shr = "DESIGN SIZE RATED HIGH SPEED SENSIBLE HEAT RATIO"
@@ -147,16 +148,6 @@ Rated Low Speed Air Flow Rate"
       air_loops << air_loop # only run on a single air loop
     end
 	
-	# set arrays for initial values
-	initial_high_cap_values = []
-	initial_high_shr_values = []
-	initial_high_afr_values = []
-	initial_high_cop_values = []
-	initial_low_cap_values = []
-	initial_low_shr_values = []
-	initial_low_afr_values = []
-	initial_low_cop_values = []
-	
     #loop through air loops
     air_loops.each do |air_loop|
       supply_components = air_loop.supplyComponents
@@ -169,28 +160,38 @@ Rated Low Speed Air Flow Rate"
 
           #change and report variables
           initial_high_cap = hVACComponent.ratedHighSpeedTotalCoolingCapacity
+		  if initial_high_cap.empty?
+		    initial_high_cap = 'autosize'
+		  end
 		  initial_high_shr = hVACComponent.ratedHighSpeedSensibleHeatRatio
+		  if initial_high_shr.empty?
+		    initial_high_shr = 'autosize'
+		  end
 		  initial_high_afr = hVACComponent.ratedHighSpeedAirFlowRate 
+		  if initial_high_afr.empty?
+		    initial_high_afr = 'autosize'
+		  end
 		  initial_high_cop = hVACComponent.ratedHighSpeedCOP
 		  initial_low_cap = hVACComponent.ratedLowSpeedTotalCoolingCapacity
+		  if initial_low_cap.empty?
+		    initial_low_cap = 'autosize'
+		  end
 		  initial_low_shr = hVACComponent.ratedLowSpeedSensibleHeatRatio
-		  initial_low_afr = hVACComponent.ratedLowSpeedAirFlowRate 
+		  if initial_low_shr.empty?
+		    initial_low_shr = 'autosize'
+		  end
+		  initial_low_afr = hVACComponent.ratedLowSpeedAirFlowRate
+		  if initial_low_afr.empty?
+		    initial_low_afr = 'autosize'
+		  end
 		  initial_low_cop = hVACComponent.ratedLowSpeedCOP
-		  initial_high_cap_values << initial_high_cap.get
-		  initial_high_shr_values << initial_high_shr.get
-		  initial_high_afr_values << initial_high_afr.get
-		  initial_high_cop_values << initial_high_cop.get
-		  initial_low_cap_values << initial_low_cap.get
-		  initial_low_shr_values << initial_low_shr.get
-		  initial_low_afr_values << initial_low_afr.get
-		  initial_low_cop_values << initial_low_cop.get
 		  final_high_cap = coil_sizing_hash[hVACComponent.name.to_s.upcase+hs_cap].to_f
 		  final_high_shr = coil_sizing_hash[hVACComponent.name.to_s.upcase+hs_shr].to_f
 		  final_high_afr = coil_sizing_hash[hVACComponent.name.to_s.upcase+hs_afr].to_f
 		  final_low_cap = coil_sizing_hash[hVACComponent.name.to_s.upcase+ls_cap].to_f
 		  final_low_shr = coil_sizing_hash[hVACComponent.name.to_s.upcase+ls_shr].to_f
 		  final_low_afr = coil_sizing_hash[hVACComponent.name.to_s.upcase+ls_afr].to_f
-          runner.registerInfo("*Setting values for Two Speed DX Unit '#{hVACComponent.name}' on air loop '#{air_loop.name}':\nRated High Speed Total Cooling Capacity from '#{initial_high_cap.get}' to '#{final_high_cap}'\nRated High Speed Sensible Heat Ratio from '#{initial_high_shr.get}' to '#{final_high_shr}'\nRated High Speed Air Flow Rate from '#{initial_high_afr.get}' to '#{final_high_afr}'\nRated Low Speed Total Cooling Capacity from '#{initial_low_cap.get}' to '#{final_low_cap}'\nRated Low Speed Sensible Heat Ratio from '#{initial_low_shr.get}' to '#{final_low_shr}'\nRated Low Speed Air Flow Rate from '#{initial_low_afr.get}' to '#{final_low_afr}'.\n")
+          runner.registerInfo("*Setting values for Two Speed DX Unit '#{hVACComponent.name}' on air loop '#{air_loop.name}':\nRated High Speed Total Cooling Capacity from '#{initial_high_cap.to_s}' to '#{final_high_cap}'\nRated High Speed Sensible Heat Ratio from '#{initial_high_shr.to_s}' to '#{final_high_shr}'\nRated High Speed Air Flow Rate from '#{initial_high_afr.to_s}' to '#{final_high_afr}'\nRated Low Speed Total Cooling Capacity from '#{initial_low_cap.to_s}' to '#{final_low_cap}'\nRated Low Speed Sensible Heat Ratio from '#{initial_low_shr.to_s}' to '#{final_low_shr}'\nRated Low Speed Air Flow Rate from '#{initial_low_afr.to_s}' to '#{final_low_afr}'.\n")
 		  hVACComponent.setRatedHighSpeedTotalCoolingCapacity(OpenStudio::OptionalDouble.new(final_high_cap))
           hVACComponent.setRatedHighSpeedSensibleHeatRatio(OpenStudio::OptionalDouble.new(final_high_shr))
           hVACComponent.setRatedHighSpeedAirFlowRate(OpenStudio::OptionalDouble.new(final_high_afr))

@@ -14,7 +14,7 @@ args << object
 
 # eio_path set in run_generation.rb
 eio_fname = OpenStudio::Ruleset::OSArgument.makeStringArgument("eio_fname")
-eio_fname.setValueName(eio_path)   
+eio_fname.setValue(eio_path)   
 args << eio_fname
 
 rubyjobbuilder = OpenStudio::Runmanager::RubyJobBuilder.new(measure.get(), args);

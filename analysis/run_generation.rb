@@ -46,7 +46,7 @@ f8 = 'outdir = OpenStudio::Path.new("#{Dir.pwd}/run_scripts/results/' + "baselin
 File.open(script_fname, 'w') do |mergedFile|
   mergedFile << f1 + "\n" + f2 + "\n" + f3 + "\n" + f5 + "\n\n" +
                 '# add EnergyPlus measures' + "\n" + f6 + "\n\n" +
-                f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
+                f7 + "\n" + '# output directory' + "\n\n" + f8 + "\n" + f9 + "\n"
 end
 num_scripts = num_scripts + 1 
 
@@ -84,8 +84,8 @@ File.readlines(fname_runs).each do |seq|
 	  # if an HVAC measure is preceding, hardsize model based on prior run	  
       if dependence_hash[preceding_measure].to_i == 1
 	    mergedFile << 'preceding_sim = ' + "'#{preceding_sim}'" + "\n"
-	    mergedFile << 'preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")'
-	    mergedFile << 'preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}'
+	    mergedFile << 'preceding_files = Dir.entries("#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}")' + "\n"
+	    mergedFile << 'preceding_eplus_folder = preceding_files.keep_if {|x| x.include? "EnergyPlus"}' + "\n"
 	    mergedFile << 'preceding_eplus_folder = "#{Dir.pwd}/run_scripts/results/" + "#{preceding_sim}" + "/" + "#{preceding_eplus_folder[0]}" + "/"' + "\n"
 		
 		if measure_hash[preceding_measure].include? "Boiler"
@@ -108,7 +108,7 @@ File.readlines(fname_runs).each do |seq|
 	# add remainder of reporting measures and output information
     mergedFile << "\n" + '# ***END OSM MEASURES***' + "\n\n" + f5 + "\n\n" +
                   '# add E+ measures' + "\n" + f6 + "\n\n" +
-                  f7 + "\n" + '# ouput directory' + "\n\n" + f8 + "\n\n" + f9 + "\n"
+                  f7 + "\n" + '# output directory' + "\n\n" + f8 + "\n" + f9 + "\n"
   end
   
   num_scripts = num_scripts + 1

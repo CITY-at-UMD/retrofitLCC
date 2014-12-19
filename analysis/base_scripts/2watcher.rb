@@ -10,9 +10,10 @@ class RunManagerWatcherImpl < OpenStudio::Runmanager::RunManagerWatcher
   end
 
   def jobFinishedDetails(t_jobId, t_jobType, t_lastRun, t_errors, t_outputFiles, t_inputParams, t_isMergedJob, t_mergedIntoJobId)
-    #puts "JobFinished: #{t_jobId} #{t_jobType.valueName} Run Time:#{t_lastRun} #{t_errors.succeeded} #{t_outputFiles.files.size} #{t_outputFiles.files.at(0).fullPath} #{t_inputParams.params.size} #{t_isMergedJob} #{t_mergedIntoJobId}\n"
-	puts "\nJob Type:#{t_jobType.valueName}\nJob Executed With No Errors?:#{t_errors.succeeded}\nFile Path:#{t_outputFiles.files.at(0).fullPath}\n"
-
+    puts "\n'#{t_jobType.valueName}' finished\nRUN TIME:#{t_lastRun}\nPARAMS SIZE:#{t_inputParams.params.size}\nMERGED JOB?:#{t_isMergedJob}\n#{t_outputFiles.files.size} output files at: #{t_outputFiles.files.at(0).fullPath}\nJOB FINISHED WITH NO ERRORS?:#{t_errors.succeeded}\nINFO:#{t_errors.infos}\nInitialConditions:#{t_errors.initialConditions}\nFinalConditions:#{t_errors.finalConditions}\nWarnings:#{t_errors.warnings}\nERRORS:#{t_errors.errors}\n"
+	#{t_jobId}
+	#{t_mergedIntoJobId}
+	
     if not @m_finishedCounts[t_jobType.value]
       @m_finishedCounts[t_jobType.value] = 1
     else

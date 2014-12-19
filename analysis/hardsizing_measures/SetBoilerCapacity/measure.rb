@@ -111,6 +111,7 @@ class SetBoilerCapacity < OpenStudio::Ruleset::ModelUserScript
 	boiler_names_query = "SELECT RowName FROM TabularDataWithStrings WHERE ReportName = 'EquipmentSummary' AND ReportForString='Entire Facility' AND TableName = 'Central Plant' AND ColumnName = 'Nominal Capacity'"
 	boiler_names_sql = sql.execAndReturnVectorOfString(boiler_names_query).get
 	boiler_capacities_sql = sql.execAndReturnVectorOfDouble(capacities_query).get
+	sql.close
 	
 	#loop through to find water boiler
 	i_boiler = 0
