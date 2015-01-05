@@ -1,6 +1,7 @@
-a ReduceLPD 0
-b ReduceNightTimeLightingLoads 0
-c ReplaceThermostatSchedulesHeating 0
-d SetBoilerThermalEfficiencyAndAutosize 1
-e SetCOPforTwoSpeedDXCoolingUnitsAndAutosize 1
-f ReplaceExteriorWindowConstruction 0
+a ExteriorWallInsulationandFinishSystem 0
+b ReduceLPD 0
+c ReduceNightTimeLightingLoads 0
+d ReduceSpaceInfiltrationByPercentage 0
+e ReplaceExteriorWindowConstruction 0
+f SetBoilerThermalEfficiencyAndAutosize 1
+g SetCOPforTwoSpeedDXCoolingUnitsAndAutosize 1

@@ -2,16 +2,6 @@
 % Encoding: Cp1252
 
 
-@InProceedings{Dasgupta2012,
-  Title                    = {Building Monitoring System and Preliminary Results for a Retrofitted Office Building},
-  Author                   = {A. Dasgupta, H. Henderson, R. Sweetser, T. Wagner},
-  Booktitle                = {International High Performance Buildings Conference, Purdue University, Purdue University},
-  Year                     = {2012},
-
-  Owner                    = {Matthew Dahlhausen},
-  Timestamp                = {2014.12.19}
-}
-
 @Article{Abadie2012551,
   Title                    = {Determinants of energy efficiency investments in the \{US\} },
   Author                   = {Luis M. Abadie and Ramon A. Ortiz and I. Galarraga},
@@ -88,6 +78,16 @@
   Url                      = {http://www.sciencedirect.com/science/article/pii/S0378778810003993}
 }
 
+@TechReport{McKinsey2009,
+  Title                    = {Unlocking Energy Efficiency in the U.S. Economy},
+  Author                   = {G.H. Choi and J. Creyts and A. Derkach and P. Farese and S. Nyquist and K. Ostrowski},
+  Institution              = {McKinsey\&Company},
+  Year                     = {2009},
+
+  Owner                    = {Matthew Dahlhausen},
+  Timestamp                = {2014.12.19}
+}
+
 @Article{Chuah201388,
   Title                    = {ROBESim: A retrofit-oriented building energy simulator based on EnergyPlus },
   Author                   = {Jun Wei Chuah and Anand Raghunathan and Niraj K. Jha},
@@ -113,6 +113,16 @@
   Timestamp                = {2014.12.19}
 }
 
+@InProceedings{Dasgupta2012,
+  Title                    = {Building Monitoring System and Preliminary Results for a Retrofitted Office Building},
+  Author                   = {A. Dasgupta and H. Henderson and R. Sweetser and T. Wagner},
+  Booktitle                = {International High Performance Buildings Conference, Purdue University, Purdue University},
+  Year                     = {2012},
+
+  Owner                    = {Matthew Dahlhausen},
+  Timestamp                = {2014.12.19}
+}
+
 @InBook{Delgoshaei2013,
   Title                    = {Hourly Plug Load Measurements and Profiles for a Medium Office Building - a Case Study},
   Author                   = {Delgoshaei, P. and Xu, K. and Wagner, S. and Sweetser, R. and Freihaut, J.},
@@ -125,16 +135,6 @@
   Doi                      = {10.1061/9780784412909.081},
   Eprint                   = {http://ascelibrary.org/doi/pdf/10.1061/9780784412909.081},
   Url                      = {http://ascelibrary.org/doi/abs/10.1061/9780784412909.081}
-}
-
-@TechReport{McKinsey2009,
-  Title                    = {Unlocking Energy Efficiency in the U.S. Economy},
-  Author                   = {G.H. Choi, J. Creyts, A. Derkach, P. Farese, S. Nyquist, K. Ostrowski},
-  Institution              = {McKinsey\&Company},
-  Year                     = {2009},
-
-  Owner                    = {Matthew Dahlhausen},
-  Timestamp                = {2014.12.19}
 }
 
 @Article{Hamdy2013189,
