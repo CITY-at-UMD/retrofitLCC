@@ -54,6 +54,7 @@ if (create.var.list) {
 #######################################
 
 # determine if the simulation result for a given permutation is available
+print(paste("determining which permutations exist..."))
 permutation.exists <- matrix(0, nrow=nperms, ncol=num.m)
 for (i in 1:nperms) {
   for (j in 1:num.m) {
@@ -193,10 +194,8 @@ npv.relative.to.base.with.replace <- c(rep(baseline.with.replacements.npv, uniqu
 simulation.results <- cbind(simulation.results, net.present.value, npv.relative.to.base, npv.relative.to.base.with.replace)
 rm(net.present.value, npv.relative.to.base, npv.relative.to.base.with.replace)
  
-
-
-# save(simulation.results, file="./run_scripts/results/simulation_results.RData")
-# print(paste("simulation results saved to: ./run_scripts/results/simulation_results.RData"))
+save(simulation.results, file="./run_scripts/results/simulation_results_LCC.RData")
+print(paste("simulation results saved to: ./run_scripts/results/simulation_results_LCC.RData"))
 
 ############################################################################
 ## CALCULATE LIFE CYCLE COST OF EACH UNIQUE PATH, UNDER CAPITAL CONSTRAINT##

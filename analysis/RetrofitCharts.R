@@ -14,15 +14,17 @@ library(reshape2)
 library(gridExtra)
 library(zoo)
 #
-#rm(list=ls())  # clear variables 
+rm(list=ls())  # clear variables 
 #
 ### Import data
-#load('./run_scripts/results/simulation_results.RData')
+load('./run_scripts/results/simulation_results_LCC.RData')
+baseline <- simulation.results[simulation.results$run.name %in% c("baseline"),]
 
 npv.vs.eui <- ggplot(data = simulation.results,
                       aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
   geom_point() +
-  geom_text(hjust=1, vjust=1, size = 3) + 
+  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$npv.relative.to.base, color = "red", size = 3) +
+  #geom_text(hjust=1, vjust=1, size = 3) + 
   #coord_cartesian(ylim=c(-100000, 135000), xlim=c(100, 75)) + 
   #scale_y_continuous(breaks=seq(100000, 135000, 5000), labels = dollar) + 
   labs(title = "Net Present Value Relative to Baseline for Measure Combinations",
@@ -39,9 +41,10 @@ plot(npv.vs.eui)
 cusize.vs.eui <- ggplot(data = simulation.results,
                         aes(x = site.energy.intensity*0.947817120/10.7639, y = cu.size, label = run.name)) + 
   geom_point() +
-  geom_text(hjust=1, vjust=1, size = 3) + 
-  coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
-  scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$cu.size, color = "red", size = 3) +
+  #geom_text(hjust=1, vjust=1, size = 3) + 
+  #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
+  #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
   labs(title = "Condensing Unit Size of Measure Options",
        x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
   xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
@@ -56,9 +59,10 @@ plot(cusize.vs.eui)
 boilersize.vs.eui <- ggplot(data = simulation.results,
                             aes(x = site.energy.intensity*0.947817120/10.7639, y = boiler.size, label = run.name)) + 
   geom_point() +
-  geom_text(hjust=1, vjust=1, size = 3) + 
-  coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
-  scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$boiler.size, color = "red", size = 3) +
+  #geom_text(hjust=1, vjust=1, size = 3) + 
+  #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
+  #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
   labs(title = "Boiler Size of Measure Options",
        x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
   xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
