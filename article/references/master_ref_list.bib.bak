@@ -197,6 +197,16 @@
   Url                      = {http://www.sciencedirect.com/science/article/pii/S0378778813006750}
 }
 
+@Electronic{RSmeans2014,
+  Title                    = {RSMeansOnline Version 5.0.3},
+  Author                   = {Reed Construction Data Inc.},
+  Url                      = {http://rsmeansonline.com},
+  Year                     = {2014},
+
+  Owner                    = {Matthew Dahlhausen},
+  Timestamp                = {2015.01.05}
+}
+
 @Article{Iqbal20072166,
   Title                    = {Parametric analysis of alternative energy conservation measures in an office building in hot and humid climate},
   Author                   = {Imran Iqbal and Mohammad S. Al-Homoud},
