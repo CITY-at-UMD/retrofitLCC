@@ -33,19 +33,19 @@ ImportEscalationRates <- function() {		# RUN CODE INSIDE THIS FUNCTION IN R; FUN
     res.names[i] <- paste("ca",i,".residential",sep="")
     com.names[i] <- paste("ca",i,".commercial",sep="")	
 	# include file load error handling here
-    assign( res.names[i], read.table( paste( getwd(), "./lib/rates/", "ca", i, ".residential.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE) )  
-    assign( com.names[i], read.table( paste( getwd(), "./lib/rates/", "ca", i, ".commercial.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE) )  
+    assign( res.names[i], read.table( paste( getwd(), "/lib/rates/", "ca", i, ".residential.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE) )  
+    assign( com.names[i], read.table( paste( getwd(), "/lib/rates/", "ca", i, ".commercial.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE) )  
   }  
 
   ## Import GHG prices
   ## NOTE: this is not robust to carbon prices exceeding $9.99 per kg, or $990/MTCO2e, which is unlikely
-  ghg.prices = read.table( paste( getwd(), "./lib/rates/", "ghg.price.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE)
+  ghg.prices = read.table( paste( getwd(), "/lib/rates/", "ghg.price.txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE)
   ghg.prices <- t(ghg.prices) #take the transpose to match other data
   colnames(ghg.prices) <- ghg.prices[1,]
   ghg.prices <- ghg.prices[-1,]
   ghg.prices <- substr(ghg.prices,2,5) #remove dollar sign  
-  apply(ghg.prices[], 2, as.numeric)
-  rownames(ghg.prices) <- c("Default", "Low", "High") #add back in row names (there is an error I'm not catching)
+  ghg.prices <- apply(ghg.prices[], 2, as.numeric)
+  rownames(ghg.prices) <- c("default", "low", "high") #add back in row names (there is an error I'm not catching)
   
   escalation.rates <- list(	ca1.residential = get(res.names[1]), 
 							ca2.residential = get(res.names[2]),
@@ -70,7 +70,7 @@ GetEscalationRate <- function(region = "ca5", sector = "commercial") {
   #	  sector: residential or commercial,  default is commercial
   # Returns:
   #   Project future price indices for that region and sector for all fuels through 2043
-  rate <- read.table( paste( getwd(), "./lib/rates/", region, ".", sector, ".txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE)
+  rate <- read.table( paste( getwd(), "/lib/rates/", region, ".", sector, ".txt", sep = ""), header=TRUE, sep = " ", check.names = FALSE)
   return(rate)
 }
 
@@ -95,7 +95,7 @@ ApplyEscalationRate <- function(cost, rate, fuel, year) {
   return(adjusted.cost)
 }
 
-ApplyEscalationRates <- function(cash.flow, region = "ca1", sector = "commercial", fuel, start.year = "2013") {
+ApplyEscalationRates <- function(cash.flow, region = "ca5", sector = "commercial", fuel, start.year = "2013") {
   # Computes the fuel price indices, excluding general inflation.
   #
   # Args:
@@ -134,5 +134,38 @@ ApplyEscalationRates <- function(cash.flow, region = "ca1", sector = "commercial
   return(adjusted.cash.flow)
 }
 
-## Add Function: GHGCost <- function(scenario = "Default", year) {} escalation.rates.ghg.prices["Default",as.character(i)]
-
+ApplyGHGCosts <- function(ghg.emissions, scenario = "default", start.year = "2013") {
+  # Computes the ghg price indices
+  #
+  # Args:
+  #   ghg.emissions: The ghg emissions, in kg CO2e  #   
+  #   scenario: specify Low, High, or Default. 
+  #	  start.year: year of first index in ghg emissions
+  #
+  # Returns:
+  #   The ghg emissions cost  
+  
+  # Error handling
+  if (as.numeric(start.year) < as.numeric("2013")){ 
+    stop("NIST rates are not available for base years prior to 2013")  
+  }  
+  if (as.numeric(start.year) + length(ghg.emissions) - 1 > as.numeric("2043")) { 
+    stop("ghg.emissions period extends beyond 2043, beyond which NIST rates are unavailable")  
+  } 
+  if (length(ghg.emissions) == 0) { 
+    stop("ghg.emissions is 0 length")  
+  }    
+  if (!exists('escalation.rates')) {
+    stop("escalation.rates$ghg.prices not available.  Run ImportEscalationRates() to load ghg.prices variable.")
+  }
+  
+  rate <- escalation.rates$ghg.prices
+  ghg.emissions.cost <- c(rep(0,length(ghg.emissions))) 
+  i <- 1
+  for (j in i:length(ghg.emissions)) {
+    ghg.emission <- ghg.emissions[j]
+    year <- as.character(as.numeric(start.year) + j-1)
+    ghg.emissions.cost[j] <- ApplyEscalationRate(ghg.emission, rate, scenario, year) 
+  }
+  return(ghg.emissions.cost)
+}
