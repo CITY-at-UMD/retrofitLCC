@@ -1,6 +1,0 @@
-Script executing from: C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/run_scripts/results/f/2-UserScript-0
-Found argument 'reporting_frequency' with value 'RunPeriod'.
-Found argument 'electricity_region' with value 'National'.
-Found argument 'equipment' with value 'Commercial Boiler'.
-Found UserScript 'AddEnvironmentalImpactFactors'.
-Processed 1 base script and 0 merged scripts

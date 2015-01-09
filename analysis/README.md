@@ -67,7 +67,8 @@ require 'C:\Program Files (x86)\OpenStudio 1.5.1\Ruby\openstudio.rb'
  
 5.  **ResultsConstruction.R**
  Takes in the simulation results and duplicate simulation mapping file. 
- Creates cash flows for each permutation, based on a year weighting over the lifetime.
+ Creates cash flows for each permutation, based on a capital constraint. 
+ Saves these in data frames to the results folder under run_scripts
 
 6.  **RetrofitCharts.R** 
- Takes in the data frames from ResultsConstruction and uses it to produce graphics
+ Takes in the data frames from ResultsConstruction and uses them to produce graphics

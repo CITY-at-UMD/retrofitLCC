@@ -16,10 +16,116 @@ library(zoo)
 #
 rm(list=ls())  # clear variables 
 #
-### Import data
-load('./run_scripts/results/simulation_results_LCC.RData')
-baseline <- simulation.results[simulation.results$run.name %in% c("baseline"),]
 
+if (FALSE) { # optional combine results
+  print(paste("importing and combining results..."))
+
+  unique.sims.files <- list.files(path = './run_scripts/results',
+                                    pattern = 'unique_sims*',
+                                    recursive = FALSE,
+                                    full.names = TRUE)
+  unique.sims.files <- unique.sims.files[lapply(unique.sims.files, nchar) > 0]
+  for (i in 1:length(unique.sims.files)) {
+    load(unique.sims.files[i])
+    if (i == 1) {
+      unique.sims <- simulation.results
+    } else {
+      unique.sims <- rbind(unique.sims, simulation.results)
+    }    
+  }
+  rm(unique.sims.files, simulation.results, i)
+  
+  retrofit.path.files <- list.files(path = './run_scripts/results',
+                                    pattern = 'retrofit_paths*',
+                                    recursive = FALSE,
+                                    full.names = TRUE)
+  retrofit.path.files <- retrofit.path.files[lapply(retrofit.path.files, nchar) > 0]
+  for (i in 1:length(retrofit.path.files)) {
+    load(retrofit.path.files[i])
+    if (i == 1) {
+      retrofit.paths <- unique.paths
+    } else {
+      retrofit.paths <- rbind(retrofit.paths, unique.paths)
+    }    
+  }
+  rm(retrofit.path.files, unique.paths, i)
+  
+  retrofit.paths <- retrofit.paths[!(retrofit.paths$avg.site.energy.intensity %in% 0), ]
+  save(unique.sims, retrofit.paths, file = paste('./run_scripts/results/final_results.RData', sep = ''))
+  print(paste('final results saved to:', paste('./run_scripts/results/final_results.RData', sep = '')))
+  rm(list=ls())
+}
+
+print(paste("loading final results..."))
+load('./run_scripts/results/final_results.RData')
+baseline <- unique.sims[unique.sims$run.name %in% 'baseline',]
+baseline.eqrep <- retrofit.paths[retrofit.paths$path.name %in% 'baseline.eqrep',]
+
+#retrofit.paths <- retrofit.paths[retrofit.paths$npv.rel.to.base.eqrep > 0, ]
+#retrofit.paths <- retrofit.paths[(retrofit.paths$capital.intensity == 100), ]
+
+############################################################
+# PLOTS OF NET PRESENT VALUE VERSUS SITE ENERGY INTENSITY ##
+############################################################
+eui_conv <- 0.947817120/10.7639
+npv.rel.to.base.eqrep.min <- min(retrofit.paths$npv.rel.to.base.eqrep)
+npv.rel.to.base.eqrep.max <- max(retrofit.paths$npv.rel.to.base.eqrep)
+
+npv.vs.eui <- ggplot(data = retrofit.paths,
+                     aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
+  geom_point(aes(color = factor(capital.intensity))) +
+  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
+           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black') +
+  scale_x_reverse() + 
+  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
+  scale_y_continuous(labels = dollar) +
+  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
+  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
+  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
+  #                                labels = dollar) +   
+  labs(title = "Net Present Value of Retrofit Paths",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(npv.vs.eui)
+
+npv.vs.ghg <- ggplot(data = retrofit.paths,
+                     aes(x = ghg.rel.to.base.eqrep, y = npv.rel.to.base.eqrep, label = path.name)) + 
+  geom_point(aes(color = factor(capital.intensity))) +
+  scale_x_reverse() + 
+  labs(title = "Relative GHG Emissions of Retrofit Paths",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Relative GHG Emissions", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(npv.vs.ghg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (FALSE) {
 npv.vs.eui <- ggplot(data = simulation.results,
                       aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
   geom_point() +
@@ -27,6 +133,7 @@ npv.vs.eui <- ggplot(data = simulation.results,
   #geom_text(hjust=1, vjust=1, size = 3) + 
   #coord_cartesian(ylim=c(-100000, 135000), xlim=c(100, 75)) + 
   #scale_y_continuous(breaks=seq(100000, 135000, 5000), labels = dollar) + 
+  scale_x_reverse() + 
   labs(title = "Net Present Value Relative to Baseline for Measure Combinations",
        x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
   xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
@@ -45,6 +152,7 @@ cusize.vs.eui <- ggplot(data = simulation.results,
   #geom_text(hjust=1, vjust=1, size = 3) + 
   #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
   #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  scale_x_reverse() + 
   labs(title = "Condensing Unit Size of Measure Options",
        x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
   xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
@@ -63,6 +171,7 @@ boilersize.vs.eui <- ggplot(data = simulation.results,
   #geom_text(hjust=1, vjust=1, size = 3) + 
   #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
   #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
+  scale_x_reverse() + 
   labs(title = "Boiler Size of Measure Options",
        x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
   xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
@@ -77,12 +186,10 @@ plot(boilersize.vs.eui)
 #pushViewport(viewport(layout = grid.layout(2, 4, heights = unit(c(1, 9), "null"))))
 #print(npv.eui, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
 #grid.text("Impact of Setbacks on Annual Energy Use and Cost", gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1:4))
+}
 
-############################################################
-# PLOTS OF NET PRESENT VALUE VERSUS SITE ENERGY INTENSITY ##
-############################################################
+
 if (FALSE) {
-
 area <- 59398.75 # ft^2
 baseline.site.energy <- (0.947817120/10.7639)*simulation.results$site.energy.intensity[simulation.results$run.names %in% "Baseline"]
 plot.heating <- ggplot(data = heating.case, 

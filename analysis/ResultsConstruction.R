@@ -10,38 +10,23 @@
 # Package Dependencies: 
 # (none)
 # 
-rm(list=ls())  # clear variables 
+# rm(list=ls())  # clear variables 
 #
 # Import function dependencies
-source("./lib/npv.R") # Import financial calculation
-source("./lib/escalationRates.R") # Import NIST escalation rates
-escalation.rates <- invisible(ImportEscalationRates())
-
-# load measures data and simulation results
-print(paste("loading simulation data..."))
-load('./measures/measure_permutations.RData')
-load('./run_scripts/results/simulation_results.RData')
-nperms <- nrow(permutations.map)
-
-##################################################
-## CHECK TO SEE WHICH SIMULATIONS ARE AVAILABLE ##
-##################################################
-# determine if the simulation result for a given permutation is available
-print(paste("determining which permutations exist..."))
-permutation.exists <- matrix(0, nrow=nperms, ncol=num.m)
-for (i in 1:nperms) {
-  for (j in 1:num.m) {
-    run <- permutations.map[i,j]
-    simulation.result <- simulation.results[simulation.results$run.name %in% run,]
-    if (nrow(simulation.result) != 0) {
-      permutation.exists[i,j] <- TRUE
-    } else{
-      permutation.exists[i,j] <- FALSE
-    }    
-  }
+if (!exists('npv')) { source("./lib/npv.R") } # Import financial calculation
+if (!exists('escalation.rates')) {
+ source("./lib/escalationRates.R") # Import NIST escalation rates
+ escalation.rates <- invisible(ImportEscalationRates())
 }
-rm(simulation.result, i, j, run)
-if (exists("k")) { rm(k) }
+
+###############
+## RUN FLAGS ##
+###############
+debug.flag <- FALSE
+run.eachsim.flag <- TRUE
+run.expansion.flag <- TRUE
+run.paths.flag <- TRUE
+save.flag <- FALSE
 
 ################################
 ## LIFE CYCLE COST PARAMETERS ##
@@ -60,8 +45,9 @@ if (exists("k")) { rm(k) }
 lifetime <- 20   # Use a 20 year life time to calculate NPV
 discount.rate <- 0.03   # 3% discount rate
 nist.ghg.scenario <- 'none' # 'none', 'default', 'high', or 'low'
-nist.energy.scenario <- 'none' # 'none' or 'default'
-capital.intensity <- 1 # $/ft2 per year investment allowance
+nist.energy.scenario <- 'default' # 'none' or 'default'
+capital.intensity <- 2 # $/ft2 per year investment allowance
+#for (capital.intensity in c(1,2,3,5,100)) {} # for loop for different capital intensities
 revolving.fund <- FALSE
 area.m2 <- 5518.33
 area.ft2 <- area.m2/(0.3048^2)  
@@ -71,11 +57,35 @@ scenario.name <- paste('DR', discount.rate*100,
                        '_GHG', nist.ghg.scenario,
                        '_ENERGY', nist.energy.scenario,
                        '_CI', capital.intensity, sep = '')
-debug.flag <- FALSE
-run.eachsim.flag <- TRUE
-run.expansion.flag <- TRUE
-run.paths.flag <- TRUE
-save.flag <- TRUE
+
+##################################################
+## CHECK TO SEE WHICH SIMULATIONS ARE AVAILABLE ##
+##################################################
+# load measures data and simulation results
+print(paste("loading simulation data..."))
+load('./measures/measure_permutations.RData')
+load('./run_scripts/results/simulation_results.RData')
+nperms <- nrow(permutations.map)
+if (!exists('permutation.exists')) {
+  # determine if the simulation result for a given permutation is available
+  print(paste("determining which permutations exist..."))
+  ptm <- proc.time()
+  permutation.exists <- matrix(0, nrow=nperms, ncol=num.m)
+  for (i in 1:nperms) {
+    for (j in 1:num.m) {
+      run <- permutations.map[i,j]
+      simulation.result <- simulation.results[simulation.results$run.name %in% run,]
+      if (nrow(simulation.result) != 0) {
+        permutation.exists[i,j] <- TRUE
+      } else{
+        permutation.exists[i,j] <- FALSE
+      }    
+    }
+  }
+  rm(simulation.result, i, j, run)
+  if (exists("k")) { rm(k) }
+  print(paste("completed exists check. Time elapsed: ", (proc.time() - ptm)[3], " seconds", sep = ""))
+}
 
 ########################################
 ## CALCULATE BASELINE LIFE CYCLE COST ##
@@ -120,6 +130,7 @@ boiler.replace.year <- 10
 capital.cost <- c(rep(0, lifetime+1))
 elec.cost <- c(rep(0, lifetime+1))
 gas.cost <- c(rep(0, lifetime+1))
+site.energy.intensity <- c(rep(0, lifetime+1))
 ghg.emissions <- c(rep(0, lifetime+1))
 if (cu.replace.year < boiler.replace.year) {
   cu.size <- simulation.results$cu.size[simulation.results$run.name %in% cu.letter]
@@ -132,6 +143,9 @@ if (cu.replace.year < boiler.replace.year) {
   gas.cost[1 : cu.replace.year] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% "baseline"]
   gas.cost[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% cu.letter]
   gas.cost[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% cu.boiler.run]
+  site.energy.intensity[1 : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
+  site.energy.intensity[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.letter]
+  site.energy.intensity[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
   ghg.emissions[1 : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
   ghg.emissions[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.letter]
   ghg.emissions[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.boiler.run]
@@ -146,6 +160,9 @@ if (cu.replace.year < boiler.replace.year) {
   gas.cost[1 : boiler.replace.year] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% "baseline"]
   gas.cost[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% boiler.letter]
   gas.cost[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% boiler.cu.run]
+  site.energy.intensity[1 : boiler.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
+  site.energy.intensity[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% boiler.letter]
+  site.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% boiler.cu.run]
   ghg.emissions[1 : boiler.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
   ghg.emissions[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% boiler.letter]
   ghg.emissions[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% boiler.cu.run]
@@ -158,14 +175,17 @@ if (cu.replace.year < boiler.replace.year) {
   elec.cost[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$annual.electric.cost[simulation.results$run.name %in% cu.boiler.run]
   gas.cost[1 : cu.replace.year] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% "baseline"]
   gas.cost[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% cu.boiler.run]
+  site.energy.intensity[1 : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
+  site.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
   ghg.emissions[1 : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
-  ghg.emissions[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.boiler.run]
+  ghg.emissions[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.boiler.run]  
 } 
 if (nist.energy.scenario != 'none') {
   elec.cost <- ApplyEscalationRates(elec.cost, region = "ca1", sector = 'Commercial', 'Electricity', start.year = "2013")
   gas.cost <- ApplyEscalationRates(gas.cost, region = "ca1", sector = 'Commercial', 'Natural.Gas', start.year = "2013")
 }
 baseline.eqrep.energy.costs <- -(elec.cost + gas.cost)
+baseline.eqrep.avg.site.energy.intensity <- sum(site.energy.intensity)/length(site.energy.intensity)
 baseline.eqrep.lifecycle.ghg.emissions <- sum(ghg.emissions)
 if (nist.ghg.scenario != 'none') {
   baseline.eqrep.ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = "default", start.year = "2013")
@@ -175,11 +195,11 @@ if (nist.ghg.scenario != 'none') {
 baseline.eqrep.cash.flow <- capital.cost + baseline.eqrep.energy.costs + baseline.eqrep.ghg.costs
 baseline.eqrep.npv <- npv(discount.rate, baseline.eqrep.cash.flow)
 
-
 ########################################################
 ## CALCULATE LIFE CYCLE COST OF EACH UNIQUE SIMULATION##
 ########################################################
 if(run.eachsim.flag) {
+  ptm <- proc.time()
   print(paste("calculating life-cycle cost for each unique simulation..."))
   # calculate NPV of each unique simulation, installed in the first year
   # this gives the NPV for path options under the no capital restrictions case
@@ -246,8 +266,8 @@ if(run.eachsim.flag) {
     save(simulation.results, file = paste('./run_scripts/results/unique_sims_', scenario.name, '.RData', sep = ''))
     print(paste('simulation results saved to:', paste('./run_scripts/results/unique_sims_', scenario.name, '.RData', sep = '')))
   }
+  print(paste("completed run.eachsim. Time elapsed: ", (proc.time() - ptm)[3], " seconds", sep = "")) 
 } # END if(run.eachsim.flag)
-
 
 ##############################
 ## EXPAND SIMULATION RESULTS##
@@ -255,10 +275,10 @@ if(run.eachsim.flag) {
 if(run.expansion.flag) { 
   # use the permutation.map to populate simulation results for the non-unique simulations
   # this takes a while to run; import it instead if simulations results are unchanged
-  
   print(paste("expanding simulation results..."))
-  for (i in 1:nperms) {
-    for (j in 1:num.m) {
+  ptm <- proc.time()
+  for (j in 1:num.m) {
+    for (i in 1:nperms) {    
       perm.name <- permutations[i,j]
       run.name <- permutations.map[i,j]    
       if (!is.element(perm.name, simulation.results$run.name)) { 
@@ -272,11 +292,12 @@ if(run.expansion.flag) {
         } # else permutation does not exist, do nothing
       } # else perm.name is in run.name, do nothing
     }
+    print(paste("completed expansion: ", j, "/", num.m, " time elapsed: ", (proc.time() - ptm)[3], " seconds", sep = "")) 
   }
   rownames(simulation.results) <- NULL
-  rm(i, j, simulation.result)
+  rm(i, j)
+  if(exists('simulation.result')) { rm(simulation.result) }
 } # END if(run.expansion.flag)
-
 
 ############################################################################
 ## CALCULATE LIFE CYCLE COST OF EACH UNIQUE PATH, UNDER CAPITAL CONSTRAINT##
@@ -284,20 +305,31 @@ if(run.expansion.flag) {
 if(run.paths.flag) {
   # calculate the performance of all possible retrofit paths for given financial criteria  
   print(paste("calculating life-cycle cost for each of the", nperms, "paths under capital constraint of $", capital.intensity, "/ft^2"))
-  
+  ptm <- proc.time()
   # calculate the NPV for the path options under capital restriction scenarios
   # for each permutation row, compare annual capital requirement to the measure cost.
   # If the next measure is less than available capital, then implement it, and other measures that can, otherwise go to next year
-  
-  if(debug.flag){ nperms <- 1 } # for debugging, use much smaller number of permutations
+
+  if(debug.flag){ nperms <- 10 } # for debugging, use much smaller number of permutations
   net.present.value <- c(rep(0, nperms*num.m))
   last.measure <- c(rep(0, nperms*num.m))
   avg.site.energy.intensity <- c(rep(0, nperms*num.m))
   lifecycle.ghg.emissions <- c(rep(0, nperms*num.m))
-  
-  for (i in 1:num.m) {
-    for (perm.row in 1:nperms) {      
-      measure.order <- strsplit(permutations[perm.row, i], "_") 
+  path.name <- c(rep(permutations[1:nperms, num.m], num.m))
+    
+  for (i in 1:num.m) {    
+    for (perm.row in 1:nperms) {
+      this.perm <- permutations[perm.row, i]
+      if (perm.row > 1) {
+       prev.perm <- permutations[(perm.row-1), i]
+       if (this.perm == prev.perm) {
+         last.measure[(i-1)*nperms + perm.row] <- last.measure[(i-1)*nperms + perm.row - 1]
+         if(debug.flag){ print(paste("SKIP TO NEXT PERM.ROW")) } ### DEBUGGING LINE ### 
+         next # go to next perm.row
+       }
+      }      
+      measure.order <- strsplit(permutations[perm.row, i], "_")
+      
       capital.cost <- c(rep(0, lifetime+1))
       site.energy.intensity <- c(simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"], rep(0, lifetime))
       elec.cost <- c(-baseline.elec.costs[1], rep(0, lifetime))
@@ -402,6 +434,7 @@ if(run.paths.flag) {
     avg.site.energy.intensity[(i-1)*nperms + perm.row] <- sum(site.energy.intensity)/length(site.energy.intensity)
     
     } # END for n.perms
+    print(paste("completed paths: ", i, "/", num.m, " time elapsed: ", (proc.time() - ptm)[3], " seconds", sep = "")) 
   } # END for num.m
   
   # calculate the NPV relative to the baseline case
@@ -410,7 +443,6 @@ if(run.paths.flag) {
   ghg.rel.to.base <- lifecycle.ghg.emissions/baseline.lifecycle.ghg.emissions
   ghg.rel.to.base.eqrep <- lifecycle.ghg.emissions/baseline.eqrep.lifecycle.ghg.emissions
   
-  path.name <- c(rep(permutations[1:nperms, num.m], num.m))
   for (k in 1:(nperms*num.m)) {
     path.name[k] = substr(path.name[k], 1, last.measure[k] + (last.measure[k]-1))
   }
@@ -429,9 +461,25 @@ if(run.paths.flag) {
                       nist.ghg.scenario = nist.ghg.scenario,
                       nist.energy.scenario = nist.energy.scenario,
                       capital.intensity = capital.intensity)
-  unique.paths <- unique(paths)  
+  unique.paths <- unique(paths) 
+  unique.paths <- unique.paths[!unique.paths$lifecycle.ghg.emissions %in% 0, ]
+  baseline.eqrep <- data.frame(path.name = 'baseline.eqrep', 
+                               net.present.value = baseline.eqrep.npv,
+                               npv.rel.to.base = baseline.eqrep.npv - baseline.npv,
+                               npv.rel.to.base.eqrep = 0,
+                               avg.site.energy.intensity = baseline.eqrep.avg.site.energy.intensity,
+                               lifecycle.ghg.emissions = baseline.eqrep.lifecycle.ghg.emissions,
+                               ghg.rel.to.base = baseline.eqrep.lifecycle.ghg.emissions/baseline.lifecycle.ghg.emissions,
+                               ghg.rel.to.base.eqrep = 1,
+                               discount.rate = discount.rate, 
+                               lifetime = lifetime, 
+                               nist.ghg.scenario = nist.ghg.scenario,
+                               nist.energy.scenario = nist.energy.scenario,
+                               capital.intensity = capital.intensity)
+  unique.paths <- rbind(unique.paths, baseline.eqrep)
   if (save.flag) {
     save(unique.paths, file = paste('./run_scripts/results/retrofit_paths_', scenario.name, '.RData', sep = ''))
     print(paste('simulation results saved to:', paste('./run_scripts/results/retrofit_paths_', scenario.name, '.RData', sep = '')))
   }  
+  print(paste("run.paths ran in:", (proc.time() - ptm)[3], "seconds"))  
 } #END If(run.paths.flag)

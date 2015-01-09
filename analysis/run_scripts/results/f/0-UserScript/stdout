@@ -1,7 +1,0 @@
-OpenSSL loaded
-Script executing from: C:/Users/mgd165/Desktop/ResearchWork/AutomatedEnergySimulation/retrofitLCC - Sandbox/analysis/run_scripts/results/f/0-UserScript
-Found argument 'wwr' with value '0.9'.
-Found argument 'sillHeight' with value '0.2'.
-Found argument 'facade' with value 'North'.
-Found UserScript 'Set Window to Wall Ratio by Facade'.
-Processed 1 base script and 0 merged scripts
