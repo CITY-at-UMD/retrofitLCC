@@ -26,7 +26,7 @@ debug.flag <- FALSE
 run.eachsim.flag <- TRUE
 run.expansion.flag <- TRUE
 run.paths.flag <- TRUE
-save.flag <- FALSE
+save.flag <- TRUE
 
 ################################
 ## LIFE CYCLE COST PARAMETERS ##
@@ -46,8 +46,9 @@ lifetime <- 20   # Use a 20 year life time to calculate NPV
 discount.rate <- 0.03   # 3% discount rate
 nist.ghg.scenario <- 'none' # 'none', 'default', 'high', or 'low'
 nist.energy.scenario <- 'default' # 'none' or 'default'
-capital.intensity <- 2 # $/ft2 per year investment allowance
-#for (capital.intensity in c(1,2,3,5,100)) {} # for loop for different capital intensities
+#capital.intensity <- 2 # $/ft2 per year investment allowance
+for (capital.intensity in c(1,2,3,5,100)) { # for loop for different capital intensities
+for (cost.modifier in c(0.5,1)) {
 revolving.fund <- FALSE
 area.m2 <- 5518.33
 area.ft2 <- area.m2/(0.3048^2)  
@@ -56,7 +57,9 @@ scenario.name <- paste('DR', discount.rate*100,
                        '_LT', lifetime,                         
                        '_GHG', nist.ghg.scenario,
                        '_ENERGY', nist.energy.scenario,
-                       '_CI', capital.intensity, sep = '')
+                       '_CI', capital.intensity,
+                       '_CM', cost.modifier, 
+                       sep = '')
 
 ##################################################
 ## CHECK TO SEE WHICH SIMULATIONS ARE AVAILABLE ##
@@ -106,12 +109,12 @@ baseline.annual.ghg.emissions <- simulation.results$ghg.emissions[simulation.res
 baseline.ghg.emissions <- c(rep(baseline.annual.ghg.emissions, lifetime+1))
 baseline.lifecycle.ghg.emissions <- sum(baseline.ghg.emissions)
 if (nist.ghg.scenario != 'none') {
-  baseline.ghg.costs <- -ApplyGHGCosts(baseline.ghg.emissions, scenario = "default", start.year = "2013")
+  baseline.ghg.costs <- -ApplyGHGCosts(baseline.ghg.emissions, scenario = nist.ghg.scenario, start.year = "2013")
 } else {
   baseline.ghg.costs <- 0*baseline.ghg.emissions
 }
 baseline.capital.cost <- c(rep(0, lifetime+1))
-baseline.cash.flow <- baseline.capital.cost + baseline.energy.costs + baseline.ghg.costs
+baseline.cash.flow <- cost.modifier*baseline.capital.cost + baseline.energy.costs + baseline.ghg.costs
 baseline.npv <- npv(discount.rate, baseline.cash.flow)
 
 # calculate NPV of baseline case with HVAC replacement measures and cost functions
@@ -131,6 +134,7 @@ capital.cost <- c(rep(0, lifetime+1))
 elec.cost <- c(rep(0, lifetime+1))
 gas.cost <- c(rep(0, lifetime+1))
 site.energy.intensity <- c(rep(0, lifetime+1))
+source.energy.intensity <- c(rep(0, lifetime+1))
 ghg.emissions <- c(rep(0, lifetime+1))
 if (cu.replace.year < boiler.replace.year) {
   cu.size <- simulation.results$cu.size[simulation.results$run.name %in% cu.letter]
@@ -146,6 +150,9 @@ if (cu.replace.year < boiler.replace.year) {
   site.energy.intensity[1 : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
   site.energy.intensity[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.letter]
   site.energy.intensity[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
+  source.energy.intensity[1 : cu.replace.year] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% "baseline"]
+  source.energy.intensity[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% cu.letter]
+  source.energy.intensity[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
   ghg.emissions[1 : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
   ghg.emissions[(cu.replace.year+1) : boiler.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.letter]
   ghg.emissions[(boiler.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.boiler.run]
@@ -163,6 +170,9 @@ if (cu.replace.year < boiler.replace.year) {
   site.energy.intensity[1 : boiler.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
   site.energy.intensity[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% boiler.letter]
   site.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% boiler.cu.run]
+  source.energy.intensity[1 : boiler.replace.year] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% "baseline"]
+  source.energy.intensity[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% boiler.letter]
+  source.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% boiler.cu.run]
   ghg.emissions[1 : boiler.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
   ghg.emissions[(boiler.replace.year+1) : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% boiler.letter]
   ghg.emissions[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% boiler.cu.run]
@@ -177,6 +187,8 @@ if (cu.replace.year < boiler.replace.year) {
   gas.cost[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$annual.gas.cost[simulation.results$run.name %in% cu.boiler.run]
   site.energy.intensity[1 : cu.replace.year] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"]
   site.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
+  source.energy.intensity[1 : cu.replace.year] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% "baseline"]
+  source.energy.intensity[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% cu.boiler.run]
   ghg.emissions[1 : cu.replace.year] <- simulation.results$ghg.emissions[simulation.results$run.name %in% "baseline"]
   ghg.emissions[(cu.replace.year+1) : (lifetime+1)] <- simulation.results$ghg.emissions[simulation.results$run.name %in% cu.boiler.run]  
 } 
@@ -186,13 +198,14 @@ if (nist.energy.scenario != 'none') {
 }
 baseline.eqrep.energy.costs <- -(elec.cost + gas.cost)
 baseline.eqrep.avg.site.energy.intensity <- sum(site.energy.intensity)/length(site.energy.intensity)
+baseline.eqrep.avg.source.energy.intensity <- sum(source.energy.intensity)/length(source.energy.intensity)
 baseline.eqrep.lifecycle.ghg.emissions <- sum(ghg.emissions)
 if (nist.ghg.scenario != 'none') {
-  baseline.eqrep.ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = "default", start.year = "2013")
+  baseline.eqrep.ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = nist.ghg.scenario, start.year = "2013")
 } else {
   baseline.eqrep.ghg.costs <- 0*ghg.emissions
 }
-baseline.eqrep.cash.flow <- capital.cost + baseline.eqrep.energy.costs + baseline.eqrep.ghg.costs
+baseline.eqrep.cash.flow <- cost.modifier*capital.cost + baseline.eqrep.energy.costs + baseline.eqrep.ghg.costs
 baseline.eqrep.npv <- npv(discount.rate, baseline.eqrep.cash.flow)
 
 ########################################################
@@ -237,11 +250,11 @@ if(run.eachsim.flag) {
     }
     energy.cost <- elec.cost + gas.cost
     if (nist.ghg.scenario != 'none') {
-      ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = "default", start.year = "2013")
+      ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = nist.ghg.scenario, start.year = "2013")
     } else {
       ghg.costs <- 0*ghg.emissions
     }
-    cash.flow <- capital.cost + energy.cost + ghg.costs
+    cash.flow <- cost.modifier*capital.cost + energy.cost + ghg.costs
     net.present.value[i] <- npv(discount.rate, cash.flow)
     lifecycle.ghg.emissions[i] <- sum(ghg.emissions)
   }
@@ -261,7 +274,8 @@ if(run.eachsim.flag) {
                               lifetime = lifetime, 
                               nist.ghg.scenario = nist.ghg.scenario,
                               nist.energy.scenario = nist.energy.scenario,
-                              capital.intensity = capital.intensity)   
+                              capital.intensity = capital.intensity,
+                              cost.modifier = cost.modifier)   
   if (save.flag) {
     save(simulation.results, file = paste('./run_scripts/results/unique_sims_', scenario.name, '.RData', sep = ''))
     print(paste('simulation results saved to:', paste('./run_scripts/results/unique_sims_', scenario.name, '.RData', sep = '')))
@@ -310,10 +324,11 @@ if(run.paths.flag) {
   # for each permutation row, compare annual capital requirement to the measure cost.
   # If the next measure is less than available capital, then implement it, and other measures that can, otherwise go to next year
 
-  if(debug.flag){ nperms <- 10 } # for debugging, use much smaller number of permutations
+  if(debug.flag){ nperms <- 3 } # for debugging, use much smaller number of permutations
   net.present.value <- c(rep(0, nperms*num.m))
   last.measure <- c(rep(0, nperms*num.m))
   avg.site.energy.intensity <- c(rep(0, nperms*num.m))
+  avg.source.energy.intensity <- c(rep(0, nperms*num.m))
   lifecycle.ghg.emissions <- c(rep(0, nperms*num.m))
   path.name <- c(rep(permutations[1:nperms, num.m], num.m))
     
@@ -332,6 +347,7 @@ if(run.paths.flag) {
       
       capital.cost <- c(rep(0, lifetime+1))
       site.energy.intensity <- c(simulation.results$site.energy.intensity[simulation.results$run.name %in% "baseline"], rep(0, lifetime))
+      source.energy.intensity <- c(simulation.results$source.energy.intensity[simulation.results$run.name %in% "baseline"], rep(0, lifetime))
       elec.cost <- c(-baseline.elec.costs[1], rep(0, lifetime))
       gas.cost <- c(-baseline.gas.costs[1], rep(0, lifetime))
       ghg.emissions <- c(baseline.ghg.emissions[1], rep(0, lifetime))
@@ -379,6 +395,7 @@ if(run.paths.flag) {
             capital.avail <- capital.avail - measure.cost
             capital.cost[yr] <- capital.cost[yr] - measure.cost
             site.energy.intensity[yr] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% this.run.name]
+            source.energy.intensity[yr] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% this.run.name]
             elec.cost[yr] <- -simulation.results$annual.electric.cost[simulation.results$run.name %in% this.run.name]
             gas.cost[yr] <- -simulation.results$annual.gas.cost[simulation.results$run.name %in% this.run.name]
             ghg.emissions[yr] <- simulation.results$ghg.emissions[simulation.results$run.name %in% this.run.name]
@@ -398,7 +415,8 @@ if(run.paths.flag) {
             # skip to next year
           } else {
             # use the previous simulation run
-            site.energy.intensity[yr] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% prev.run.name]        
+            site.energy.intensity[yr] <- simulation.results$site.energy.intensity[simulation.results$run.name %in% prev.run.name]    
+            source.energy.intensity[yr] <- simulation.results$source.energy.intensity[simulation.results$run.name %in% prev.run.name] 
             elec.cost[yr] <- -simulation.results$annual.electric.cost[simulation.results$run.name %in% prev.run.name]
             gas.cost[yr] <- -simulation.results$annual.gas.cost[simulation.results$run.name %in% prev.run.name]
             ghg.emissions[yr] <- simulation.results$ghg.emissions[simulation.results$run.name %in% prev.run.name]
@@ -422,16 +440,17 @@ if(run.paths.flag) {
     }
     energy.cost <- elec.cost + gas.cost
     if (nist.ghg.scenario != 'none') {
-      ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = "default", start.year = "2013")
+      ghg.costs <- -ApplyGHGCosts(ghg.emissions, scenario = nist.ghg.scenario, start.year = "2013")
     } else {
       ghg.costs <- 0*ghg.emissions
     }
-    cash.flow <- capital.cost + energy.cost + ghg.costs
+    cash.flow <- cost.modifier*capital.cost + energy.cost + ghg.costs
     net.present.value[(i-1)*nperms + perm.row] <- npv(discount.rate, cash.flow)
     lifecycle.ghg.emissions[(i-1)*nperms + perm.row] <- sum(ghg.emissions)
     last.measure[(i-1)*nperms + perm.row] <- j - 1
     if(debug.flag){ print(paste("LAST measure?:", (j-1))) } ### DEBUGGING LINE ###     
     avg.site.energy.intensity[(i-1)*nperms + perm.row] <- sum(site.energy.intensity)/length(site.energy.intensity)
+    avg.source.energy.intensity[(i-1)*nperms + perm.row] <- sum(source.energy.intensity)/length(source.energy.intensity)
     
     } # END for n.perms
     print(paste("completed paths: ", i, "/", num.m, " time elapsed: ", (proc.time() - ptm)[3], " seconds", sep = "")) 
@@ -453,6 +472,7 @@ if(run.paths.flag) {
                       npv.rel.to.base, 
                       npv.rel.to.base.eqrep,
                       avg.site.energy.intensity,
+                      avg.source.energy.intensity,
                       lifecycle.ghg.emissions,
                       ghg.rel.to.base, 
                       ghg.rel.to.base.eqrep,                      
@@ -460,7 +480,8 @@ if(run.paths.flag) {
                       lifetime = lifetime, 
                       nist.ghg.scenario = nist.ghg.scenario,
                       nist.energy.scenario = nist.energy.scenario,
-                      capital.intensity = capital.intensity)
+                      capital.intensity = capital.intensity, 
+                      cost.modifier = cost.modifier)
   unique.paths <- unique(paths) 
   unique.paths <- unique.paths[!unique.paths$lifecycle.ghg.emissions %in% 0, ]
   baseline.eqrep <- data.frame(path.name = 'baseline.eqrep', 
@@ -468,6 +489,7 @@ if(run.paths.flag) {
                                npv.rel.to.base = baseline.eqrep.npv - baseline.npv,
                                npv.rel.to.base.eqrep = 0,
                                avg.site.energy.intensity = baseline.eqrep.avg.site.energy.intensity,
+                               avg.source.energy.intensity = baseline.eqrep.avg.source.energy.intensity,
                                lifecycle.ghg.emissions = baseline.eqrep.lifecycle.ghg.emissions,
                                ghg.rel.to.base = baseline.eqrep.lifecycle.ghg.emissions/baseline.lifecycle.ghg.emissions,
                                ghg.rel.to.base.eqrep = 1,
@@ -475,7 +497,8 @@ if(run.paths.flag) {
                                lifetime = lifetime, 
                                nist.ghg.scenario = nist.ghg.scenario,
                                nist.energy.scenario = nist.energy.scenario,
-                               capital.intensity = capital.intensity)
+                               capital.intensity = capital.intensity, 
+                               cost.modifier = cost.modifier)
   unique.paths <- rbind(unique.paths, baseline.eqrep)
   if (save.flag) {
     save(unique.paths, file = paste('./run_scripts/results/retrofit_paths_', scenario.name, '.RData', sep = ''))
@@ -483,3 +506,4 @@ if(run.paths.flag) {
   }  
   print(paste("run.paths ran in:", (proc.time() - ptm)[3], "seconds"))  
 } #END If(run.paths.flag)
+}}

@@ -42,8 +42,16 @@ if (FALSE) { # optional combine results
   retrofit.path.files <- retrofit.path.files[lapply(retrofit.path.files, nchar) > 0]
   for (i in 1:length(retrofit.path.files)) {
     load(retrofit.path.files[i])
+    
+    # add in column if forgotten in ResultsConstrution.R
+    #if (grepl('CM0.5', retrofit.path.files[i]) == 1) {
+    #  unique.paths <- cbind(unique.paths, cost.modifier = 0.5)
+    #} else {      
+    #  unique.paths <- cbind(unique.paths, cost.modifier = 1)
+    #}
+    
     if (i == 1) {
-      retrofit.paths <- unique.paths
+      retrofit.paths <- unique.paths      
     } else {
       retrofit.paths <- rbind(retrofit.paths, unique.paths)
     }    
@@ -59,10 +67,18 @@ if (FALSE) { # optional combine results
 print(paste("loading final results..."))
 load('./run_scripts/results/final_results.RData')
 baseline <- unique.sims[unique.sims$run.name %in% 'baseline',]
+baseline <- baseline[baseline$capital.intensity %in% '100',]
 baseline.eqrep <- retrofit.paths[retrofit.paths$path.name %in% 'baseline.eqrep',]
+baseline.eqrep <- baseline.eqrep[baseline.eqrep$capital.intensity %in% '100',]
 
+# examples of limiting dataset
 #retrofit.paths <- retrofit.paths[retrofit.paths$npv.rel.to.base.eqrep > 0, ]
 #retrofit.paths <- retrofit.paths[(retrofit.paths$capital.intensity == 100), ]
+#retrofit.paths <- retrofit.paths[(retrofit.paths$nist.energy.scenario == 'default'), ]
+#retrofit.paths <- retrofit.paths[!(retrofit.paths$nist.ghg.scenario == 'none'), ]
+#retrofit.paths <- retrofit.paths[!(grepl('a', retrofit.paths$path.name)), ]
+#retrofit.paths <- retrofit.paths[!(grepl('_', retrofit.paths$path.name)), ]
+#retrofit.paths <- retrofit.paths[order(retrofit.paths$npv.rel.to.base.eqrep, decreasing = TRUE), ]
 
 ############################################################
 # PLOTS OF NET PRESENT VALUE VERSUS SITE ENERGY INTENSITY ##
@@ -75,7 +91,7 @@ npv.vs.eui <- ggplot(data = retrofit.paths,
                      aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
   geom_point(aes(color = factor(capital.intensity))) +
   annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
-           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black') +
+           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
   scale_x_reverse() + 
   #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
   scale_y_continuous(labels = dollar) +
@@ -94,6 +110,52 @@ npv.vs.eui <- ggplot(data = retrofit.paths,
         axis.text.x = element_text(size = 12))
 plot(npv.vs.eui)
 
+npv.vs.eui2 <- ggplot(data = retrofit.paths,
+                     aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
+  geom_point(aes(color = factor(cost.modifier))) +
+  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
+           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
+  scale_x_reverse() + 
+  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
+  scale_y_continuous(labels = dollar) +
+  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
+  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
+  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
+  #                                labels = dollar) +   
+  labs(title = "Net Present Value of Retrofit Paths",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(npv.vs.eui2)
+
+npv.vs.eui3 <- ggplot(data = retrofit.paths,
+                      aes(x = avg.source.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
+  geom_point(aes(color = factor(nist.ghg.scenario))) +
+  annotate("segment", x = baseline.eqrep$avg.source.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.source.energy.intensity[1]*eui_conv,
+           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
+  scale_x_reverse() + 
+  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
+  scale_y_continuous(labels = dollar) +
+  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
+  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
+  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
+  #                                labels = dollar) +   
+  labs(title = "Net Present Value of Retrofit Paths",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(npv.vs.eui3)
+
 npv.vs.ghg <- ggplot(data = retrofit.paths,
                      aes(x = ghg.rel.to.base.eqrep, y = npv.rel.to.base.eqrep, label = path.name)) + 
   geom_point(aes(color = factor(capital.intensity))) +
@@ -109,22 +171,55 @@ npv.vs.ghg <- ggplot(data = retrofit.paths,
         axis.text.x = element_text(size = 12))
 plot(npv.vs.ghg)
 
+################################
+# PLOTS OF INSTALLATION ORDER ##
+################################
 
 
+###############################
+# PLOTS OF CAPITAL INTENSITY ##
+###############################
+# show the impact of NPV in capital intensity for the best retrofit paths by scenario
+i <- 1
+for (nist.ghg.scenario in c('default','low','high','none')) {
+  for (cost.modifier in c(1)) {
+    subset.df <- retrofit.paths[((retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) & (retrofit.paths$cost.modifier == cost.modifier)), ]
+    df <- subset.df[(subset.df$npv.rel.to.base.eqrep == max(subset.df$npv.rel.to.base.eqrep)),]
+    #if ( nrow(df) > 1 ) { df <- df[1,] }
+    df <- subset.df[(subset.df$path.name %in% df$path.name),]
+    df <- cbind(df, path.group = i)
+    if ( i == 1 ) { 
+      ci.df <- df      
+    } else { 
+      ci.df <- rbind(ci.df, df) 
+    }
+    i <- i + 1
+  }  
+}
+
+ci.drop <- ggplot(data = ci.df,
+                      aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
+  geom_point(aes(color = factor(capital.intensity), shape = factor(nist.ghg.scenario)), size = 3) +
+  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
+           y = min(ci.df$npv.rel.to.base.eqrep), yend = max(ci.df$npv.rel.to.base.eqrep), color = 'black', size = 1) +
+  scale_x_reverse() + 
+  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
+  scale_y_continuous(labels = dollar) +  
+  labs(title = "Net Present Value of Retrofit Paths",
+       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 14),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey",size=0.5),
+        axis.text.y = element_text(size = 12, hjust = 0),
+        axis.text.x = element_text(size = 12))
+plot(ci.drop)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+################
+# OTHER PLOTS ##
+################
 if (FALSE) {
 npv.vs.eui <- ggplot(data = simulation.results,
                       aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
