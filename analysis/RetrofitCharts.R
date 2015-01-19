@@ -17,7 +17,8 @@ library(zoo)
 rm(list=ls())  # clear variables 
 #
 
-if (FALSE) { # optional combine results
+if (FALSE) { 
+  # optional combine results; needs to be done if running RetrofitCharts.R for the first time with a new dataset
   print(paste("importing and combining results..."))
 
   unique.sims.files <- list.files(path = './run_scripts/results',
@@ -66,126 +67,170 @@ if (FALSE) { # optional combine results
 
 print(paste("loading final results..."))
 load('./run_scripts/results/final_results.RData')
+area.m2 <- 5518.33
+area.ft2 <- area.m2/(0.3048^2)  
+#get retrofit paths in terms of $/ft^2
+retrofit.paths$net.present.value <- retrofit.paths$net.present.value/area.ft2
+retrofit.paths$npv.rel.to.base <- retrofit.paths$npv.rel.to.base/area.ft2
+retrofit.paths$npv.rel.to.base.eqrep <- retrofit.paths$npv.rel.to.base.eqrep/area.ft2
+
 baseline <- unique.sims[unique.sims$run.name %in% 'baseline',]
 baseline <- baseline[baseline$capital.intensity %in% '100',]
 baseline.eqrep <- retrofit.paths[retrofit.paths$path.name %in% 'baseline.eqrep',]
 baseline.eqrep <- baseline.eqrep[baseline.eqrep$capital.intensity %in% '100',]
 
 # examples of limiting dataset
+#retrofit.paths <- retrofit.paths[order(retrofit.paths$npv.rel.to.base.eqrep, decreasing = TRUE), ]
 #retrofit.paths <- retrofit.paths[retrofit.paths$npv.rel.to.base.eqrep > 0, ]
 #retrofit.paths <- retrofit.paths[(retrofit.paths$capital.intensity == 100), ]
 #retrofit.paths <- retrofit.paths[(retrofit.paths$nist.energy.scenario == 'default'), ]
 #retrofit.paths <- retrofit.paths[!(retrofit.paths$nist.ghg.scenario == 'none'), ]
 #retrofit.paths <- retrofit.paths[!(grepl('a', retrofit.paths$path.name)), ]
 #retrofit.paths <- retrofit.paths[!(grepl('_', retrofit.paths$path.name)), ]
-#retrofit.paths <- retrofit.paths[order(retrofit.paths$npv.rel.to.base.eqrep, decreasing = TRUE), ]
 
 ############################################################
 # PLOTS OF NET PRESENT VALUE VERSUS SITE ENERGY INTENSITY ##
 ############################################################
+fmt <- function(){
+  function(x) format(x,nsmall=2,scientific=FALSE)
+}
+
 eui_conv <- 0.947817120/10.7639
 npv.rel.to.base.eqrep.min <- min(retrofit.paths$npv.rel.to.base.eqrep)
 npv.rel.to.base.eqrep.max <- max(retrofit.paths$npv.rel.to.base.eqrep)
 
-npv.vs.eui <- ggplot(data = retrofit.paths,
-                     aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
-  geom_point(aes(color = factor(capital.intensity))) +
-  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
-           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
-  scale_x_reverse() + 
-  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
-  scale_y_continuous(labels = dollar) +
-  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
-  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
-  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
-  #                                labels = dollar) +   
-  labs(title = "Net Present Value of Retrofit Paths",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+npv.vs.eui1 <- ggplot(data = retrofit.paths,
+                     aes(x = avg.site.energy.intensity*eui_conv, 
+                         y = npv.rel.to.base.eqrep,
+                         color = factor(cost.modifier))) + 
+  geom_point(size = 0.5) +
+  scale_color_grey(name = 'Cost Modifier') +
+  coord_cartesian(xlim=c(96, 72), ylim=c(-20, 2)) + 
+  scale_x_reverse(breaks=seq(72, 96, by=2)) + 
+  scale_y_continuous(breaks=seq(-20, 2, by=2), labels = fmt()) +
+  annotate('segment', 
+           x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, 
+           xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
+           y = -20, 
+           yend = 2, 
+           color = 'black', size = 1, alpha = 0.6) + 
+  annotate('text', x = 90, y = -18, vjust = 1, hjust = 0, label = 'Baseline') +
+  annotate('rect', xmin = 80, xmax = 96, ymin = -2.5, ymax = 1.5, alpha = 0, color = 'red') +
+  annotate('text', x = 80, y = 1.5, vjust = 1, hjust = 1, label = '(b)', color = 'red') +
+  labs(title = '(a) Net Present Value of Retrofit Paths by Cost Modifier') + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity over Lifetime (", kBtu/ft^2, ")", sep=""))) + 
   ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
+  theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
-plot(npv.vs.eui)
+        panel.grid.major = element_line(color = "grey20", size=0.5),
+        panel.grid.minor = element_line(color = "grey80", size=0.5),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14))
+plot(npv.vs.eui1)
 
 npv.vs.eui2 <- ggplot(data = retrofit.paths,
-                     aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
-  geom_point(aes(color = factor(cost.modifier))) +
-  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
-           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
-  scale_x_reverse() + 
-  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
-  scale_y_continuous(labels = dollar) +
-  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
-  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
-  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
-  #                                labels = dollar) +   
-  labs(title = "Net Present Value of Retrofit Paths",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+                      aes(x = avg.site.energy.intensity*eui_conv, 
+                          y = npv.rel.to.base.eqrep,
+                          color = factor(nist.ghg.scenario, levels=c(c('high','default','low','none'))))) + 
+  geom_point(size = 1.75) +
+  scale_color_grey(name = 'NIST GHG Scenario') +
+  #scale_color_brewer(palette='Set1', name = 'NIST GHG Scenario') +
+  coord_cartesian(xlim=c(96, 80),ylim=c(-2.5, 1.5)) + 
+  scale_x_reverse(breaks=seq(80,96,by=2)) + 
+  scale_y_continuous(breaks=seq(-2.5, 1.5, by=0.5),labels = fmt()) +
+  annotate('segment', 
+           x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, 
+           xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
+           y = -2.5, 
+           yend = 1.5, 
+           color = 'black', size = 1, alpha = 0.6) + 
+  annotate('text', x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, 
+           y = 1.35, vjust = 1, hjust = 1, label = 'Baseline') +  
+  #annotate('rect', xmin = 81, xmax = 90, ymin = 0, ymax = 1.5, alpha = 0, color = 'red') +
+  #annotate('text', x = 81, y = 1.5, vjust = 1, hjust = 1, label = '(c)', color = 'red') +
+  labs(title = '(b) Net Present Value of Retrofit Paths by NIST GHG Scenario') + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity over Lifetime (", kBtu/ft^2, ")", sep=""))) + 
   ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
+  theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
+        panel.grid.major = element_line(color = "grey20", size=0.5),
+        panel.grid.minor = element_line(color = "grey80", size=0.5),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14))
 plot(npv.vs.eui2)
 
+grid.arrange(npv.vs.eui1, npv.vs.eui2, ncol=2)
+
+
+retrofit.paths <- retrofit.paths[order(retrofit.paths$capital.intensity, decreasing = FALSE), ]
 npv.vs.eui3 <- ggplot(data = retrofit.paths,
-                      aes(x = avg.source.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
-  geom_point(aes(color = factor(nist.ghg.scenario))) +
-  annotate("segment", x = baseline.eqrep$avg.source.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.source.energy.intensity[1]*eui_conv,
-           y = npv.rel.to.base.eqrep.min, yend = npv.rel.to.base.eqrep.max, color = 'black', size = 1.5) +
-  scale_x_reverse() + 
-  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
-  scale_y_continuous(labels = dollar) +
-  #scale_y_continuous(breaks = seq(round(npv.rel.to.base.eqrep.min, digits = -4), 
-  #                                round(npv.rel.to.base.eqrep.max, digits = -4),  
-  #                                round((npv.rel.to.base.eqrep.max - npv.rel.to.base.eqrep.min)/5, digits = -4)),
-  #                                labels = dollar) +   
-  labs(title = "Net Present Value of Retrofit Paths",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+                      aes(x = avg.site.energy.intensity*eui_conv, 
+                          y = npv.rel.to.base.eqrep,
+                          color = factor(capital.intensity))) + 
+  geom_point(size = 1.75) +
+  scale_color_brewer(palette='Set1', name = 'Capital Intensity') +
+  coord_cartesian(xlim=c(90, 81),ylim=c(0, 1.5)) + 
+  scale_x_reverse(breaks=seq(81,90,by=1)) + 
+  scale_y_continuous(breaks=seq(0, 1.5, by=0.25),labels = fmt()) +
+  labs(title = '(c) Net Present Value of Retrofit Paths by Capital Intensity') + 
+  xlab(expression(paste("Avg. Site Energy Use Intensity over Lifetime (", kBtu/ft^2, ")", sep=""))) + 
   ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
   theme(title = element_text(face = 'bold', size = 14),
         panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
+        panel.grid.major = element_line(color = "grey", size=0.5),
         axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
+        axis.text.x = element_text(size = 12),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14))
 plot(npv.vs.eui3)
-
-npv.vs.ghg <- ggplot(data = retrofit.paths,
-                     aes(x = ghg.rel.to.base.eqrep, y = npv.rel.to.base.eqrep, label = path.name)) + 
-  geom_point(aes(color = factor(capital.intensity))) +
-  scale_x_reverse() + 
-  labs(title = "Relative GHG Emissions of Retrofit Paths",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Relative GHG Emissions", sep=""))) + 
-  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
-plot(npv.vs.ghg)
-
-################################
-# PLOTS OF INSTALLATION ORDER ##
-################################
 
 
 ###############################
 # PLOTS OF CAPITAL INTENSITY ##
 ###############################
-# show the impact of NPV in capital intensity for the best retrofit paths by scenario
+
+# Show measure paths with positive NPV and reduced energy use, and group them together into path groups
 i <- 1
 for (nist.ghg.scenario in c('default','low','high','none')) {
-  for (cost.modifier in c(1)) {
+  for (cost.modifier in c(0.5, 1)) {
     subset.df <- retrofit.paths[((retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) & (retrofit.paths$cost.modifier == cost.modifier)), ]
+    df <- subset.df[(subset.df$npv.rel.to.base.eqrep > 0),]
+    df <- df[(df$capital.intensity == 100),]
+    df <- df[order(df$npv.rel.to.base.eqrep, decreasing = TRUE),]
+    for (path in df$path.name){
+      df.group <- subset.df[(subset.df$path.name %in% path),] 
+      df.group <- cbind(df.group, path.group = i)
+      if ( i == 1 ) { 
+        ci.df <- df.group      
+      } else { 
+        ci.df <- rbind(ci.df, df.group) 
+      }
+      i <- i + 1
+    }
+    print(paste('nist.ghg.scenario:', nist.ghg.scenario, 
+                'cost.modifier:', cost.modifier,
+                'time elapsed:', (proc.time() - ptm)[3], 'seconds')) 
+  }  
+}
+
+# For each financial scenario, show the best measure path ranked by NPV in the full capital intensity option
+i <- 1
+for (nist.ghg.scenario in c('default','low','high','none')) {
+  for (cost.modifier in c(0.5, 1)) {
+    subset.df <- retrofit.paths[((retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) & (retrofit.paths$cost.modifier == cost.modifier)), ]
+    # eliminate single replacement options
+    subset.df <- subset.df[!(subset.df$path.name == 'f'),] 
+    subset.df <- subset.df[!(subset.df$path.name == 'g'),]
+    subset.df <- subset.df[!(subset.df$path.name == 'f_c'),]
+    subset.df <- subset.df[!(subset.df$path.name == 'c_f'),]
     df <- subset.df[(subset.df$npv.rel.to.base.eqrep == max(subset.df$npv.rel.to.base.eqrep)),]
-    #if ( nrow(df) > 1 ) { df <- df[1,] }
     df <- subset.df[(subset.df$path.name %in% df$path.name),]
     df <- cbind(df, path.group = i)
     if ( i == 1 ) { 
@@ -198,182 +243,151 @@ for (nist.ghg.scenario in c('default','low','high','none')) {
 }
 
 ci.drop <- ggplot(data = ci.df,
-                      aes(x = avg.site.energy.intensity*eui_conv, y = npv.rel.to.base.eqrep, label = path.name)) + 
-  geom_point(aes(color = factor(capital.intensity), shape = factor(nist.ghg.scenario)), size = 3) +
-  annotate("segment", x = baseline.eqrep$avg.site.energy.intensity[1]*eui_conv, xend = -baseline.eqrep$avg.site.energy.intensity[1]*eui_conv,
-           y = min(ci.df$npv.rel.to.base.eqrep), yend = max(ci.df$npv.rel.to.base.eqrep), color = 'black', size = 1) +
-  scale_x_reverse() + 
-  #coord_cartesian(ylim=c(0, round(npv.rel.to.base.eqrep.max, digits = -4)), xlim=c(100, 75)) + 
-  scale_y_continuous(labels = dollar) +  
-  labs(title = "Net Present Value of Retrofit Paths",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
+                  aes(x = avg.site.energy.intensity*eui_conv, 
+                      y = npv.rel.to.base.eqrep,
+                      group = path.group)) + 
+  geom_point(aes(alpha = factor(capital.intensity), 
+                 shape = factor(nist.ghg.scenario, levels=c(c('high','default','low','none')))),
+             size = 5) +
+  scale_alpha_discrete(name = expression(paste("Capital Availability ($/", ft^2, ")", sep=""))) + 
+  scale_shape(name = 'NIST GHG Scenario') + 
+  geom_line(alpha = 0.5) +
+  geom_text(data = ci.df[((ci.df$capital.intensity == 100) & (ci.df$nist.ghg.scenario == 'high')), ],
+            aes(label = paste("  ", path.name, ", CM=", cost.modifier, sep='')),
+            hjust=0, vjust=0, angle = 0, size = 5) + 
+  geom_text(data = ci.df[((ci.df$capital.intensity == 100) & (ci.df$cost.modifier == 0.5) & (ci.df$nist.ghg.scenario == 'default')), ],
+            aes(label = paste("  ", path.name, ", CM=", cost.modifier, sep='')),
+            hjust=0, vjust=0, angle = 0, size = 5) +
+  coord_cartesian(xlim=c(87, 83),ylim=c(0, 1.5)) + 
+  scale_x_reverse(breaks=seq(83,87,by=1)) + 
+  scale_y_continuous(breaks=seq(0, 1.5, by=0.25),labels = fmt()) +
   xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
   ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
+  theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
+        panel.grid.major = element_line(color = "grey20", size=0.5),
+        panel.grid.minor = element_line(color = "grey80", size=0.5),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14))
 plot(ci.drop)
 
+################################
+# PLOTS OF INSTALLATION ORDER ##
+################################
+# run this once only
+retrofit.paths <- cbind(retrofit.paths, order.group = 0, order.group.name = retrofit.paths$path.name, num.m = 1)
 
-################
-# OTHER PLOTS ##
-################
-if (FALSE) {
-npv.vs.eui <- ggplot(data = simulation.results,
-                      aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative.to.base, label = run.name)) + 
-  geom_point() +
-  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$npv.relative.to.base, color = "red", size = 3) +
-  #geom_text(hjust=1, vjust=1, size = 3) + 
-  #coord_cartesian(ylim=c(-100000, 135000), xlim=c(100, 75)) + 
-  #scale_y_continuous(breaks=seq(100000, 135000, 5000), labels = dollar) + 
-  scale_x_reverse() + 
-  labs(title = "Net Present Value Relative to Baseline for Measure Combinations",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
-plot(npv.vs.eui)
-
-cusize.vs.eui <- ggplot(data = simulation.results,
-                        aes(x = site.energy.intensity*0.947817120/10.7639, y = cu.size, label = run.name)) + 
-  geom_point() +
-  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$cu.size, color = "red", size = 3) +
-  #geom_text(hjust=1, vjust=1, size = 3) + 
-  #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
-  #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
-  scale_x_reverse() + 
-  labs(title = "Condensing Unit Size of Measure Options",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Capacity (W)"))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
-plot(cusize.vs.eui)
-
-boilersize.vs.eui <- ggplot(data = simulation.results,
-                            aes(x = site.energy.intensity*0.947817120/10.7639, y = boiler.size, label = run.name)) + 
-  geom_point() +
-  annotate("point", x = (0.947817120/10.7639)*baseline$site.energy.intensity, y = baseline$boiler.size, color = "red", size = 3) +
-  #geom_text(hjust=1, vjust=1, size = 3) + 
-  #coord_cartesian(ylim=c(350000, 500000), xlim=c(100, 75)) + 
-  #scale_y_continuous(breaks=seq(350000, 500000, 25000)) + 
-  scale_x_reverse() + 
-  labs(title = "Boiler Size of Measure Options",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Capacity (W)"))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12))
-plot(boilersize.vs.eui)
-
-#pushViewport(viewport(layout = grid.layout(2, 4, heights = unit(c(1, 9), "null"))))
-#print(npv.eui, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
-#grid.text("Impact of Setbacks on Annual Energy Use and Cost", gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1:4))
-}
-
-
-if (FALSE) {
-area <- 59398.75 # ft^2
-baseline.site.energy <- (0.947817120/10.7639)*simulation.results$site.energy.intensity[simulation.results$run.names %in% "Baseline"]
-plot.heating <- ggplot(data = heating.case, 
-      aes(x = (0.947817120/10.7639)*site.energy.intensity, 
-          y = (1/area)*npv.relative,
-          label = run.names)) + 
-  geom_point(size = 3) +   
-  
-  geom_text(size=4, hjust=1) +
-  coord_cartesian(xlim=c(95, 80),ylim=c(-20, 2.50)) + 
-  scale_y_continuous(breaks=seq(-20, 2.5, 2.50), labels = dollar) +
-  scale_x_reverse() +
-  labs(title = "(a) Measures For Heating Load Reduction",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12)) + 
-  geom_vline(xintercept = baseline.site.energy, color='red') + 
-  geom_hline(yintercept = 0, color='red') + 
-  annotate("text", x=baseline.site.energy, y=0, label="Baseline", hjust = 0, vjust = 1, size = 4) +
-  annotate("point", x=baseline.site.energy, y=0, label="Baseline", hjust = 0, vjust = 1, size = 3)
-  
-plot.cooling <- ggplot(data = cooling.case, 
-                       aes(x = (0.947817120/10.7639)*site.energy.intensity, 
-                           y = (1/area)*npv.relative,
-                           label = run.names)) + 
-  geom_point(size = 3) +  
-  geom_text(size=4, hjust=1) +
-  coord_cartesian(xlim=c(95, 80),ylim=c(-2.5, 2.5)) + 
-  scale_y_continuous(breaks=seq(-2.5, 2.5, 0.5), labels = dollar) +
-  scale_x_reverse() +
-  labs(title = "(b) Measures For Cooling Load Reduction",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12)) + 
-  geom_vline(xintercept = baseline.site.energy, color='red') + 
-  geom_hline(yintercept = 0, color='red') + 
-  annotate("text", x=baseline.site.energy, y=0, label="Baseline", hjust = 0, vjust = 1, size = 4) +
-  annotate("point", x=baseline.site.energy, y=0, label="Baseline", hjust = 0, vjust = 1, size = 3)
-
-pushViewport(viewport(layout = grid.layout(9, 1, heights = unit(c(1, 9), "null"))))
-print(plot.heating, vp = viewport(layout.pos.row = 2:5, layout.pos.col = 1))
-print(plot.cooling, vp = viewport(layout.pos.row = 6:9, layout.pos.col = 1))
-grid.text("Life Cycle Cost of Measure Bundle Options Relative to Baseline", 
-          gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
-
-
-  net.present.value <- c(rep(0, num.runs) )
-  for (i in 1:num.runs) {
-    cash.flow[i,] <- c(-1*rep(simulation.results$total.annual.energy.cost[i], lifetime + 1))
-    net.present.value[i] <- npv(discount.rate, cash.flow[i,])
+# match all groups of the same letter combinations as the same order group using regex
+i <- 1
+ptm <- proc.time()
+for (num.m in 2:7) {
+  str.len <- num.m + num.m - 1
+  len.match <- (nchar(as.character(retrofit.paths$path.name)) == str.len)
+  retrofit.paths$num.m[len.match] <- num.m
+  order.df <- retrofit.paths[len.match, ]  
+  while ( nrow(order.df) > 0 ) {
+    str <- as.character(order.df$path.name[1])
+    str <- paste('([', str, ']){', str.len, ',}', sep='')
+    match.logical <- grepl(str, as.character(order.df$path.name))
+    match.list <- unique(order.df$path.name[(match.logical)])
+    retrofit.paths$order.group[(as.character(retrofit.paths$path.name) %in% match.list)] <- i
+    retrofit.paths$order.group.name[(as.character(retrofit.paths$path.name) %in% match.list)] <- as.character(order.df$path.name[1])
+    order.df <- order.df[!(match.logical),]
+    i <- i + 1
   }
-  simulation.results <- cbind(simulation.results, net.present.value)
-  npv.baseline <- simulation.results$net.present.value[simulation.results$run.names %in% "Baseline"]
-  npv.relative <- simulation.results$net.present.value - npv.baseline # NPV relative to baseline NPV
-  simulation.results <- cbind(simulation.results, npv.relative)
-
-area <- 59398.75 # ft^2
-baseline.site.energy <- (0.947817120/10.7639)*simulation.results$site.energy.intensity[simulation.results$run.names %in% "Baseline"]
-npv.eui <- ggplot(data = simulation.results,
-                       aes(x = site.energy.intensity*0.947817120/10.7639, y = npv.relative/area, label = run.names)) + 
-  geom_point() +
-  scale_x_reverse() +
-  coord_cartesian(ylim=c(-1, 7), xlim=c(100, 75)) + 
-  scale_y_continuous(breaks=seq(-1, 7, 0.5), labels = dollar) + 
-  labs(title = "Net Present Value of Measure Options Relative to Baseline",
-       x = expression(paste("Site Energy Use Intensity (kBtu/ft^2)"))) + 
-  xlab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
-  ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
-  theme(title = element_text(face = 'bold', size = 14),
-        panel.background = element_blank(),
-        panel.grid.major = element_line(color = "grey",size=0.5),
-        axis.text.y = element_text(size = 12, hjust = 0),
-        axis.text.x = element_text(size = 12)) + 
-  geom_vline(xintercept = baseline.site.energy, color='red') + 
-  geom_hline(yintercept = 0, color='red') + 
-  annotate("text", x=baseline.site.energy, y=0, label="Baseline", hjust = 0, vjust = 1, size = 4)
-plot(npv.eui)
-
-#pushViewport(viewport(layout = grid.layout(2, 4, heights = unit(c(1, 9), "null"))))
-#print(npv.eui, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
-#grid.text("Impact of Setbacks on Annual Energy Use and Cost", gp=gpar(fontsize=20), vp = viewport(layout.pos.row = 1, layout.pos.col = 1:4))
+  print(paste('num.m:', num.m, 'time elapsed:', (proc.time() - ptm)[3], 'seconds'))  
 }
+
+# for each path group, in each scenario combination, calculate the relative and maximum difference of ordering
+first.iter <- TRUE
+ptm <- proc.time()
+for (nist.ghg.scenario in c('default','low','high','none')) {
+  for (cost.modifier in c(0.5, 1)) {
+    for (capital.intensity in c(1,2,3,5,100)){
+      num.groups <- max(retrofit.paths$order.group)
+      max.diff <- c(rep(0, num.groups))
+      rel.diff <- c(rep(0, num.groups))
+      num.m <- c(rep(0, num.groups))
+      order.group.name <- c(rep('', num.groups))
+      for (order.group in 1:num.groups) {
+        v <- retrofit.paths$npv.rel.to.base.eqrep[(retrofit.paths$order.group == order.group) 
+                                                  & (retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) 
+                                                  & (retrofit.paths$cost.modifier == cost.modifier)
+                                                  & (retrofit.paths$capital.intensity == capital.intensity)]  
+        order.group.name[order.group] <- as.character(retrofit.paths$order.group.name[(retrofit.paths$order.group == order.group)][1])
+        max.diff[order.group] <- (max(v) - min(v))
+        rel.diff[order.group] <- abs((max(v) - min(v)) / mean(v))
+        num.m[order.group] <- retrofit.paths$num.m[retrofit.paths$order.group == order.group][1] 
+      }
+      if (first.iter == TRUE) {
+        order.df <- data.frame(order.group = 1:num.groups, order.group.name, num.m, max.diff, rel.diff, 
+                               cost.modifier, nist.ghg.scenario, capital.intensity)
+        first.iter <- FALSE
+      } else {
+        order.df <- rbind(order.df, 
+                          data.frame(order.group = 1:num.groups, order.group.name, num.m, max.diff, rel.diff, 
+                                     cost.modifier  = cost.modifier,
+                                     nist.ghg.scenario = nist.ghg.scenario,
+                                     capital.intensity = capital.intensity))
+      }
+      print(paste('cost.modifier:', cost.modifier,
+                  'nist.ghg.scenario:', nist.ghg.scenario,
+                  'capital.intensity:', capital.intensity,
+                  'time elapsed:', (proc.time() - ptm)[3], 'seconds'))
+    }
+  }
+}
+order.df <- order.df[order(order.df$max.diff, decreasing = TRUE), ]
+best.order.group.num <- retrofit.paths$order.group[(retrofit.paths$path.name %in% "b_g_f_c")][1]
+best.order.group <- order.df[(order.df$order.group %in% best.order.group.num), ]
+
+order.graph <- ggplot(data = order.df,
+                      aes(x = factor(capital.intensity), 
+                          y = max.diff, 
+                          fill = factor(num.m))) + 
+  geom_boxplot(outlier.size = 1) +
+  scale_fill_grey(name = 'Measures Considered') +
+  coord_cartesian(ylim=c(0, 2.5)) +  
+  scale_y_continuous(breaks=seq(0, 2.5, by=0.25),labels = fmt()) +
+  #annotate('rect', xmin = 81, xmax = 90, ymin = 0, ymax = 1.5, alpha = 0, color = 'red') +
+  #annotate('text', x = 81, y = 1.5, vjust = 1, hjust = 1, label = '(c)', color = 'red') +
+  #labs(title = 'Measure order') + 
+  xlab(expression(paste("Capital Availability ($/", ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Maximum Difference in Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 18),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),#element_line(color = "grey20", size=0.5),
+        panel.grid.minor = element_line(color = "grey80", size=0.5),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14),
+        legend.position = c(0.92, 0.66))
+plot(order.graph)
+
+order.graph2 <- ggplot(data = best.order.group,
+                      aes(x = factor(capital.intensity), 
+                          y = max.diff)) + 
+  geom_violin() +
+  coord_cartesian(ylim=c(0, 0.5)) +  
+  scale_y_continuous(breaks=seq(0, 0.5, by=0.05),labels = fmt()) +
+  #annotate('rect', xmin = 81, xmax = 90, ymin = 0, ymax = 1.5, alpha = 0, color = 'red') +
+  #annotate('text', x = 81, y = 1.5, vjust = 1, hjust = 1, label = '(c)', color = 'red') +
+  xlab(expression(paste("Capital Availability ($/", ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Maximum Difference in Net Present Value ($/", ft^2, ")", sep=""))) + 
+  theme(title = element_text(face = 'bold', size = 18),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey80", size=0.5),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14),
+        legend.position = c(0.92, 0.7))
+plot(order.graph2)
