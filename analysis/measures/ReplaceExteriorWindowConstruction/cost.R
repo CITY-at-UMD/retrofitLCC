@@ -1,3 +1,3 @@
 cost <- function(null) {
-  return(50000)
+  return(182311.48)
 }

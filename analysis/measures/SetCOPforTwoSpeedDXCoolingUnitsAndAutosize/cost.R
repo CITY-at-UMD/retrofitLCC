@@ -1,5 +1,5 @@
 cost <- function(size) {
-  fixed <- 50000
-  variable <- 1000
+  fixed <- 7909
+  variable <- 766*(1/(0.293071*12000)) # $ per ton / ton per W 
   return (size*variable + fixed)
   }
