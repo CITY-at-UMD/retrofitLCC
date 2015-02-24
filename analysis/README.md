@@ -72,3 +72,6 @@ require 'C:\Program Files (x86)\OpenStudio 1.5.1\Ruby\openstudio.rb'
 
 6.  **RetrofitCharts.R** 
  Takes in the data frames from ResultsConstruction and uses them to produce graphics
+ 
+7.  **ResultsReaderSingleSimulation.R**
+ Reads in the simulation results for a single simulation and produces charts. 

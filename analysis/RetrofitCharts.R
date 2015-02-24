@@ -191,6 +191,35 @@ npv.vs.eui3 <- ggplot(data = retrofit.paths,
         legend.text = element_text(size = 14))
 plot(npv.vs.eui3)
 
+###########################
+# PLOTS OF GHG INTENSITY ##
+###########################
+npv.bins <- retrofit.paths[(retrofit.paths$npv.rel.to.base.eqrep > 0),]
+#npv.bins$discrete <- cut(npv.bins$npv.rel.to.base.eqrep, c(5,0), include.lowest=T)
+
+ghg.graph <- ggplot(data = npv.bins,
+                    aes(x = factor(capital.intensity), 
+                        y = ghg.rel.to.base.eqrep, 
+                        fill = factor(cost.modifier))) + 
+  geom_violin() + 
+  scale_fill_grey(name = 'Cost Modifier') +
+  coord_cartesian(ylim=c(0.84, 1.04)) +  
+  scale_y_continuous(breaks=seq(0.84, 1.04, by=0.02),labels = fmt()) +
+  #annotate('rect', xmin = 81, xmax = 90, ymin = 0, ymax = 1.5, alpha = 0, color = 'red') +
+  #annotate('text', x = 81, y = 1.5, vjust = 1, hjust = 1, label = '(c)', color = 'red') +
+  labs(title = 'Relative 20-yr GHG Emissions Compared to Baseline Case') + 
+  xlab(expression(paste("Capital Availability ($/", ft^2, ")", sep=""))) + 
+  ylab("Relative 20-yr GHG emissions") + 
+  theme(title = element_text(face = 'bold', size = 18),
+        panel.background = element_blank(),
+        panel.grid.major = element_line(color = "grey20", size=0.5),
+        panel.grid.minor = element_line(color = "grey80", size=0.5),
+        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        legend.key.size = unit(2,'cm'),
+        legend.key = element_rect(fill = 'white'),
+        legend.text = element_text(size = 14))
+plot(ghg.graph)
 
 ###############################
 # PLOTS OF CAPITAL INTENSITY ##
@@ -198,6 +227,7 @@ plot(npv.vs.eui3)
 
 # Show measure paths with positive NPV and reduced energy use, and group them together into path groups
 i <- 1
+ptm <- proc.time()
 for (nist.ghg.scenario in c('default','low','high','none')) {
   for (cost.modifier in c(0.5, 1)) {
     subset.df <- retrofit.paths[((retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) & (retrofit.paths$cost.modifier == cost.modifier)), ]
@@ -221,24 +251,26 @@ for (nist.ghg.scenario in c('default','low','high','none')) {
 }
 
 # For each financial scenario, show the best measure path ranked by NPV in the full capital intensity option
+top.num <- 10 # number of best paths to show
 i <- 1
 for (nist.ghg.scenario in c('default','low','high','none')) {
   for (cost.modifier in c(0.5, 1)) {
     subset.df <- retrofit.paths[((retrofit.paths$nist.ghg.scenario == nist.ghg.scenario) & (retrofit.paths$cost.modifier == cost.modifier)), ]
     # eliminate single replacement options
-    subset.df <- subset.df[!(subset.df$path.name == 'f'),] 
-    subset.df <- subset.df[!(subset.df$path.name == 'g'),]
-    subset.df <- subset.df[!(subset.df$path.name == 'f_c'),]
-    subset.df <- subset.df[!(subset.df$path.name == 'c_f'),]
-    df <- subset.df[(subset.df$npv.rel.to.base.eqrep == max(subset.df$npv.rel.to.base.eqrep)),]
-    df <- subset.df[(subset.df$path.name %in% df$path.name),]
-    df <- cbind(df, path.group = i)
-    if ( i == 1 ) { 
-      ci.df <- df      
-    } else { 
-      ci.df <- rbind(ci.df, df) 
+    subset.df <- subset.df[!(subset.df$path.name %in% c('c','f','g','c_f','f_c','c_g','g_c')),] 
+    #df <- subset.df[(subset.df$npv.rel.to.base.eqrep == max(subset.df$npv.rel.to.base.eqrep)),]
+    subset.df <- subset.df[order(subset.df$npv.rel.to.base.eqrep, decreasing = TRUE),]
+    top <- as.character(unique(subset.df$path.name))[1:top.num]
+    for (j in 1:top.num){     
+      df <- subset.df[(subset.df$path.name %in% top[j]),]
+      df <- cbind(df, path.group = (i + (j-1)))
+      if ( (i + (j-1)) == 1 ) { 
+        ci.df <- df      
+      } else { 
+        ci.df <- rbind(ci.df, df) 
+      }
     }
-    i <- i + 1
+    i <- i + top.num
   }  
 }
 
@@ -258,8 +290,11 @@ ci.drop <- ggplot(data = ci.df,
   geom_text(data = ci.df[((ci.df$capital.intensity == 100) & (ci.df$cost.modifier == 0.5) & (ci.df$nist.ghg.scenario == 'default')), ],
             aes(label = paste("  ", path.name, ", CM=", cost.modifier, sep='')),
             hjust=0, vjust=0, angle = 0, size = 5) +
-  coord_cartesian(xlim=c(87, 83),ylim=c(0, 1.5)) + 
-  scale_x_reverse(breaks=seq(83,87,by=1)) + 
+  geom_text(data = ci.df[((ci.df$capital.intensity == 100) & (ci.df$cost.modifier == 1) & (ci.df$nist.ghg.scenario == 'default')), ],
+            aes(label = paste("  ", path.name, ", CM=", cost.modifier, sep='')),
+            hjust=0, vjust=0, angle = 0, size = 5) +
+  coord_cartesian(xlim=c(88, 83),ylim=c(0, 1.5)) + 
+  scale_x_reverse(breaks=seq(83,88,by=1)) + 
   scale_y_continuous(breaks=seq(0, 1.5, by=0.25),labels = fmt()) +
   xlab(expression(paste("Avg. Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
   ylab(expression(paste("Net Present Value ($/", ft^2, ")", sep=""))) + 
@@ -277,7 +312,7 @@ plot(ci.drop)
 ################################
 # PLOTS OF INSTALLATION ORDER ##
 ################################
-# run this once only
+# run this once
 retrofit.paths <- cbind(retrofit.paths, order.group = 0, order.group.name = retrofit.paths$path.name, num.m = 1)
 
 # match all groups of the same letter combinations as the same order group using regex
