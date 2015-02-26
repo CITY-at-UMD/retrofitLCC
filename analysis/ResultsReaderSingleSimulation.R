@@ -1,5 +1,5 @@
-# ResultsReadSingleSimulation.R
-# reads in the simulation results for one simulation result and charts it.
+# ResultsReaderSingleSimulation.R
+# Reads in the simulation results for a single simulation generates load component information and energy use breakdown.
 #
 # Building Science Group 2014
 #
@@ -10,48 +10,251 @@
 library(sqldf) # perform SQL selects on R data frames
 library(ggplot2)
 library(reshape2)
+library(grid)
+library(ggplot2)
+library(scales)
+library(reshape2)
+library(gridExtra)
+library(zoo)
+source('./lib/multiplot.R')
 #
-# 
-rm(list=ls())  # clear variables 
+# Data requirements: 
+# .sql file WITH LOAD COMPONENTS.  See example .idf file in ./model/load components for a list of what to include, or read from the .rdd file 
+#
+# Recommend clearing variables, as data.frames from sql files are memory intensive
+rm(list=ls())  
 
 # function for formating numbers in plots
 fmt <- function(){
   function(x) format(x,nsmall=2,scientific=FALSE)
 }
 
-print(paste("reading simulation results..."))
-# locate directories where to find .sql files
-dirs <- list.dirs(path = "./run_scripts/results",
-                  recursive = FALSE)
-num.dirs <- length(dirs)
-run.names <- gsub(".*/results/","", dirs)
 
-# read all .sql files in data folders
-sql.files <- c(rep("", num.dirs))
-missing.sql.files <- c(rep("", num.dirs))
-for (i in 1:num.dirs) {
-  sql.exists <- list.files(path = dirs[i], 
-                           pattern="*.sql", 
-                           recursive = TRUE,
-                           include.dirs = TRUE,
-                           full.names = TRUE)
-  if(length(sql.exists) == 0) {
-    print(paste(".sql file for", run.names[i], "not found"))
-    missing.sql.files <- run.names[i]
-  } else {
-    sql.files[i] <- sql.exists
+##########################
+# ZONE LOAD COMPONENTS ##
+#########################
+# Note: The EnergyPlus Output is limmited to 255 output variables, which will not allow reporting all the variables necessary for total load balance on each zone. 
+# To override this, see the section on ReadVarsESO in the EnergyPlus InputOutputReference
+# 
+
+# Read .sql file in data folder, or type .sql filename here: sql.file <- "myfile.sql"
+sql.file <- list.files(path="./model/load components/", pattern="*.sql", full.names = TRUE)
+sql.file <- sql.file[1]
+
+# Load variable data dictionary
+variable.data.dictionary <- sqldf("SELECT * FROM ReportVariableDataDictionary", dbname = sql.file)
+load.names <- sqldf("SELECT distinct VariableName FROM ReportVariableDataDictionary", dbname = sql.file)
+
+# Load time table.  Function changes necessary if not reported in 1/2 hour increments
+time <- sqldf("SELECT * FROM Time", dbname = sql.file)
+
+# Determine zone loads for a specific load, e.g. Zone Infiltration Sensible Heat Gain Energy
+LoadsByType <- function(sql.filename, VariableName) {
+  # load variable data dictionary if not present
+  if (!exists("variable.data.dictionary")) {
+    tryCatch({
+      sql.statement <- "SELECT * FROM ReportVariableDataDictionary"
+      variable.data.dictionary <- sqldf(sql.statement, dbname = sql.file)
+    }, error = function(err) {
+      stop("variable.data.dictionary not found!")
+    }, finally = {})
   }
+  # Check for SQL file
+  if (!exists("sql.file")) {
+    stop("sql.file not found!")
+  }
+  
+  index.in.dictionary <- variable.data.dictionary$VariableName == VariableName
+    if (sum(index.in.dictionary) == 0) {
+      stop(paste(VariableName, " not found in variable data dictionary"))
+    }  
+  data.index <- variable.data.dictionary$ReportVariableDataDictionaryIndex[index.in.dictionary]  
+  index.numbers <- paste(data.index, collapse = ',')
+  sql.begin <- "SELECT * FROM ReportVariableData WHERE ReportVariableDataDictionaryIndex IN "
+  sql.statement <- paste(sql.begin, "(", index.numbers, ")", sep="")
+  print(paste("loading '", VariableName, "' instances from '", sql.filename, "'...", sep=""))
+  data <- sqldf(sql.statement, dbname = sql.filename)
+  
+  # Drop extraneous column
+  drop <- "ReportVariableExtendedDataIndex"
+  data <- data[,!(names(data) %in% drop)]
+  
+  # Replace ReportVariableDataDictionaryIndex in data with KeyValue from variable.data.dictionary
+  for (i in data.index) {
+    data$ReportVariableDataDictionaryIndex[data$ReportVariableDataDictionaryIndex == i] <- variable.data.dictionary$KeyValue[variable.data.dictionary$ReportVariableDataDictionaryIndex == i]
+  }
+  col.index <- grep("ReportVariableDataDictionaryIndex", colnames(data))
+  colnames(data)[col.index] <- "KeyValue"
+  
+  # Replace TimeIndex with Hour.  Replace with the appropriate time series in the future.
+  for (i in 1:length(data.index)){
+    start = (i-1)*8760 + 1
+    end = i*8760
+    data$TimeIndex[start:end] <- 1:8760
+  }
+  col.index <- grep("TimeIndex", colnames(data))
+  colnames(data)[col.index] <- "Hour"
+  print(paste("data.frame size:", format(object.size(data), units = "Mb")))
+  
+  return(data)
 }
 
-# only keep valid sql files
-run.names <- run.names[lapply(sql.files, nchar) > 0] 
-sql.files <- sql.files[lapply(sql.files, nchar) > 0]
-num.files <- length(sql.files)
+# Determine all loads in a zone
+LoadsByZone <- function(sql.filename, VariableName) {  
+  stop("function in development")
+}
 
-# target specific sql file
-sql.file <- sql.files[grep("baseline", run.names)]
+SumLoadByHour <- function(df) {
+  load.sum <- aggregate(VariableValue ~ Hour, data = df, FUN = sum)
+  return(load.sum)
+}
 
-# peak load contributions
+SumLoadByZone <- function(df) {
+  load.sum <- aggregate(df$VariableValue, by = list(df$KeyValue), FUN = sum)
+  col.names(load.sum) <- c("KeyValue","Value") 
+  return(load.sum)
+}
+
+
+people.sensible <- SumLoadByHour(LoadsByType(sql.file, "Zone People Sensible Heating Rate"))
+lights.total <- SumLoadByHour(LoadsByType(sql.file, "Zone Lights Total Heating Rate"))
+elec.equipment.radiant <- SumLoadByHour(LoadsByType(sql.file, "Zone Electric Equipment Radiant Heating Rate"))
+elec.equipment.convective <- SumLoadByHour(LoadsByType(sql.file, "Zone Electric Equipment Convective Heating Rate"))
+window.gain <- SumLoadByHour(LoadsByType(sql.file, "Zone Windows Total Heat Gain Rate"))
+window.loss <- SumLoadByHour(LoadsByType(sql.file, "Zone Windows Total Heat Loss Rate"))
+infiltration <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance Outdoor Air Transfer Rate"))
+interzone <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance Interzone Air Transfer Rate"))
+system.air<- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance System Air Transfer Rate"))
+system.convective <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance System Convective Heat Gain Rate"))
+opaque.conduction <- (people.sensible + lights.total + elec.equipment.radiant + 
+                      elec.equipment.convective + window.gain - window.loss + infiltration + 
+                      interzone + system.air + system.convective)$VariableValue
+opaque.conduction <- as.data.frame(cbind(Hour = people.sensible$Hour, VariableValue = opaque.conduction))
+sensible.heat.gains <- data.frame(Hour = people.sensible$Hour,
+                                  people.sensible = people.sensible$VariableValue,
+                                  lights.total  = lights.total$VariableValue,
+                                  elec.equipment = (elec.equipment.radiant$VariableValue + elec.equipment.convective$VariableValue),
+                                  window = (window.gain$VariableValue - window.loss$VariableValue),
+                                  infiltration = infiltration$VariableValue, 
+                                  interzone = interzone$VariableValue, 
+                                  hvac = (system.air$VariableValue + system.convective$VariableValue),
+                                  surface.transfer.and.residual = opaque.conduction$VariableValue)
+
+sensible.heat.gain.summary <- sqldf("SELECT * FROM TabularDataWithStrings WHERE ReportName = 'SensibleHeatGainSummary'", dbname = sql.file)
+
+# calculate the difference?
+window.solar <- SumLoadByHour(LoadsByType(sql.file, "Zone Windows Total Transmitted Solar Radiation Rate"))
+total.internal.radiant <- SumLoadByHour(LoadsByType(sql.file, "Zone Total Internal Radiant Heating Rate"))
+total.internal.convective <- SumLoadByHour(LoadsByType(sql.file, "Zone Total Internal Convective Heating Rate"))
+air.internal.convective <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance Internal Convective Heat Gain Rate"))
+air.storage <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance Air Energy Storage Rate"))
+air.surface <- SumLoadByHour(LoadsByType(sql.file, "Zone Air Heat Balance Surface Convection Rate"))
+opaque.gain <- SumLoadByHour(LoadsByType(sql.file, "Zone Opaque Surface Inside Faces Total Conduction Heat Gain Rate"))
+opaque.loss <- SumLoadByHour(LoadsByType(sql.file, "Zone Opaque Surface Inside Faces Total Conduction Heat Loss Rate"))
+
+#calculate annual and peak load information - import from SensibleHeatGainSummary?
+all.loads <- cbind(sensible.heat.gains, 
+                   window.solar = window.solar$VariableValue, 
+                   total.internal.radiant = total.internal.radiant$VariableValue, 
+                   air.internal.convective = air.internal.convective$VariableValue, 
+                   air.storage = air.storage$VariableValue, 
+                   air.surface = air.surface$VariableValue, 
+                   opaque.transfer = (opaque.gain$VariableValue - opaque.loss$VariableValue)) 
+
+load.components <- sqldf("SELECT * FROM TabularDataWithStrings WHERE ReportName = 'ZoneComponentLoadSummary'", dbname = sql.file)
+unique.zones <- sqldf("SELECT distinct ReportForString FROM TabularDataWithStrings WHERE ReportName = 'ZoneComponentLoadSummary'", dbname = sql.file)$ReportForString
+unique.loads <- sqldf("SELECT distinct RowName FROM TabularDataWithStrings WHERE ReportName = 'ZoneComponentLoadSummary' and ColumnName <> 'Value' and RowName <> 'Grand Total'", dbname = sql.file)$RowName
+
+# peak cooling components
+df <- load.components[load.components$TableName %in% c("Estimated Cooling Peak Load Components"),]
+df.peak.by.zone <- df[(df$RowName %in% c("Grand Total") & df$ColumnName %in% c("Total")),]
+total.load <- sum(as.double(df.peak.by.zone$Value))
+zone.weights <- data.frame(zones = unique.zones, weight = as.double(df.peak.by.zone$Value) / total.load)
+percents <- df[df$ColumnName %in% c("%Grand Total"),]
+contribution.by.load <- matrix(nrow = length(unique.loads), ncol = length(unique.zones))
+dimnames(contribution.by.load) <- list(unique.loads, unique.zones)
+for (load in unique.loads) {    
+  for (zone in unique.zones) {
+    # load = zone weight * percent contribution of that load to total zone load at peak
+    contribution.by.load[load, zone] <-  
+      zone.weights$weight[zone.weights$zones %in% zone] * 
+      as.double(percents$Value[(percents$RowName %in% c(load) & percents$ReportForString %in% c(zone))])
+  }
+}
+peak.cooling.load.percents <- data.frame(variable = rownames(contribution.by.load), percent = rowSums(contribution.by.load))
+
+# peak heating components
+df <- load.components[load.components$TableName %in% c("Estimated Heating Peak Load Components"),]
+df.peak.by.zone <- df[(df$RowName %in% c("Grand Total") & df$ColumnName %in% c("Total")),]
+total.load <- sum(as.double(df.peak.by.zone$Value))
+zone.weights <- data.frame(zones = unique.zones, weight = as.double(df.peak.by.zone$Value) / total.load)
+percents <- df[df$ColumnName %in% c("%Grand Total"),]
+contribution.by.load <- matrix(nrow = length(unique.loads), ncol = length(unique.zones))
+dimnames(contribution.by.load) <- list(unique.loads, unique.zones)
+for (load in unique.loads) {    
+  for (zone in unique.zones) {
+    # load = zone weight * percent contribution of that load to total zone load at peak
+    contribution.by.load[load, zone] <-  
+      zone.weights$weight[zone.weights$zones %in% zone] * 
+      as.double(percents$Value[(percents$RowName %in% c(load) & percents$ReportForString %in% c(zone))])
+  }
+}
+peak.heating.load.percents <- data.frame(variable = rownames(contribution.by.load), percent = rowSums(contribution.by.load))
+
+#########
+# PLOTS #
+#########
+
+loads.plot <- melt(all.loads[1:168,], id.vars = "Hour")
+loads.plot <- ggplot(data = loads.plot, aes(x = Hour,  y = value, color = variable)) + 
+  geom_line() + 
+  theme_minimal()
+plot(loads.plot)
+
+df <- peak.heating.load.percents[peak.heating.load.percents$percent != 0 | peak.cooling.load.percents$percent != 0, ]
+df$percent <- df$percent/100
+peak.heating <- ggplot(data = df, aes(x = variable, y = percent)) + 
+  geom_bar(stat="identity", ymin = 0, fill = "grey80") +
+  geom_text(aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
+  scale_y_continuous(labels = percent_format()) +
+  coord_flip() + 
+  labs(title = "Peak Heating Loads") +
+  theme(title = element_text(face = 'bold', size = 18),
+        panel.background = element_blank(), 
+        panel.grid.major.x = element_line(size=0.5, linetype = 'solid', color='#999999'),
+        axis.text.y = element_text(face = 'bold', color = "grey20", size = 16, hjust = 0.5), 
+        axis.text.x = element_text(color = "grey20", size = 16),
+        axis.ticks.y = element_blank(),
+        axis.title = element_blank(),
+        axis.line = element_line(size=1, color="#999999"), 
+        axis.line.y = element_blank())
+df <- peak.cooling.load.percents[peak.heating.load.percents$percent != 0 | peak.cooling.load.percents$percent != 0, ]
+df$percent <- df$percent/100
+peak.cooling <- ggplot(data = df, aes(x = variable, y = percent)) + 
+  geom_bar(stat="identity", ymin = 0, fill = "grey80") +  
+  geom_text(aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
+  scale_y_continuous(labels = percent_format()) +
+  coord_flip() +
+  labs(title = "Peak Cooling Loads") +
+  theme(title = element_text(face = 'bold', size = 16),
+        panel.background = element_blank(),
+        panel.grid.major.x = element_line(size=0.5, linetype = 'solid', color='#999999'),
+        axis.title = element_blank(), 
+        axis.text.y = element_blank(),
+        axis.text.x = element_text(color = "grey20", size = 16),
+        axis.ticks.y = element_blank(),
+        axis.line = element_line(size=1, color="#999999"), 
+        axis.line.y = element_blank())
+
+pushViewport(viewport(layout = grid.layout(2, 5, heights = unit(c(1, 9), "null"))))
+grid.text("(b) Percent Contributions of Component Loads to Thermal Zones' Peak Heating and Cooling", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:5))
+print(peak.cooling, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
+print(peak.heating, vp = viewport(layout.pos.row = 2, layout.pos.col = 3:5))
+
+######################################################
+# SENSIBLE PEAK COMPONENTS, AVAILABLE IN OUTPUT HTML #
+######################################################
+
 # sql statements for accessing primary information
 peak.heat.sql <- "SELECT * FROM TabularDataWithStrings WHERE TABLENAME='Peak Heating Sensible Heat Gain Components' AND ROWNAME='Total Facility'"
 peak.cool.sql <- "SELECT * FROM TabularDataWithStrings WHERE TABLENAME='Peak Cooling Sensible Heat Gain Components' AND ROWNAME='Total Facility'"
@@ -107,7 +310,9 @@ print(peak.plot1, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:3))
 print(peak.plot2, vp = viewport(layout.pos.row = 1, layout.pos.col = 4:7))
 
 
-# annual energy end uses
+###################################################
+# ANNUAL ENERGY END USE, AVAILABLE IN OUTPUT HTML #
+###################################################
 end.use.sql <- "SELECT * FROM TabularDataWithStrings WHERE REPORTNAME='AnnualBuildingUtilityPerformanceSummary' AND TABLENAME='End Uses' AND (COLUMNNAME = 'Electricity' OR COLUMNNAME ='Natural Gas')"
 end.use.df <- sqldf(end.use.sql, dbname = sql.file)[,c("RowName","ColumnName","Value","Units")]
 end.use.df <- end.use.df[!(end.use.df$RowName %in% c('','Exterior Lighting','Exterior Equipment','Heat Rejection',
