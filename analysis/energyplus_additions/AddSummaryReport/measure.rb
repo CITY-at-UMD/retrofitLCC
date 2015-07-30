@@ -24,7 +24,7 @@ class AddSummaryReport < OpenStudio::Ruleset::WorkspaceUserScript
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
     # make a user choice for the reporting frequency
-    reports_request_chs = OpenStudio::StringVector.new    
+    reports_request_chs = OpenStudio::StringVector.new
     reports_request_chs << "AllSummary"
     reports_request_chs << "AllMonthly"
     reports_request_chs << "AllSummaryAndMonthly"

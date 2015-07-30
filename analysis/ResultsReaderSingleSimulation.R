@@ -9,11 +9,9 @@
 # Package Dependencies: 
 library(sqldf) # perform SQL selects on R data frames
 library(ggplot2)
-library(reshape2)
-library(grid)
-library(ggplot2)
 library(scales)
 library(reshape2)
+library(grid)
 library(gridExtra)
 library(zoo)
 source('./lib/multiplot.R')
@@ -215,15 +213,15 @@ df <- peak.heating.load.percents[peak.heating.load.percents$percent != 0 | peak.
 df$percent <- df$percent/100
 peak.heating <- ggplot(data = df, aes(x = variable, y = percent)) + 
   geom_bar(stat="identity", ymin = 0, fill = "grey80") +
-  geom_text(aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
+  geom_text(size=8, aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
   scale_y_continuous(labels = percent_format()) +
   coord_flip() + 
   labs(title = "Peak Heating Loads") +
   theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(), 
         panel.grid.major.x = element_line(size=0.5, linetype = 'solid', color='#999999'),
-        axis.text.y = element_text(face = 'bold', color = "grey20", size = 16, hjust = 0.5), 
-        axis.text.x = element_text(color = "grey20", size = 16),
+        axis.text.y = element_text(face = 'bold', color = "grey20", size = 22, hjust = 0.5), 
+        axis.text.x = element_text(color = "grey20", size = 20),
         axis.ticks.y = element_blank(),
         axis.title = element_blank(),
         axis.line = element_line(size=1, color="#999999"), 
@@ -232,7 +230,7 @@ df <- peak.cooling.load.percents[peak.heating.load.percents$percent != 0 | peak.
 df$percent <- df$percent/100
 peak.cooling <- ggplot(data = df, aes(x = variable, y = percent)) + 
   geom_bar(stat="identity", ymin = 0, fill = "grey80") +  
-  geom_text(aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
+  geom_text(size=8, aes(x = variable, y = percent, label = percent(round(percent, 2)), hjust=ifelse(sign(percent)>0, 1, 0))) +
   scale_y_continuous(labels = percent_format()) +
   coord_flip() +
   labs(title = "Peak Cooling Loads") +
@@ -241,15 +239,15 @@ peak.cooling <- ggplot(data = df, aes(x = variable, y = percent)) +
         panel.grid.major.x = element_line(size=0.5, linetype = 'solid', color='#999999'),
         axis.title = element_blank(), 
         axis.text.y = element_blank(),
-        axis.text.x = element_text(color = "grey20", size = 16),
+        axis.text.x = element_text(color = "grey20", size = 20),
         axis.ticks.y = element_blank(),
         axis.line = element_line(size=1, color="#999999"), 
         axis.line.y = element_blank())
 
-pushViewport(viewport(layout = grid.layout(2, 5, heights = unit(c(1, 9), "null"))))
-grid.text("(b) Percent Contributions of Component Loads to Thermal Zones' Peak Heating and Cooling", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:5))
-print(peak.cooling, vp = viewport(layout.pos.row = 2, layout.pos.col = 1:2))
-print(peak.heating, vp = viewport(layout.pos.row = 2, layout.pos.col = 3:5))
+pushViewport(viewport(layout = grid.layout(1, 5, heights = unit(c(1, 9), "null"))))
+#grid.text("(b) Percent Contributions of Component Loads to Thermal Zones' Peak Heating and Cooling", vp = viewport(layout.pos.row = 1, layout.pos.col = 1:5))
+print(peak.cooling, vp = viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+print(peak.heating, vp = viewport(layout.pos.row = 1, layout.pos.col = 3:5))
 
 ######################################################
 # SENSIBLE PEAK COMPONENTS, AVAILABLE IN OUTPUT HTML #
@@ -340,21 +338,27 @@ end.use.df <- end.use.df[order(end.use.df$plot),]
 
 area.m2 <- 5518.33
 area.ft2 <- area.m2/(0.3048^2)  
-eui_conv <- 0.947817120/10.7639
+eui_conv_si <- 1/3.6
+eui_conv_ip <- 0.947817120/10.7639
+
+#FIGURE 3 - Breakout of building energy end use
 end.use.plot <- ggplot(data = end.use.df,
-                       aes(x=reorder(RowName,Value), y=Value*(1000/area.m2)*eui_conv,label=RowName)) +
+                       aes(x=reorder(RowName,Value), y=Value*(1000/area.m2)*eui_conv_si,label=RowName)) +
   geom_bar(stat="identity", aes(fill=factor(plot), alpha=plot)) +
   scale_fill_manual(values = c('grey60','grey40'), guide=FALSE) +
   scale_alpha(range=c(0,1), guide=FALSE) +  
-  ylab(expression(paste("Site Energy Use Intensity (", kBtu/ft^2, ")", sep=""))) + 
+  ylab(expression(paste("Site Energy Use Intensity (", kWh/m^2, ")", sep=""))) + 
   xlab("Energy End Use") + 
-  labs(title='(a) Energy End Use Breakout') +
-  coord_cartesian(ylim=c(0, 100)) +
-  scale_y_continuous(breaks=seq(0, 100, by=10)) +
+  #labs(title='(a) Energy End Use Breakout') +
+  coord_cartesian(ylim=c(0, 300)) +
+  coord_flip() +
+  scale_y_continuous(breaks=seq(0, 300, by=50)) +
   theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(),
         panel.grid.major = element_line(color = "grey20", size=0.5),
         panel.grid.minor = element_line(color = "grey80", size=0.5),
-        axis.text.y = element_text(color = "grey20", size = 16, hjust = 0),
-        axis.text.x = element_text(color = "grey20", size = 16))
+        axis.text.y = element_text(color = "grey20", size = 20, hjust = 0),
+        axis.text.x = element_text(color = "grey20", size = 20), 
+        axis.title.y = element_text(size = 22),
+        axis.title.x = element_text(size = 22))
 plot(end.use.plot)
