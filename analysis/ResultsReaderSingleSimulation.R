@@ -340,25 +340,29 @@ area.m2 <- 5518.33
 area.ft2 <- area.m2/(0.3048^2)  
 eui_conv_si <- 1/3.6
 eui_conv_ip <- 0.947817120/10.7639
+eui_ip_to_si <- eui_conv_si/eui_conv_ip
 
 #FIGURE 3 - Breakout of building energy end use
 end.use.plot <- ggplot(data = end.use.df,
-                       aes(x=reorder(RowName,Value), y=Value*(1000/area.m2)*eui_conv_si,label=RowName)) +
+                       aes(x=reorder(RowName,Value), y=Value*(1000/area.m2)*eui_conv_ip,label=RowName)) +
   geom_bar(stat="identity", aes(fill=factor(plot), alpha=plot)) +
   scale_fill_manual(values = c('grey60','grey40'), guide=FALSE) +
   scale_alpha(range=c(0,1), guide=FALSE) +  
-  ylab(expression(paste("Site Energy Use Intensity (", kWh/m^2, ")", sep=""))) + 
+  ylab(expression(paste("Site Energy Use Intensity, ",
+                        kBtu/ft^2, "(", kWh/m^2, ")",sep=""))) + 
   xlab("Energy End Use") + 
   #labs(title='(a) Energy End Use Breakout') +
-  coord_cartesian(ylim=c(0, 300)) +
+  coord_cartesian(ylim=c(0,100)) +
   coord_flip() +
-  scale_y_continuous(breaks=seq(0, 300, by=50)) +
+  scale_y_continuous(breaks=seq(0,100,by=15),
+                     labels=paste(seq(0,100,by=15)," (",format(seq(0,100,by=15)*eui_ip_to_si,trim=TRUE,digits=3),")",sep="")) +
   theme(title = element_text(face = 'bold', size = 18),
         panel.background = element_blank(),
         panel.grid.major = element_line(color = "grey20", size=0.5),
         panel.grid.minor = element_line(color = "grey80", size=0.5),
         axis.text.y = element_text(color = "grey20", size = 20, hjust = 0),
-        axis.text.x = element_text(color = "grey20", size = 20), 
+        axis.text.x = element_text(color = "grey20", size = 17), 
         axis.title.y = element_text(size = 22),
         axis.title.x = element_text(size = 22))
 plot(end.use.plot)
+
